@@ -1,0 +1,24 @@
+.header {
+  @apply top-0 inset-x-0 h-20;
+  @apply bg-black bg-opacity-10;
+}
+
+.header div {
+  @apply flex;
+}
+
+.header-left {
+  @apply flex-row justify-start content-center;
+}
+
+.logo-container {
+  @apply flex-auto flex-col justify-center content-center h-5/6;
+}
+
+.logo-icon {
+  @apply w-16 h-16 self-center;
+}
+
+.header-nav {
+  @apply flex flex-row justify-center content-center;
+}
