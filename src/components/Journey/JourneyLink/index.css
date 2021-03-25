@@ -1,0 +1,20 @@
+.journey-link-container {
+  @apply m-4 grid grid-cols-2 grid-rows-2;
+}
+
+.journey-title {
+  @apply m-2;
+}
+
+.journey-due-date {
+  @apply ml-auto p-2;
+}
+
+.tags {
+  @apply row-start-2 col-span-2;
+  @apply flex content-end;
+}
+
+.tag-badge {
+  @apply m-2 border-white self-center;
+}

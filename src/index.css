@@ -5,13 +5,14 @@
 
 @layer base {
   body {
-    @apply h-screen;
-    margin: 0;
+    @apply h-screen m-0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    /* SMALL: Background gradient */
+    @apply bg-green-900;
+    /* MEDIUM & LARGE: Background Image*/
+    @apply  md:bg-road-img md:bg-center;
   }
   
   div {
@@ -20,5 +21,13 @@
 
   #root {
     @apply h-full;
+  }
+
+  input {
+    @apply select-none outline-none;
+  }
+
+  .panel-black {
+    @apply bg-black bg-opacity-30 rounded-lg;
   }
 }
