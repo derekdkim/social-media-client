@@ -1,0 +1,26 @@
+.form-container {
+  @apply flex flex-row;
+  @apply mx-auto w-1/2 p-4;
+}
+
+.form-container form {
+  @apply w-full;
+}
+
+.input-container {
+  @apply my-6;
+  @apply flex flex-col;
+}
+
+.input-container input {
+  @apply p-2 leading-5;
+  @apply border-gray-600 bg-gray-50 bg-opacity-20;
+}
+
+.btn-container {
+  @apply flex flex-row justify-center;
+}
+
+.create-btn {
+  @apply bg-green-600 hover:bg-green-400 hover:text-white border-green-700;
+}

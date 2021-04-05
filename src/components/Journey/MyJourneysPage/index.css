@@ -1,0 +1,7 @@
+.right-btn-container-outer {
+  @apply flex;
+}
+
+.right-btn-container-inner {
+  @apply ml-auto m-4;
+}

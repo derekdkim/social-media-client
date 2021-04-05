@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './index.css';
+
 import JourneyLink from '../JourneyLink';
 
 const MyJourneyPage = () => {
 
   return (
     <div class='page-container'>
-      <Link to='/journeys/new'><button>Start A New Journey</button></Link>
-      <div>
-        <h1>My Journeys</h1>
+      <div className='right-btn-container-outer'>
+        <Link className='right-btn-container-inner' to='/journeys/new'>
+          <button className='button'> + Start A New Journey</button>
+        </Link>
+      </div>
+      <div className='one-tab-container'>
+        <h1 className='tab-heading'>My Journeys</h1>
         <div class='journey-list'>
           <JourneyLink />
         </div>

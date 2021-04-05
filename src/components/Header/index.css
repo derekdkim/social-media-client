@@ -1,6 +1,6 @@
 .header {
   @apply flex text-center;
-  @apply top-0 inset-x-0 h-20;
+  @apply top-0 inset-x-0 h-20 w-full;
   @apply bg-black bg-opacity-20 shadow-md;
 }
 
@@ -39,14 +39,14 @@
 
 .nav-link {
   @apply flex flex-row content-center;
-  @apply m-4 lg:m-6 md:m-3  fill-current;
+  @apply m-4 lg:m-6  fill-current;
   @apply hover:text-gray-300;
 }
 
 .nav-link-text {
   @apply self-center;
   @apply ml-2 mr-2;
-  @apply hidden md:block;
+  @apply hidden lg:block;
 }
 
 /* Right Side*/
@@ -70,7 +70,7 @@
 
 .profile-container {
   @apply flex content-center justify-center;
-  @apply w-1/5 ml-2;
+  @apply w-1/5 mx-2;
 }
 
 .avatar-container {

@@ -11,7 +11,7 @@ const IndexPage = () => {
           <h1>Welcome back, User!</h1>
         </div>
         <div className='journey-container'>
-          <h3>Your current journeys:</h3>
+          <h3 className='tab-heading'>Your current journeys:</h3>
           <JourneyLink />
           <JourneyLink />
           <JourneyLink />
@@ -19,7 +19,7 @@ const IndexPage = () => {
       </div>
       <div className='tab-right'>
         <div className='progress-panel panel-black'>
-          <h3 className='progress-panel-header'>Your progress in 2021</h3>
+          <h3 className='progress-panel-header tab-heading'>Your progress in 2021</h3>
           <p>Journeys completed this year: 0</p>
           <p>Total journeys completed: 15</p>
           <p>Last journey completed:</p>

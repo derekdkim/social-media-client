@@ -1,24 +1,20 @@
 .index-page {
-  /* MEDIUM & LARGE: 2 panel page*/
-  @apply md:grid md:grid-cols-2 text-white;
-}
-
-.index-page h3 {
-  @apply text-2xl text-left;
+  /* LARGE: 2 panel page*/
+  @apply lg:grid lg:grid-cols-2 text-white;
 }
 
 .tab-left {
   @apply flex flex-col content-around;
-  @apply mt-10 ml-20 text-left;
+  @apply mt-10 mx-20 text-left;
 }
 
 .tab-right {
   @apply flex;
-  @apply m-20;
+  @apply mx-20 lg:m-20;
 }
 
 .progress-panel {
-  @apply  p-8 w-full;
+  @apply  m-4 p-8 w-full;
 }
 
 .progress-panel-header {
