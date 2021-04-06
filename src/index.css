@@ -32,7 +32,15 @@
   }
 
   .one-tab-container {
-    @apply mx-20;
+    @apply mx-4 lg:mx-20;
+  }
+
+  .card-item {
+    @apply m-4;
+  }
+
+  .only-tab {
+    @apply mt-20;
   }
 
   .panel-black {

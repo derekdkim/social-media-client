@@ -7,7 +7,7 @@ const JourneyLink = () => {
   const [tags, setTags] = useState(['work', 'health', 'personal dev', 'soft skills']);
 
   return (
-    <div className='journey-link-container panel-black'>
+    <div className='journey-link-container panel-black card-item'>
       <h3 className='journey-title'>{title}</h3>
       <p className='journey-due-date'>Due Date: {dueDate.toDateString()}</p>
       <div className='tags'>

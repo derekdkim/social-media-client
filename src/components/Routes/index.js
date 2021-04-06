@@ -18,7 +18,7 @@ const Routes = () => {
       <Route path='/my-journeys' component={MyJourneyPage} />
       <Route path='/journeys/new' component={JourneyCreator} />
       <Route path='/explore' component={ExplorePage} />
-      <Route path='my-friends' component={MyFriendsPage}/>
+      <Route path='/my-friends' component={MyFriendsPage}/>
     </Switch>
   );
 }

@@ -1,6 +1,6 @@
 .form-container {
   @apply flex flex-row;
-  @apply mx-auto w-1/2 p-4;
+  @apply p-4 lg:mx-auto lg:w-1/2;
 }
 
 .form-container form {
@@ -23,4 +23,52 @@
 
 .create-btn {
   @apply bg-green-600 hover:bg-green-400 hover:text-white border-green-700;
+}
+
+/* Toggle button */
+.switch-container {
+  @apply flex flex-row content-center mt-4;
+}
+
+.switch {
+  @apply inline-block relative;
+  width: 60px;
+  height: 34px;  
+}
+
+.switch input {
+  @apply opacity-0 w-0 h-0;
+}
+
+.slider {
+  @apply absolute cursor-pointer inset-0 bg-gray-400 bg-opacity-40;
+  border-radius: 34px;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+}
+
+.slider:before {
+  @apply absolute bg-white;
+  content: "";
+  width: 26px;
+  height: 26px;
+  left: 4px;
+  bottom: 4px;
+  border-radius: 50%;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.switch-text {
+  @apply ml-4 text-xl;
 }

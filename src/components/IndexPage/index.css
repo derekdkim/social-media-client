@@ -5,16 +5,16 @@
 
 .tab-left {
   @apply flex flex-col content-around;
-  @apply mt-10 mx-20 text-left;
+  @apply mt-10 mx-4 lg:mx-20 text-left;
 }
 
 .tab-right {
   @apply flex;
-  @apply mx-20 lg:m-20;
+  @apply mx-4 lg:m-20;
 }
 
 .progress-panel {
-  @apply  m-4 p-8 w-full;
+  @apply  m-4 p-2 lg:p-4 w-full;
 }
 
 .progress-panel-header {
