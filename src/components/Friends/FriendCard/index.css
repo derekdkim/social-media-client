@@ -4,9 +4,9 @@
 }
 
 .profile-pic {
-  @apply md:ml-2 h-12 text-white fill-current;
+  @apply md:ml-2 h-12 text-white fill-current self-center;
 }
 
 .unfriend-btn {
-  @apply ml-auto mr-4;
+  @apply ml-auto mr-4 h-8 w-8 self-center;
 }

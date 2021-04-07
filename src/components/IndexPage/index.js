@@ -8,10 +8,10 @@ const IndexPage = () => {
     <div className='page-container index-page'>
       <div className='tab-left'>
         <div className='welcome-panel'>
-          <h1>Welcome back, User!</h1>
+          <h1 className='tab-title'>Welcome back, User!</h1>
         </div>
         <div className='journey-container'>
-          <h3 className='tab-heading'>Your current journeys:</h3>
+          <h3 className='tab-heading tab-title'>Your current journeys:</h3>
           <JourneyLink />
           <JourneyLink />
           <JourneyLink />

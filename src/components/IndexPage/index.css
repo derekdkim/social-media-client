@@ -1,6 +1,6 @@
 .index-page {
   /* LARGE: 2 panel page*/
-  @apply lg:grid lg:grid-cols-2 text-white;
+  @apply lg:grid lg:grid-cols-2;
 }
 
 .tab-left {

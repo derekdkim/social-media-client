@@ -13,8 +13,8 @@
 }
 
 .input-container input {
-  @apply p-2 leading-5;
-  @apply border-gray-600 bg-gray-50 bg-opacity-20;
+  @apply mt-2 p-2 leading-5;
+  @apply border-gray-600 bg-gray-400 bg-opacity-20;
 }
 
 .btn-container {
@@ -22,7 +22,8 @@
 }
 
 .create-btn {
-  @apply bg-green-600 hover:bg-green-400 hover:text-white border-green-700;
+  @apply hover:bg-green-300 text-white shadow-md;
+  background-color: #38b000;
 }
 
 /* Toggle button */
@@ -60,7 +61,7 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #cb997e;
 }
 
 input:checked + .slider:before {
@@ -70,5 +71,5 @@ input:checked + .slider:before {
 }
 
 .switch-text {
-  @apply ml-4 text-xl;
+  @apply mx-4 text-xl;
 }

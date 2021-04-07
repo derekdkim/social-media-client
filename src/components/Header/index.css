@@ -1,7 +1,9 @@
 .header {
   @apply flex text-center;
   @apply top-0 inset-x-0 h-20 w-full;
-  @apply bg-black bg-opacity-20 shadow-md;
+  @apply shadow-lg;
+  background-color: #ddbea9;
+  color: #472d30;
 }
 
 .header div {
@@ -11,7 +13,7 @@
 /* Left Side */
 .header-left {
   @apply flex-row justify-between content-center;
-  @apply w-1/2 h-full text-white;
+  @apply w-1/2 h-full;
 }
 
 .logo-container {
@@ -34,13 +36,12 @@
 
 .nav-icon {
   @apply w-5 h-5 self-center;
-  @apply fill-current text-white;
 }
 
 .nav-link {
   @apply flex flex-row content-center;
   @apply m-4 lg:m-6  fill-current;
-  @apply hover:text-gray-300;
+  @apply hover:text-white;
 }
 
 .nav-link-text {
