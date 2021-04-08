@@ -39,7 +39,7 @@
     @apply mt-20;
   }
 
-  .panel-black {
+  .content-panel {
     @apply bg-white rounded-lg shadow-lg border border-gray-100 border-solid;
   }
 
@@ -58,7 +58,7 @@
     background-color: #8a5a44;
   }
 
-  .tab-title {
+  .dbrown-text {
     color: #472d30;
   }
 }

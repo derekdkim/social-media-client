@@ -18,7 +18,7 @@ const JourneyCreator = () => {
         </Link>
       </div>
 
-      <div className='one-tab-container form-container panel-black'>
+      <div className='one-tab-container form-container content-panel'>
         <form>
           <h3 className='tab-heading text-center'>New Journey</h3>
           <div className='input-container'>

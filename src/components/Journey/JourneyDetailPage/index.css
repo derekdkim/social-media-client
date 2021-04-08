@@ -1,0 +1,14 @@
+.journey-det-container {
+  @apply grid;
+}
+
+@media (min-width: 1024px) {
+  .journey-det-container {
+    @apply grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .journey-info-container {
+    @apply row-span-2 m-2;
+  }
+}

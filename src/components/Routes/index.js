@@ -8,6 +8,7 @@ import MyJourneyPage from '../Journey/MyJourneysPage';
 import JourneyCreator from '../Journey/JourneyCreator';
 import ExplorePage from '../Journey/ExplorePage';
 import MyFriendsPage from '../Friends/MyFriendsPage';
+import JourneyDetailPage from '../Journey/JourneyDetailPage';
 
 const Routes = () => {
   return (
@@ -19,6 +20,7 @@ const Routes = () => {
       <Route path='/journeys/new' component={JourneyCreator} />
       <Route path='/explore' component={ExplorePage} />
       <Route path='/my-friends' component={MyFriendsPage}/>
+      <Route path='/journey-details' component={JourneyDetailPage}/>
     </Switch>
   );
 }

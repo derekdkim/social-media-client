@@ -1,0 +1,7 @@
+.author-container {
+  @apply flex flex-row m-2;
+}
+
+.author-info {
+  @apply ml-4;
+}

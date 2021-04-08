@@ -14,7 +14,7 @@ const MyJourneyPage = () => {
         </Link>
       </div>
       <div className='one-tab-container'>
-        <h1 className='tab-heading tab-title'>My Journeys</h1>
+        <h1 className='tab-heading dbrown-text'>My Journeys</h1>
         <div class='journey-list grid lg:grid-cols-2'>
           <JourneyLink />
           <JourneyLink />
