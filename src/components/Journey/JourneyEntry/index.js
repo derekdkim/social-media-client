@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
 
 import { UserIcon } from '../../../images';
 import lorem from '../../../placeholders/lorem';
 
 const JourneyEntry = () => {
+  const [entryLiked, updateEntryLiked] = useState(false);
+
+  const handleLikes = () => {
+    updateEntryLiked(!entryLiked);
+  }
+
   return (
     <div className='content-panel card-item'>
       <div className='author-container'>
@@ -16,6 +22,10 @@ const JourneyEntry = () => {
       </div>
       <div className='p-2'>
         <p>{lorem}</p>
+      </div>
+      <div className='icon-footer'>
+        <i onClick={handleLikes} class={entryLiked ? 'fas fa-heart red' : 'far fa-heart'}></i>
+        <i className='far fa-comment'></i>
       </div>
     </div>
   );

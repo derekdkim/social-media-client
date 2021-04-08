@@ -5,3 +5,15 @@
 .author-info {
   @apply ml-4;
 }
+
+.icon-footer {
+  @apply p-2;
+}
+
+.icon-footer i {
+  @apply mr-8 text-xl;
+}
+
+.red {
+  color: red;
+}
