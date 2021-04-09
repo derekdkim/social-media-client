@@ -14,8 +14,8 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path='/' component={IndexPage} />
-      <Route path='/signup' component={SignupPage} />
-      <Route path='/login' component={LoginPage} />
+      <Route path='/sign-up' component={SignupPage} />
+      <Route path='/log-in' component={LoginPage} />
       <Route path='/my-journeys' component={MyJourneyPage} />
       <Route path='/journeys/new' component={JourneyCreator} />
       <Route path='/explore' component={ExplorePage} />

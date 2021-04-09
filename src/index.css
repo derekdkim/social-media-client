@@ -58,6 +58,10 @@
     background-color: #8a5a44;
   }
 
+  .disabled-btn {
+    @apply bg-gray-500 hover:bg-gray-500;
+  }
+
   .dbrown-text {
     color: #472d30;
   }

@@ -144,14 +144,13 @@ const SignupPage = () => {
 
   return (
     <div className='page-container'>
-      <div className='auth-form-container'>
-
-        <h1>Create a New Account</h1>
+      <div className='one-tab-container form-container content-panel only-tab'>
         <form 
           className='auth-form'
           onSubmit={handleSubmit}
           noValidate
         >
+          <h1 className='tab-heading text-center'>Create a New Account</h1>
 
           <div className='input-container'>
             <label htmlFor='signup-username-input'>Username</label>
@@ -211,14 +210,14 @@ const SignupPage = () => {
               required
             ></input>
           </div>
-
-          <button
-            className={formCompleted ? 'signup-btn': 'signup-btn disabled-btn'}
-            disabled={!formCompleted}
-          >
-            Sign Up
-          </button>
-
+          <div className='btn-container'>
+            <button
+              className={formCompleted ? 'button': 'button disabled-btn'}
+              disabled={!formCompleted}
+            >
+              Sign Up
+            </button>
+          </div>
         </form>
       </div>
     </div>

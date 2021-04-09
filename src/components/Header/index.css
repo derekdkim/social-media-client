@@ -76,5 +76,9 @@
 
 .avatar-container {
   @apply w-10 h-10 rounded-full self-center;
-  @apply bg-white;
+}
+
+.settings-menu {
+  @apply absolute top-20 right-0 z-50;
+  @apply flex flex-col text-left;
 }
