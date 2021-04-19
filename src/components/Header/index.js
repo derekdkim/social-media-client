@@ -57,6 +57,10 @@ const Header = () => {
             </button>
           </div>
           { isActive && <div ref={menuRef} className='settings-menu content-panel'>
+              <Link to='/profile'>
+                <button className='m-2'>View Profile</button>
+              </Link>
+              <hr></hr>
               <button className='m-2'>Dark Mode</button>
               <hr></hr>
               <button className='m-2' onClick={handleLogout}>Log Out</button>

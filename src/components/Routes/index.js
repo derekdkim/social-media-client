@@ -9,6 +9,7 @@ import JourneyCreator from '../Journey/JourneyCreator';
 import ExplorePage from '../Journey/ExplorePage';
 import MyFriendsPage from '../Friends/MyFriendsPage';
 import JourneyDetailPage from '../Journey/JourneyDetailPage';
+import ProfilePage from '../Profile/ProfilePage';
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
       <Route path='/explore' component={ExplorePage} />
       <Route path='/my-friends' component={MyFriendsPage}/>
       <Route path='/journey-details' component={JourneyDetailPage}/>
+      <Route path='/profile' component={ProfilePage}/>
     </Switch>
   );
 }

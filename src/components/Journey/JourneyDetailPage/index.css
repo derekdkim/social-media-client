@@ -1,7 +1,3 @@
-.journey-det-container {
-  @apply grid;
-}
-
 @media (min-width: 1024px) {
   .journey-det-container {
     @apply grid;
