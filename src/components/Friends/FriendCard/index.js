@@ -14,7 +14,6 @@ const FriendCard = () => {
       <div className='flex content-center justify-center'>
         <button className='unfriend-btn'><img src={ UnfriendIcon } alt='unfriend'></img></button>
       </div>
-
     </div>
   );
 }

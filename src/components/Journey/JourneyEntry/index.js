@@ -24,7 +24,7 @@ const JourneyEntry = () => {
         <p>{lorem}</p>
       </div>
       <div className='icon-footer'>
-        <i onClick={handleLikes} class={entryLiked ? 'fas fa-heart red' : 'far fa-heart'}></i>
+        <i onClick={handleLikes} className={entryLiked ? 'fas fa-heart red' : 'far fa-heart'}></i>
         <i className='far fa-comment'></i>
       </div>
     </div>

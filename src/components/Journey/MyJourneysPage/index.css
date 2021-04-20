@@ -3,5 +3,5 @@
 }
 
 .right-btn-container-inner {
-  @apply ml-auto m-4;
+  @apply ml-auto mx-4 mb-4 mt-6;
 }

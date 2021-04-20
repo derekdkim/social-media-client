@@ -3,11 +3,11 @@
 }
 
 .journey-title {
-  @apply m-2;
+  @apply m-2 font-bold;
 }
 
 .journey-due-date {
-  @apply ml-auto p-2;
+  @apply ml-auto p-2 text-xs md:text-base;
 }
 
 .tags {
@@ -16,5 +16,5 @@
 }
 
 .tag-badge {
-  @apply m-2 border-white self-center;
+  @apply m-2 border-white self-center text-xs md:text-sm;
 }

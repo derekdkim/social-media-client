@@ -1,0 +1,23 @@
+.card-left {
+  @apply flex flex-row;
+}
+
+.card-left div:nth-child(2) {
+  @apply ml-4;
+}
+
+.card-primary-text {
+  @apply text-base lg:text-xl font-bold;
+}
+
+.card-secondary-text {
+  @apply text-sm lg:text-base;
+}
+
+.card-right {
+  @apply ml-auto p-2 flex flex-col md:flex-row;
+}
+
+.card-btn {
+  @apply my-2 md:mx-2;
+}

@@ -31,6 +31,10 @@
     @apply mx-4 lg:mx-20;
   }
 
+  .narrow-page {
+    @apply lg:w-1/2 lg:mx-auto;  
+  }
+
   .card-item {
     @apply m-4 p-2;
   }

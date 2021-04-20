@@ -15,7 +15,7 @@ const ProfilePage = () => {
         </div>
         <div className='username-container'>
           <h3 className='text-3xl'>User1</h3>
-          <h4 classname='tab-heading'>John Doe</h4>
+          <h4 className='tab-heading'>John Doe</h4>
         </div>
       </div>
       <div>
@@ -39,7 +39,7 @@ const ProfilePage = () => {
       <div>
         <h3 className='tab-heading'>Friends <span className='text-gray-600 text-base'>524</span></h3>
         <div className='friend-grid card-item'>
-          {[...Array(24)].map((e, i) => <FriendBadge />)}
+          {[...Array(24)].map((e, i) => <FriendBadge key={i} />)}
         </div>
         <p className='card-item'>View all</p>
       </div>
