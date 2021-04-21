@@ -1,0 +1,8 @@
+.comment-container {
+  @apply flex flex-row;
+}
+
+.comment-content {
+  @apply break-words text-xs md:text-sm;
+  word-wrap: break-all;
+}

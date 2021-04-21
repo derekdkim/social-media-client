@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.css';
 
 import JourneyEntry from '../JourneyEntry';
 import lorem from '../../../placeholders/lorem';
 
 const JourneyDetailPage = () => {
+  const [isParticipant, setIsParticipant] = useState(false);
+
+  const joinJourney = () => {
+    setIsParticipant(true);
+  }
+
+  const leaveJourney = () => {
+    setIsParticipant(false);
+  }
+
+
   return (
     <div className='page-container journey-det-container'>
       <div>
@@ -22,7 +33,10 @@ const JourneyDetailPage = () => {
           <p>{lorem}</p>
         </div>
         <div className='card-item'>
-          <button className='button w-full'>Join this journey</button>
+          { isParticipant
+              ? <button onClick={ leaveJourney } className='button w-full decline-btn'>Leave this journey</button>
+              : <button onClick={ joinJourney } className='button w-full'>Join this journey</button>
+          }
         </div>
       </div>
       <div className='card-item'>

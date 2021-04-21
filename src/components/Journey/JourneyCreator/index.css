@@ -1,29 +1,10 @@
 .form-container {
   @apply flex flex-row;
-  @apply p-4 lg:mx-auto lg:w-1/2;
+  @apply p-4 lg:mx-auto lg:w-1/2 mb-2;
 }
 
 .form-container form {
   @apply w-full;
-}
-
-.input-container {
-  @apply my-6;
-  @apply flex flex-col;
-}
-
-.input-container input {
-  @apply mt-2 p-2 leading-5;
-  @apply border-gray-600 bg-gray-400 bg-opacity-20;
-}
-
-.btn-container {
-  @apply flex flex-row justify-center;
-}
-
-.create-btn {
-  @apply hover:bg-green-300 text-white shadow-md;
-  background-color: #38b000;
 }
 
 /* Toggle button */

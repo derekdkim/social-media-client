@@ -15,8 +15,8 @@ const FriendReqCard = () => {
         </div>
       </div>
       <div className='card-right'>
-        <button className='button card-btn create-btn'>Accept</button>
-        <button className='button card-btn bg-red-600'>Decline</button>
+        <button className='button card-btn accept-btn'>Accept</button>
+        <button className='button card-btn decline-btn'>Decline</button>
       </div>
     </div>
   );

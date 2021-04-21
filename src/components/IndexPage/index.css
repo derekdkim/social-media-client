@@ -26,5 +26,5 @@
 }
 
 .welcome-panel {
-  @apply h-24 text-5xl;
+  @apply text-3xl md:text-5xl mb-8 md:mb-24;
 }

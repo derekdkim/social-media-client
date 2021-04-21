@@ -6,5 +6,6 @@
 
   .journey-info-container {
     @apply row-span-2 m-2;
+    margin-top: 6.75rem;
   }
 }

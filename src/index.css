@@ -19,10 +19,26 @@
     @apply h-full;
   }
 
-  input {
-    @apply select-none outline-none;
+  /* Input */
+  input, textarea {
+    @apply select-none outline-none resize-none;
   }
 
+  .input-container {
+    @apply my-6;
+    @apply flex flex-col;
+  }
+
+  .input-field {
+    @apply mt-2 p-2 leading-5;
+    @apply border-gray-600 bg-gray-400 bg-opacity-20;
+  }
+
+  .comment-field {
+    @apply border-b-2;
+  }
+
+  /* Content divs */
   .page-container {
     @apply text-black;
   }
@@ -47,12 +63,9 @@
     @apply bg-white rounded-lg shadow-lg border border-gray-100 border-solid;
   }
 
-  .tab-heading {
-    @apply text-2xl;
-  }
-
+  /* Buttons */
   .button {
-    @apply text-white hover:text-white;
+    @apply text-white hover:text-white select-none outline-none;
     background-color: #b07d62;
     @apply border-none rounded-md shadow-lg;
     @apply py-2 px-4;
@@ -63,10 +76,28 @@
   }
 
   .disabled-btn {
-    @apply bg-gray-500 hover:bg-gray-500;
+    @apply bg-gray-500 hover:bg-gray-500 pointer-events-none;
   }
 
+  .decline-btn {
+    @apply bg-red-600 hover:bg-red-500;
+  }
+
+  .btn-container {
+    @apply flex flex-row justify-center;
+  }
+
+  .accept-btn {
+    @apply hover:bg-green-300 text-white shadow-md;
+    background-color: #38b000;
+  }
+
+  /* Text/Font */
   .dbrown-text {
     color: #472d30;
+  }
+
+  .tab-heading {
+    @apply text-2xl;
   }
 }

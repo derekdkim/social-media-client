@@ -71,7 +71,7 @@
 
 .profile-container {
   @apply flex content-center justify-center;
-  @apply w-1/5 mx-2;
+  @apply w-1/5 mx-4 lg:mx-0;
 }
 
 .avatar-container {
