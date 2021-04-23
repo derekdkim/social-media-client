@@ -18,9 +18,9 @@ const JourneyComment = (props) => {
         <img src={ UserIcon } className='avatar mt-2' alt='commenter' />
       </div>
       <div className='flex flex-col ml-2'>
-        <div className='flex flex-col'>
+        <div className='flex flex-col lg:flex-row'>
           <p className='font-bold text-sm'>{ data.author }</p>
-          <span className='text-gray-500 text-xs'>{ formatDistance(data.timestamp, new Date()) }</span>
+          <span className='text-gray-500 text-xs lg:self-center lg:ml-1'>{ formatDistance(data.timestamp, new Date()) }</span>
         </div>
         <div className='mt-1'>
           <p className='comment-content'>{ data.content }</p>

@@ -3,14 +3,6 @@
   @apply p-2;
 }
 
-.avatar {
-  @apply h-10 text-white fill-current self-center;
-}
-
-.profile-pic {
-  @apply md:ml-2 avatar;
-}
-
 .unfriend-btn {
   @apply ml-auto mr-4 h-8 w-8 self-center;
 }

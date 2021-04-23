@@ -2,17 +2,24 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
 
+import HamburgerMenu from '../Menu/HamburgerMenu';
 import { useAuthContext } from '../../context/AuthContextProvider';
 import { useDetectOutsideClick } from './useDetectOutsideClick';
-import { LogoIcon, MapIcon, SearchIcon, FriendIcon, UserIcon } from '../../images';
+import { LogoIcon, SearchIcon, UserIcon, HamburgerMenuIcon } from '../../images';
 
 const Header = () => {
-  const menuRef = useRef(null);
-  const [isActive, setIsActive] = useDetectOutsideClick(menuRef, false);
+  const settingsRef = useRef(null);
+  const navRef = useRef(null);
+  const [isSettingsActive, setIsSettingsActive] = useDetectOutsideClick(settingsRef, false);
+  const [isNavActive, setIsNavActive] = useDetectOutsideClick(navRef, false);
   const auth = useAuthContext();
 
-  const handleClick = () => {
-    setIsActive(!isActive);
+  const toggleSettings = () => {
+    setIsSettingsActive(!isSettingsActive);
+  }
+
+  const toggleNav = () => {
+    setIsNavActive(!isNavActive);
   }
 
   const handleLogout = () => {
@@ -21,49 +28,41 @@ const Header = () => {
 
   return (
     <div className='header'>
+      <HamburgerMenu ref={ navRef } isNavActive= { isNavActive } />
       <div className='header-left'>
+        <div className='hamburger-menu-container'>
+          <button onClick={ toggleNav } >
+            <img className='menu-icon' src={ HamburgerMenuIcon } alt='hamburger-menu' />
+          </button>
+        </div>
         <div className='home-container'>
-          <Link to='/'>
+          <Link className='flex justify-center content-center' to='/'>
             <div className='logo-container'>
-              <img className='logo-icon' src={LogoIcon} alt='tent-logo'/>
+              <img className='logo-icon' src={ LogoIcon } alt='tent-logo'/>
               <h1>Adventure Together</h1>
             </div>      
           </Link>
         </div>
-        { auth.loggedIn && <nav className='header-nav'>
-          <Link className='nav-link' to='/my-journeys'>
-            <img className='nav-icon' src={MapIcon} alt='my-journeys-icon'/>
-            <p className='nav-link-text'>My Journeys</p>
-          </Link>
-          <Link className='nav-link' to='/explore'>
-            <img className='nav-icon' src={SearchIcon} alt='explore-icon'/>
-            <p className='nav-link-text'>Explore</p>
-          </Link>
-          <Link className='nav-link' to='/my-friends'>
-            <img className='nav-icon' src={FriendIcon} alt='friends-icon'/>
-            <p className='nav-link-text'>Friends</p>
-          </Link>
-        </nav> }
       </div>
       { auth.loggedIn ? <div className='header-right'>
         <div className='search-bar'>
-          <img className='search-bar-icon' src={SearchIcon} alt='search-icon'/>
+          <img className='search-bar-icon' src={ SearchIcon } alt='search-icon'/>
           <input type='text' className='search-bar-input'/>
         </div>
         <div className='profile-container'>
           <div className='avatar-container'>
-            <button onClick={handleClick}>
-              <img src={UserIcon} className='avatar' alt='profile-pic'/>
+            <button onClick={ toggleSettings }>
+              <img src={ UserIcon } className='avatar' alt='profile-pic'/>
             </button>
           </div>
-          { isActive && <div ref={menuRef} className='settings-menu content-panel'>
+          { isSettingsActive && <div ref={ settingsRef } className='settings-menu content-panel'>
               <Link to='/profile'>
-                <button className='m-2'>View Profile</button>
+                <button className='m-2 card-item'>View Profile</button>
               </Link>
               <hr></hr>
-              <button className='m-2'>Dark Mode</button>
+              <button className='m-2 card-item'>Dark Mode</button>
               <hr></hr>
-              <button className='m-2' onClick={handleLogout}>Log Out</button>
+              <button className='m-2 card-item' onClick={ handleLogout }>Log Out</button>
             </div> }
         </div>
       </div> 

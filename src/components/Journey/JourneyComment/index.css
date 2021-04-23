@@ -1,8 +1,12 @@
 .comment-container {
-  @apply flex flex-row;
+  @apply flex flex-row my-2;
+}
+
+.username-date {
+  @apply flex flex-col lg:flex-row;
 }
 
 .comment-content {
-  @apply break-words text-xs md:text-sm;
-  word-wrap: break-all;
+  @apply text-xs md:text-sm;
+  word-break: break-all;
 }

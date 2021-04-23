@@ -5,7 +5,7 @@ import './index.css';
 const JourneyLink = () => {
   const [title, setTitle] = useState('Journey Title');
   const [dueDate, setDueDate] = useState(new Date());
-  const [tags, setTags] = useState(['work', 'health', 'personal dev', 'soft skills']);
+  const [tags, setTags] = useState(['work', 'health', 'personal dev', 'soft skills', 'whatever-tag']);
 
   return (
     <div className='journey-link-container content-panel card-item'>

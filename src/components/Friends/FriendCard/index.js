@@ -6,7 +6,7 @@ import { UserIcon, UnfriendIcon } from '../../../images/';
 const FriendCard = () => {
   return (
     <div className='content-panel card-item friend-card-container'>
-      <img src={ UserIcon } className='profile-pic' alt='profile-pic'/>
+      <img src={ UserIcon } className='avatar ml-2' alt='profile-pic'/>
       <div>
         <p className='text-xl font-bold'>Username</p>
         <p className='text-base'>Firstname Lastname</p>

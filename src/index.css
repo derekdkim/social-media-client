@@ -80,7 +80,7 @@
   }
 
   .decline-btn {
-    @apply bg-red-600 hover:bg-red-500;
+    @apply bg-red-600 hover:bg-red-300;
   }
 
   .btn-container {
@@ -99,5 +99,16 @@
 
   .tab-heading {
     @apply text-2xl;
+  }
+
+  /* Images */
+  .avatar {
+    @apply h-10 text-white fill-current self-center;
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .invisible {
+    display: none !important;
   }
 }
