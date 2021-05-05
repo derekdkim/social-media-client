@@ -1,0 +1,27 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { useAuthContext } from '../../../context/AuthContextProvider';
+
+const SettingsMenu = (props) => {
+  const { settingsRef } = props;
+  const authContext = useAuthContext();
+
+  const handleLogout = () => {
+    authContext.setLoggedIn(false);
+  }
+
+  return (
+    <div ref={ settingsRef } className='settings-menu content-panel'>
+      <Link to='/profile'>
+        <button className='m-2 card-item'>View Profile</button>
+      </Link>
+      <hr></hr>
+      <button className='m-2 card-item'>Dark Mode</button>
+      <hr></hr>
+      <button className='m-2 card-item' onClick={ handleLogout } >Log Out</button>
+    </div>
+  );
+}
+
+export default SettingsMenu;

@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
 
 import HamburgerMenu from '../Menu/HamburgerMenu';
-import { useAuthContext } from '../../context/AuthContextProvider';
-import { useDetectOutsideClick } from './useDetectOutsideClick';
+import useDetectOutsideClick from '../util/useDetectOutsideClick';
 import { LogoIcon, SearchIcon, UserIcon, HamburgerMenuIcon } from '../../images';
+import SettingsMenu from '../Menu/SettingsMenu';
+import { useAuthContext } from '../../context/AuthContextProvider';
 
 const Header = () => {
   const settingsRef = useRef(null);
   const navRef = useRef(null);
   const [isSettingsActive, setIsSettingsActive] = useDetectOutsideClick(settingsRef, false);
   const [isNavActive, setIsNavActive] = useDetectOutsideClick(navRef, false);
-  const auth = useAuthContext();
+  const authContext = useAuthContext();
 
   const toggleSettings = () => {
     setIsSettingsActive(!isSettingsActive);
@@ -22,13 +23,9 @@ const Header = () => {
     setIsNavActive(!isNavActive);
   }
 
-  const handleLogout = () => {
-    auth.setLoggedIn(false);
-  }
-
   return (
     <div className='header'>
-      <HamburgerMenu ref={ navRef } isNavActive= { isNavActive } />
+      { isNavActive && <HamburgerMenu navRef={ navRef } /> }
       <div className='header-left'>
         <div className='hamburger-menu-container'>
           <button onClick={ toggleNav } >
@@ -44,7 +41,8 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      { auth.loggedIn ? <div className='header-right'>
+      { /* Placeholder for authentication -- Currently have unstyled sign-up & log-in buttons as placeholders */
+        authContext.loggedIn ? <div className='header-right'>
         <div className='search-bar'>
           <img className='search-bar-icon' src={ SearchIcon } alt='search-icon'/>
           <input type='text' className='search-bar-input'/>
@@ -55,15 +53,7 @@ const Header = () => {
               <img src={ UserIcon } className='avatar' alt='profile-pic'/>
             </button>
           </div>
-          { isSettingsActive && <div ref={ settingsRef } className='settings-menu content-panel'>
-              <Link to='/profile'>
-                <button className='m-2 card-item'>View Profile</button>
-              </Link>
-              <hr></hr>
-              <button className='m-2 card-item'>Dark Mode</button>
-              <hr></hr>
-              <button className='m-2 card-item' onClick={ handleLogout }>Log Out</button>
-            </div> }
+          { isSettingsActive && <SettingsMenu settingsRef={ settingsRef } /> }
         </div>
       </div> 
         : <div className='header-right'>

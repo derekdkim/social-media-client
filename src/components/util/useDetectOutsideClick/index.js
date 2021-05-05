@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-export const useDetectOutsideClick = (element, initState) => {
+const useDetectOutsideClick = (ref, initState) => {
   const [isActive, setIsActive] = useState(initState);
 
   useEffect(() => {
     const pageClickEvent = (e) => {
-      // If active element exists and is outside of target element
-      if (element.current !== null && !element.current.contains(e.target)) {
+      // If active ref exists and is outside of target ref
+      if (ref.current !== null && !ref.current.contains(e.target)) {
         setIsActive(!isActive);
       }
     }
@@ -18,7 +18,9 @@ export const useDetectOutsideClick = (element, initState) => {
     return () => {
       window.removeEventListener('click', pageClickEvent);
     }
-  }, [isActive, element]);
+  }, [isActive, ref]);
 
   return [isActive, setIsActive];
 }
+
+export default useDetectOutsideClick;
