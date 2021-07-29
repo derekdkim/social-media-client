@@ -69,6 +69,6 @@
 }
 
 .settings-menu {
-  @apply absolute top-20 right-0 z-50 m-1;
+  @apply absolute top-20 right-0 z-50;
   @apply flex flex-col text-left;
 }

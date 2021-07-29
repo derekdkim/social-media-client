@@ -8,7 +8,7 @@ const HamburgerMenu = (props) => {
   const { navRef } = props;
 
   return (
-    <div className='left-hbmenu-tab content-panel' ref={ navRef }>
+    <div className='left-hbmenu-tab menu-panel' ref={ navRef }>
       <nav className='header-nav'>
         <Link className='nav-link card-item' to='/my-journeys'>
           <img className='nav-icon' src={ MapIcon } alt='my-journeys-icon'/>

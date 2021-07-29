@@ -12,7 +12,7 @@ const SettingsMenu = (props) => {
   }
 
   return (
-    <div ref={ settingsRef } className='settings-menu content-panel'>
+    <div ref={ settingsRef } className='settings-menu menu-panel'>
       <Link to='/profile'>
         <button className='m-2 card-item'>View Profile</button>
       </Link>

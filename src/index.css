@@ -63,6 +63,10 @@
     @apply bg-white rounded-lg shadow-lg border border-gray-100 border-solid;
   }
 
+  .menu-panel {
+    @apply bg-white shadow-md border border-gray-100 border-solid;
+  }
+
   /* Buttons */
   .button {
     @apply text-white hover:text-white select-none outline-none;

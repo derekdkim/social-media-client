@@ -36,7 +36,7 @@ const Header = () => {
           <Link className='flex justify-center content-center' to='/'>
             <div className='logo-container'>
               <img className='logo-icon' src={ LogoIcon } alt='tent-logo'/>
-              <h1>Adventure Together</h1>
+              <h1>Journey Together</h1>
             </div>      
           </Link>
         </div>

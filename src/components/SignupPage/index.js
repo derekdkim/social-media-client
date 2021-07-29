@@ -1,4 +1,7 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import './index.css';
 
 const SignupPage = () => {
   const [username, setUsername] = useState({errMsg: ''});
@@ -7,6 +10,8 @@ const SignupPage = () => {
   const [lastName, setLastName] = useState({errMsg: ''});
   const [birthday, setBirthday] = useState({errMsg: ''});
   const [formCompleted, setFormCompleted] = useState(false);
+  const [formAccepted, setFormAccepted] = useState(false);
+  const [formErrMsg, setFormErrMsg] = useState('');
   
   const updateUsername = (event) => {
     // Validation check
@@ -127,10 +132,30 @@ const SignupPage = () => {
     });
   }
 
-  const handleSubmit = () => {
-    // PLACEHOLDER -- POST TO DB
-    console.log('Form submitted');
-    console.log(username.value, password.value, firstName.value, lastName.value, birthday.value);
+  const handleSubmit = async (event) => {
+    //Prevent page refresh after form submit
+    event.preventDefault();
+
+    // Post to API
+    await axios.post('https://journey-social-media-server.herokuapp.com/users/sign-up', {
+        username: username.value,
+        password: password.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        birthDate: birthday.value
+      })
+      .then(res => {
+        if (res.data.message === 'Sign-up successful') {
+          // Set state for redirect following submission if sign-up was successful
+          setFormAccepted(true);
+        } else {
+          // Add something to show error
+          setFormErrMsg('Sign-up failed. Please try again.');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -144,6 +169,7 @@ const SignupPage = () => {
 
   return (
     <div className='page-container'>
+      { formAccepted ? <Redirect to='/log-in'/> : <div></div> }
       <div className='one-tab-container form-container content-panel only-tab'>
         <form 
           className='auth-form'
@@ -151,6 +177,8 @@ const SignupPage = () => {
           noValidate
         >
           <h1 className='tab-heading text-center'>Create a New Account</h1>
+
+          <span className='text-input-error'>{formErrMsg}</span>
 
           <div className='input-container'>
             <label htmlFor='signup-username-input'>Username</label>

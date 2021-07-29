@@ -1,9 +1,12 @@
 import React from 'react';
 import './index.css';
+import { useAuthContext } from '../../context/AuthContextProvider';
 
 import JourneyLink from '../Journey/JourneyLink';
 
 const IndexPage = () => {
+  const auth = useAuthContext();
+
   return (
     <div className='page-container index-page'>
       <div className='tab-left'>
@@ -24,6 +27,7 @@ const IndexPage = () => {
           <p>Total journeys completed: 15</p>
           <p>Last journey completed:</p>
           <JourneyLink />
+          <p>{auth.JWT}</p>
         </div>
       </div>
     </div>

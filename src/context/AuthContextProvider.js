@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import AuthContext from './AuthContext';
 
 const AuthContextProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [JWT, setJWT] = useState(null);
 
   return (
     <AuthContext.Provider
       value={{
         loggedIn: loggedIn,
-        setLoggedIn: setLoggedIn
+        setLoggedIn: setLoggedIn,
+        JWT: JWT,
+        setJWT: setJWT
       }}
     >
       { children }
