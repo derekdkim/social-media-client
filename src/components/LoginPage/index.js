@@ -50,7 +50,7 @@ const LoginPage = () => {
 
   return (
     <div className='page-container'>
-      { auth.loggedIn ? <Redirect to='/' /> : <div></div> }
+      { auth.loggedIn && <Redirect to='/' /> }
       <div className='one-tab-container content-panel form-container only-tab'>
         <form 
           className='auth-form'

@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
+import axios from 'axios';
 import './index.css';
+
+import { useAuthContext } from '../../../context/AuthContextProvider';
 
 const JourneyCreator = () => {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [dueDate, setDueDate] = useState(null);
-  const [publicStatus, setPublicStatus] = useState(false);
+  const [publicStatus, setPublicStatus] = useState(2);
   const [formComplete, setFormComplete] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const auth = useAuthContext();
 
   const updateTitle = (e) => {
     setTitle(e.target.value);
@@ -24,7 +30,7 @@ const JourneyCreator = () => {
   
   const switchPrivacy = (e) => {
     // Update privacy checked state for the Public/Private Slider Text
-    e.target.checked === true ? setPublicStatus(true) : setPublicStatus(false);
+    e.target.checked === true ? setPublicStatus(0) : setPublicStatus(2);
   }
 
   useEffect(() => {
@@ -34,14 +40,34 @@ const JourneyCreator = () => {
     }
   }, [title, desc, dueDate, publicStatus]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     if (formComplete) {
-      alert('Journey submitted!');
+      axios.post('https://journey-social-media-server.herokuapp.com/journeys/new', {
+          title: title,
+          desc: desc,
+          dueDate: dueDate,
+          publicStatus: publicStatus
+        },
+        { headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+        })
+        .then(res => {
+          if (res.data.message === 'success') {
+            setFormSubmitted(true);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   }
 
   return (
     <div className='page-container'>
+      { formSubmitted && <Redirect to='/my-journeys' /> }
       <div className='right-btn-container-outer'>
         <Link className='right-btn-container-inner' to='/my-journeys'>
           <button className='button'>Back</button>
@@ -70,7 +96,7 @@ const JourneyCreator = () => {
                 <input onChange={switchPrivacy} id='journey-privacy-input' type='checkbox'></input>
                 <span className='slider'></span>
               </label>
-              <span className='switch-text'>{publicStatus ? 'Public' : 'Private'}</span>
+              <span className='switch-text'>{ publicStatus === 0 ? 'Public' : 'Private' }</span>
             </div>
           </div>
           <div className='btn-container'>

@@ -5,3 +5,7 @@
 .right-btn-container-inner {
   @apply ml-auto mx-4 mb-4 mt-6;
 }
+
+.loading-msg-container {
+  @apply m-6;
+}
