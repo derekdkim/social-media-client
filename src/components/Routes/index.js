@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import PrivateRoute from './privateRoute';
+
 import LoginPage from '../LoginPage';
 import SignupPage from '../SignupPage';
 import IndexPage from '../IndexPage';
@@ -15,16 +17,16 @@ import FriendRequestPage from '../Friends/FriendRequestPage';
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path='/' component={IndexPage} />
+      <PrivateRoute exact path='/' component={IndexPage} />
       <Route path='/sign-up' component={SignupPage} />
       <Route path='/log-in' component={LoginPage} />
-      <Route path='/my-journeys' component={MyJourneyPage} />
-      <Route path='/journeys/new' component={JourneyCreator} />
-      <Route path='/explore' component={ExplorePage} />
-      <Route path='/my-friends' component={MyFriendsPage} />
-      <Route path='/journey-details' component={JourneyDetailPage} />
-      <Route path='/profile' component={ProfilePage} />
-      <Route path='/friend-requests' component={FriendRequestPage} />
+      <PrivateRoute path='/my-journeys' component={MyJourneyPage} />
+      <PrivateRoute path='/journeys/new' component={JourneyCreator} />
+      <PrivateRoute path='/explore' component={ExplorePage} />
+      <PrivateRoute path='/my-friends' component={MyFriendsPage} />
+      <PrivateRoute path='/journey-details' component={JourneyDetailPage} />
+      <PrivateRoute path='/profile' component={ProfilePage} />
+      <PrivateRoute path='/friend-requests' component={FriendRequestPage} />
     </Switch>
   );
 }

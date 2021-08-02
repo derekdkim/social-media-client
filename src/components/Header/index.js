@@ -27,11 +27,13 @@ const Header = () => {
     <div className='header'>
       { isNavActive && <HamburgerMenu navRef={ navRef } /> }
       <div className='header-left'>
-        <div className='hamburger-menu-container'>
-          <button onClick={ toggleNav } >
-            <img className='menu-icon' src={ HamburgerMenuIcon } alt='hamburger-menu' />
-          </button>
-        </div>
+        { authContext.loggedIn &&
+            <div className='hamburger-menu-container'>
+              <button onClick={ toggleNav } >
+                <img className='menu-icon' src={ HamburgerMenuIcon } alt='hamburger-menu' />
+              </button>
+            </div> 
+        }
         <div className='home-container'>
           <Link className='flex justify-center content-center' to='/'>
             <div className='logo-container'>
