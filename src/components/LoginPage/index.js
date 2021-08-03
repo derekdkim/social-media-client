@@ -36,6 +36,8 @@ const LoginPage = () => {
           localStorage.setItem('token', res.data.token);
           // Save JWT to auth Context
           auth.setJWT(res.data.token);
+          // Save current user UUID to auth Context -- Important for recognizing if user is a participant or author
+          auth.setUUID(res.data.user.uuid);
           // [CHANGE LATER]: Placeholder indicator for being logged in
           auth.setLoggedIn(true);
         } else {

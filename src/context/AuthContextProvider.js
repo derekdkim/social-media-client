@@ -4,6 +4,7 @@ import AuthContext from './AuthContext';
 const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [JWT, setJWT] = useState(null);
+  const [UUID, setUUID] = useState(null);
 
   return (
     <AuthContext.Provider
@@ -11,7 +12,9 @@ const AuthContextProvider = ({ children }) => {
         loggedIn: loggedIn,
         setLoggedIn: setLoggedIn,
         JWT: JWT,
-        setJWT: setJWT
+        setJWT: setJWT,
+        UUID: UUID,
+        setUUID: setUUID
       }}
     >
       { children }

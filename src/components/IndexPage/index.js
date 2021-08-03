@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
-import { useAuthContext } from '../../context/AuthContextProvider';
+import axios from 'axios';
 
+import { useAuthContext } from '../../context/AuthContextProvider';
 import JourneyLink from '../Journey/JourneyLink';
 
 const IndexPage = () => {
+  const [journeyList, setJourneyList] = useState(null);
   const auth = useAuthContext();
+
+  useEffect(() => {
+    if (auth.loggedIn && auth.JWT) {
+      axios.get('https://journey-social-media-server.herokuapp.com/journeys/private', {
+          headers: {
+            'Authorization': `Bearer ${auth.JWT}`
+          }
+        })
+        .then(res => {
+          setJourneyList(res.data.journeys);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   return (
     <div className='page-container index-page'>
@@ -15,9 +33,10 @@ const IndexPage = () => {
         </div>
         <div className='journey-container'>
           <h3 className='tab-heading dbrown-text'>Your current journeys:</h3>
-          <JourneyLink />
-          <JourneyLink />
-          <JourneyLink />
+            { journeyList != null
+              ? journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
+              : <p>Looks like you're not on any journeys right now.</p>
+            }
         </div>
       </div>
       <div className='tab-right'>
@@ -26,8 +45,6 @@ const IndexPage = () => {
           <p>Journeys completed this year: 0</p>
           <p>Total journeys completed: 15</p>
           <p>Last journey completed:</p>
-          <JourneyLink />
-          <p>{auth.JWT}</p>
         </div>
       </div>
     </div>
