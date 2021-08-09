@@ -3,12 +3,15 @@ import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { useAuthContext } from '../../context/AuthContextProvider';
+import { useStatusContext } from '../../context/StatusContextProvider';
 
 const LoginPage = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [JWTErrMsg, setJWTErrMsg] = useState('');
+  
   const auth = useAuthContext();
+  const status = useStatusContext();
 
   const updateUsername = (event) => {
     setUsername({
@@ -25,6 +28,7 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     // Prevent page refresh
     event.preventDefault();
+    status.setIsLoading(true);
 
     axios.post('https://journey-social-media-server.herokuapp.com/users/log-in', {
         username: username.value,
@@ -43,6 +47,7 @@ const LoginPage = () => {
         } else {
           setJWTErrMsg('Web Token not found.');
           auth.setLoggedIn(false);
+          status.setIsLoading(false);
         }
       })
       .catch(err => {

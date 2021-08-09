@@ -4,14 +4,15 @@ import axios from 'axios';
 import './index.css';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
+import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyLink from '../JourneyLink';
 
 const MyJourneyPage = () => {
   const [journeyList, setJourneyList] = useState(null);
   const [renderJourneys, setRenderJourneys] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const auth = useAuthContext();
+  const status = useStatusContext();
 
   // Fetch journey data from API on initial render
   useEffect(() => {
@@ -19,7 +20,10 @@ const MyJourneyPage = () => {
 
     // Prevent state updates when component is unmounted
     if (isMounted) {
-      setIsLoading(true);
+      // Start Loading
+      status.setIsLoading(true);
+
+      // Fetch journeys
       axios.get('https://journey-social-media-server.herokuapp.com/journeys/private', {
           headers: {
             'Authorization': `Bearer ${auth.JWT}`
@@ -29,11 +33,16 @@ const MyJourneyPage = () => {
           if (res.data.journeys) {
             // Set imported journeys list to state
             setJourneyList(res.data.journeys);
-            setIsLoading(false);
+            
+            // Loading Complete
+            status.setIsLoading(false);
           }
         })
         .catch(err => {
           console.log(err);
+
+          // Loading Complete
+          status.setIsLoading(false);
         })
     }
 
@@ -57,7 +66,6 @@ const MyJourneyPage = () => {
   return (
     <div className='page-container'>
       <div className='right-btn-container-outer'>
-        { isLoading && <div className='loading-msg-container'>Loading your journeys...</div> }
         <Link className='right-btn-container-inner' to='/journeys/new'>
           <button className='button'> + Start A New Journey</button>
         </Link>

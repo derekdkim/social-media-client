@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import './index.css';
 
+import { useStatusContext } from '../../context/StatusContextProvider';
+
 const SignupPage = () => {
   const [username, setUsername] = useState({errMsg: ''});
   const [password, setPassword] = useState({errMsg: ''});
@@ -12,6 +14,8 @@ const SignupPage = () => {
   const [formCompleted, setFormCompleted] = useState(false);
   const [formAccepted, setFormAccepted] = useState(false);
   const [formErrMsg, setFormErrMsg] = useState('');
+
+  const status = useStatusContext();
   
   const updateUsername = (event) => {
     // Validation check
@@ -136,6 +140,9 @@ const SignupPage = () => {
     //Prevent page refresh after form submit
     event.preventDefault();
 
+    // Start Loading
+    status.setIsLoading(true);
+
     // Post to API
     await axios.post('https://journey-social-media-server.herokuapp.com/users/sign-up', {
         username: username.value,
@@ -152,9 +159,15 @@ const SignupPage = () => {
           // Add something to show error
           setFormErrMsg('Sign-up failed. Please try again.');
         }
+
+        // Loading Complete
+        status.setIsLoading(false);
       })
       .catch(err => {
         console.log(err);
+
+        // Loading Complete
+        status.setIsLoading(false);
       });
   }
 

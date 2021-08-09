@@ -4,6 +4,7 @@ import axios from 'axios';
 import './index.css';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
+import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyEntry from '../JourneyEntry';
 import lorem from '../../../placeholders/lorem';
 
@@ -14,6 +15,7 @@ const JourneyDetailPage = () => {
 
   const { id } = useParams();
   const auth = useAuthContext();
+  const status = useStatusContext();
 
   const joinJourney = () => {
     setIsParticipant(true);
@@ -29,6 +31,10 @@ const JourneyDetailPage = () => {
 
   useEffect(() => {
     if (auth.loggedIn && id) {
+      // Start Loading
+      status.setIsLoading(true);
+
+      // Fetch journey
       axios.get(`https://journey-social-media-server.herokuapp.com/journeys/${id}`, {
           headers: {
             'Authorization': `Bearer ${auth.JWT}`
@@ -40,10 +46,16 @@ const JourneyDetailPage = () => {
 
           if (res.data.journey.author.uuid === auth.UUID) {
             setIsAuthor(true);
+
+            // Loading Complete
+            status.setIsLoading(false);
           }
         })
         .catch(err => {
           console.log(err);
+
+          //Loading Complete
+          status.setIsLoading(false);
         });
     }
   }, []);
