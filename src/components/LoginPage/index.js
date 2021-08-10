@@ -82,7 +82,7 @@ const LoginPage = () => {
           <div className='input-container'>
             <label htmlFor='login-password-input'>Password</label>
             <input
-              type='text'
+              type='password'
               className='text-input'
               id='login-password-input'
               onChange={updatePassword}
