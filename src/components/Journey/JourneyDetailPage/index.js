@@ -6,12 +6,13 @@ import './index.css';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyEntry from '../JourneyEntry';
-import lorem from '../../../placeholders/lorem';
 
 const JourneyDetailPage = () => {
   const [journey, setJourney] = useState(null);
   const [isParticipant, setIsParticipant] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
+  const [timestamp, setTimestamp] = useState(new Date());
+  const [dueDate, setDueDate] = useState(new Date());
 
   const { id } = useParams();
   const auth = useAuthContext();
@@ -46,6 +47,14 @@ const JourneyDetailPage = () => {
 
           if (res.data.journey.author.uuid === auth.UUID) {
             setIsAuthor(true);
+            
+            // Set dates to readable format
+            setTimestamp(new Date(res.data.journey.timestamp));
+            // Due Date is optional
+            if (res.data.journey.dueDate !== undefined) {
+              setDueDate(new Date(res.data.journey.dueDate));
+            }
+
 
             // Loading Complete
             status.setIsLoading(false);
@@ -71,7 +80,10 @@ const JourneyDetailPage = () => {
             <div className='content-panel card-item'>
               <ul>
                 <li>Created by {journey.author.username}</li>
-                <li>Started on {journey.timestamp}</li>
+                <li>Started on {timestamp.toDateString()}</li>
+                { journey.dueDate !== undefined && 
+                  <li>Due Date: {dueDate.toDateString()}</li>
+                }
                 <li><a href=''>{journey.participants.length + 1}</a> Participants</li>
               </ul>
             </div>

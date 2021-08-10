@@ -208,7 +208,7 @@ const SignupPage = () => {
           <div className='input-container'>
             <label htmlFor='signup-password-input'>Password</label>
             <input
-              type='text'
+              type='password'
               className='text-input'
               id='signup-password-input'
               onChange={updatePassword}

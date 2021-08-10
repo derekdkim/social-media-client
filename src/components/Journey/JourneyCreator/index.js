@@ -10,6 +10,7 @@ const JourneyCreator = () => {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [dueDate, setDueDate] = useState(null);
+  const [dueDateExists, setDueDateExists] = useState(false);
   const [publicStatus, setPublicStatus] = useState(2);
   const [formComplete, setFormComplete] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -33,22 +34,48 @@ const JourneyCreator = () => {
     e.target.checked === true ? setPublicStatus(0) : setPublicStatus(2);
   }
 
+    const switchDueDateOption = (e) => {
+    // Update privacy checked state for the Public/Private Slider Text
+    e.target.checked === true ? setDueDateExists(true) : setDueDateExists(false);
+  }
+
   useEffect(() => {
     // Check for form completion
-    if (![title, desc, dueDate, publicStatus].includes(null)) {
-      setFormComplete(true);
+    if (![title, desc, publicStatus].includes(null)) {
+      // Check if dueDate option was selected
+      if (!dueDateExists) {
+        setFormComplete(true);
+      } else {
+        // If dueDate option was selected, the user must enter a valid due date
+        if (dueDate !== null) {
+          setFormComplete(true);
+        } else {
+          setFormComplete(false);
+        }
+      }
+    } else {
+      setFormComplete(false);
     }
-  }, [title, desc, dueDate, publicStatus]);
+  }, [title, desc, dueDate, publicStatus, dueDateExists]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (formComplete) {
-      axios.post('https://journey-social-media-server.herokuapp.com/journeys/new', {
+      // Enter content except dueDate
+      const formContent = {
           title: title,
           desc: desc,
-          dueDate: dueDate,
           publicStatus: publicStatus
+      };
+
+      // Add dueDate if it was selected
+      if (dueDateExists) {
+        formContent.dueDate = dueDate;
+      }
+
+      axios.post('https://journey-social-media-server.herokuapp.com/journeys/new', {
+          ...formContent
         },
         { headers: {
           'Authorization': `Bearer ${auth.JWT}`
@@ -86,8 +113,20 @@ const JourneyCreator = () => {
             <TextareaAutosize id='journey-desc-input' className='input-field' type='text' onChange={ updateDesc } placeholder="Share what your journey is about!" />
           </div>
           <div className='input-container'>
-            <label htmlFor='journey-date-input'>Due Date</label>
-            <input id='journey-date-input' className='input-field' onChange={ updateDueDate } type='date'></input>
+            <label htmlFor='journey-due-date-selection'>Does this journey have an end date?</label>
+            <div className='switch-container'>
+              <label className='switch'>
+                <input onChange={ switchDueDateOption } id='journey-privacy-input' type='checkbox'></input>
+                <span className='slider'></span>
+              </label>
+              <span className='switch-text'>{ dueDateExists ? 'Yes' : 'No' }</span>
+            </div>
+            { dueDateExists &&
+              <div className='input-container'>
+                <label htmlFor='journey-date-input'>Due Date</label>
+                <input id='journey-date-input' className='input-field' onChange={ updateDueDate } value={ dueDate } type='date'></input>
+              </div>
+            }
           </div>
           <div className='input-container'>
             <label htmlFor='journey-privacy-input'>Do you want this journey to be public?</label>
