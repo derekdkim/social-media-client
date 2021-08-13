@@ -6,6 +6,7 @@ import './index.css';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyEntry from '../JourneyEntry';
+import EntryCreator from '../../Entry/EntryCreator';
 
 const JourneyDetailPage = () => {
   const [journey, setJourney] = useState(null);
@@ -13,16 +14,19 @@ const JourneyDetailPage = () => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [timestamp, setTimestamp] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
+  const [entryWrite, setEntryWrite] = useState(false);
 
   const { id } = useParams();
   const auth = useAuthContext();
   const status = useStatusContext();
 
   const joinJourney = () => {
+    // TODO: Connect to API
     setIsParticipant(true);
   }
 
   const leaveJourney = () => {
+    // TODO: Connect to API
     setIsParticipant(false);
   }
 
@@ -30,6 +34,20 @@ const JourneyDetailPage = () => {
 
   }
 
+  // Button event handlers to toggle Entry Creator on and off
+  const openEntryCreator = () => {
+    if (!entryWrite) {
+      setEntryWrite(true);
+    }
+  }
+
+  const closeEntryCreator = () => {
+    if (entryWrite) {
+      setEntryWrite(false);
+    }
+  }
+
+  // Fetch API data on component mount
   useEffect(() => {
     if (auth.loggedIn && id) {
       // Start Loading
@@ -92,7 +110,10 @@ const JourneyDetailPage = () => {
             </div>
             <div className='card-item'>
               { isAuthor 
-                  ? <button onClick={ deleteJourney } className='button w-full decline-btn'>Delete this journey</button>
+                  ? <div>
+                      <button className='button w-full mb-4'>Edit Journey Details</button>
+                      <button onClick={ deleteJourney } className='button w-full decline-btn'>Delete this journey</button>
+                    </div>
                   : isParticipant 
                   ? <button onClick={ leaveJourney } className='button w-full decline-btn'>Leave this journey</button>
                   : <button onClick={ joinJourney } className='button w-full'>Join this journey</button>
@@ -100,6 +121,13 @@ const JourneyDetailPage = () => {
             </div>
           </div>
           <div className='card-item'>
+            { entryWrite
+              ? <div>
+                  <button onClick={ closeEntryCreator } className='button'>-</button>
+                  <EntryCreator parent={journey} />
+                </div> 
+              : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
+            }
             <JourneyEntry />
             <JourneyEntry />
             <JourneyEntry />

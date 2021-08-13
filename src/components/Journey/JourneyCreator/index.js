@@ -11,7 +11,7 @@ const JourneyCreator = () => {
   const [desc, setDesc] = useState(null);
   const [dueDate, setDueDate] = useState(null);
   const [dueDateExists, setDueDateExists] = useState(false);
-  const [publicStatus, setPublicStatus] = useState(2);
+  const [publicStatus, setPublicStatus] = useState(0);
   const [formComplete, setFormComplete] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -28,13 +28,16 @@ const JourneyCreator = () => {
   const updateDueDate = (e) => {
     setDueDate(e.target.value);
   }
-  
-  const switchPrivacy = (e) => {
-    // Update privacy checked state for the Public/Private Slider Text
-    e.target.checked === true ? setPublicStatus(0) : setPublicStatus(2);
+
+  const updatePrivacy = (e) => {
+    // Prevent update if the value is already the same
+    if (parseInt(e.target.value) !== publicStatus) {
+      // Update privacy status to selected dropdown value
+      setPublicStatus(parseInt(e.target.value));
+    }
   }
 
-    const switchDueDateOption = (e) => {
+  const switchDueDateOption = (e) => {
     // Update privacy checked state for the Public/Private Slider Text
     e.target.checked === true ? setDueDateExists(true) : setDueDateExists(false);
   }
@@ -66,7 +69,7 @@ const JourneyCreator = () => {
       const formContent = {
           title: title,
           desc: desc,
-          publicStatus: publicStatus
+          privacy: publicStatus
       };
 
       // Add dueDate if it was selected
@@ -129,14 +132,12 @@ const JourneyCreator = () => {
             }
           </div>
           <div className='input-container'>
-            <label htmlFor='journey-privacy-input'>Do you want this journey to be public?</label>
-            <div className='switch-container'>
-              <label className='switch'>
-                <input onChange={switchPrivacy} id='journey-privacy-input' type='checkbox'></input>
-                <span className='slider'></span>
-              </label>
-              <span className='switch-text'>{ publicStatus === 0 ? 'Public' : 'Private' }</span>
-            </div>
+            <label htmlFor='journey-privacy-input'>Choose who can see your journey</label>
+            <select onChange={ updatePrivacy } name='privacy' id='privacy-select' className='input-field'>
+              <option value='0' selected>Public</option>
+              <option value='1'>Friends Only</option>
+              <option value='2'>Private</option>
+            </select>
           </div>
           <div className='btn-container'>
             <button className={ formComplete ? 'button accept-btn' : 'button disabled-btn' }>Embark on a New Journey!</button>
