@@ -75,7 +75,7 @@ const MyJourneyPage = () => {
         <div className='journey-list grid lg:grid-cols-2'>
           { renderJourneys 
               ? journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
-              : <div>You are not currently on any journeys yet. My JWT is {auth.JWT}</div>
+              : <div>You are not currently on any journeys yet.</div>
           }
         </div>
       </div>

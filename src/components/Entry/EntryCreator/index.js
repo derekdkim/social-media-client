@@ -43,50 +43,32 @@ const EntryCreator = (props) => {
   }
 
   const handleSubmit = (event) => {
+    const url = `https://journey-social-media-server.herokuapp.com/entries/${parent._id}/new`;
     event.preventDefault();
 
     // Start Loading
     status.setIsLoading(true);
 
     // TODO: Axios request
-    // axios.post(`https://journey-social-media-server.herokuapp.com/entries/${parent._id}/new`, {
-    //     text: text,
-    //   },
-    //   { headers: {
-    //       'Authorization': `Bearer ${auth.JWT}`
-    //     }
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-
-    //     // Loading Complete
-    //     status.setIsLoading(false);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-
-    //     // Loading Complete
-    //     status.setIsLoading(false);
-    //   });
-
-    axios.post(`https://journey-social-media-server.herokuapp.com/entries/${parent._id}/new`, {
-      text:text,
-    }, { headers: {
-      'Authorization': `Bearer ${auth.JWT}`
+    axios.post(url, {
+        text: text,
+      }, 
+      { headers: {
+        'Authorization': `Bearer ${auth.JWT}`
       }
-    })
-    .then(res => {
-      console.log(res);
+      })
+      .then(res => {
+        console.log(res);
 
-      // Loading Complete
-      status.setIsLoading(false);
-    })
-    .catch(err => {
-      console.log(err);
+        // Loading Complete
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
 
-      // Loading Complete
-      status.setIsLoading(false);
-    });
+        // Loading Complete
+        status.setIsLoading(false);
+      });
   }
 
   useEffect(() => {

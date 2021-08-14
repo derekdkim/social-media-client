@@ -15,6 +15,8 @@ const JourneyDetailPage = () => {
   const [timestamp, setTimestamp] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
   const [entryWrite, setEntryWrite] = useState(false);
+  const [entries, setEntries] = useState(null);
+  const [renderEntries, setRenderEntries] = useState(false);
 
   const { id } = useParams();
   const auth = useAuthContext();
@@ -87,6 +89,38 @@ const JourneyDetailPage = () => {
     }
   }, []);
 
+  // Fetch entries data from API after fetching journey data
+  useEffect(() => {
+    if (journey) {
+      // Start Loading
+      status.setIsLoading(true);
+
+      // Fetch entries
+      axios.get(`https://journey-social-media-server.herokuapp.com/entries/${id}/all`,
+        { headers: {
+            'Authorization': `Bearer ${auth.JWT}`
+          }
+        })
+        .then(res => {
+          setEntries(res.data.entries);
+
+          // Decide if there are any results to render
+          if (res.data.entries.length > 0) {
+            setRenderEntries(true);
+          }
+
+          // Loading Complete
+          status.setIsLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+
+          // Loading Complete
+          status.setIsLoading(false);
+        });
+    }
+  }, [journey]);
+
   return (
     <div>
       { journey != null &&
@@ -94,6 +128,7 @@ const JourneyDetailPage = () => {
           <div>
             <h1 className='text-3xl text-center card-item dbrown-text'>{journey.title}</h1>
           </div>
+          {/* Side Tab */}
           <div className='journey-info-container'>
             <div className='content-panel card-item'>
               <ul>
@@ -121,6 +156,7 @@ const JourneyDetailPage = () => {
             </div>
           </div>
           <div className='card-item'>
+            {/* Entry Creator -- Toggleable via button */}
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
@@ -128,11 +164,11 @@ const JourneyDetailPage = () => {
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }
-            <JourneyEntry />
-            <JourneyEntry />
-            <JourneyEntry />
-            <JourneyEntry />
-            <JourneyEntry />
+            {/* Entries List */}
+            { renderEntries  
+              ? entries.map((entry, index) => <JourneyEntry entry={entry} key={index} />)
+              : <div className='content-panel card-item'>There are currently no entries in this journey. Create one!</div>
+            }
           </div>
         </div>
       }
