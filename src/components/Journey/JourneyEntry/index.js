@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
+import axios from 'axios';
 import './index.css';
 
+import { useAuthContext } from '../../../context/AuthContextProvider';
+import { useStatusContext } from '../../../context/StatusContextProvider';
 import { UserIcon } from '../../../images';
+import CommentCreator from '../../Comment/CommentCreator';
 import JourneyComment from '../JourneyComment';
 import comments from '../../../placeholders/comments';
 
 const JourneyEntry = (props) => {
   const [entryLiked, updateEntryLiked] = useState(false);
   const [commentsTab, setCommentsTab] = useState(false);
+  const [commentsList, setCommentsList] = useState(null);
   const [timestamp, setTimestamp] = useState(new Date());
+  const [lastCommentSubmitted, setLastCommentSubmitted] = useState(null);
 
+  const auth = useAuthContext();
+  const status = useStatusContext();
   const { entry } = props;
 
   const handleLikes = () => {
@@ -18,13 +25,45 @@ const JourneyEntry = (props) => {
   }
 
   const toggleComments = () => {
+    if (!commentsTab) {
+      getComments();
+    }
     setCommentsTab(prevState => !prevState);
+  }
+
+  const getComments = () => {
+      // Start Loading
+    status.setIsLoading(true);
+
+    axios.get(`https://journey-social-media-server.herokuapp.com/comments/${entry._id}/all`, 
+      {
+        headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+      })
+      .then(res => {
+        // Save response to state
+        setCommentsList(res.data.comments);
+
+        // Loading Complete
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+
+        // Loading Complete
+        status.setIsLoading(false);
+      })
   }
 
   useEffect(() => {
     // Update timestamp
     setTimestamp(new Date(entry.timestamp));
   }, []);
+
+  useEffect(() => {
+    getComments();
+  }, [lastCommentSubmitted]);
 
   return (
     <div className='content-panel card-item'>
@@ -47,12 +86,11 @@ const JourneyEntry = (props) => {
             <h5 className='m-2'>Comments</h5>
             <div className='card-item'>
               <div>
-                { comments.map((e, i) => <JourneyComment data={ e } key={ i } />) }
+                { commentsList !== null
+                  ? commentsList.map((e, i) => <JourneyComment comment={ e } key={ i } />)
+                  : <p>No comments yet. Be the first to write one!</p> }
               </div>
-              <div className='flex flex-col'>
-                <TextareaAutosize className='comment-field' type='text' placeholder='Share your thoughts!' />
-                <button className='button ml-auto mt-4'>Post Comment</button>
-              </div>
+              <CommentCreator parent={entry} setLastCommentSubmitted={ setLastCommentSubmitted } />
             </div>
           </div>
       }

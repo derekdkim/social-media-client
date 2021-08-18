@@ -17,6 +17,7 @@ const JourneyDetailPage = () => {
   const [entryWrite, setEntryWrite] = useState(false);
   const [entries, setEntries] = useState(null);
   const [renderEntries, setRenderEntries] = useState(false);
+  const [lastEntrySubmitted, setLastEntrySubmitted] = useState(null);
 
   const { id } = useParams();
   const auth = useAuthContext();
@@ -119,7 +120,7 @@ const JourneyDetailPage = () => {
           status.setIsLoading(false);
         });
     }
-  }, [journey]);
+  }, [journey, lastEntrySubmitted]);
 
   return (
     <div>
@@ -160,7 +161,7 @@ const JourneyDetailPage = () => {
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
-                  <EntryCreator parent={journey} />
+                  <EntryCreator parent={journey} setLastEntrySubmitted={setLastEntrySubmitted} />
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }

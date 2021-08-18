@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import './index.css';
 import axios from 'axios';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 
-const EntryCreator = (props) => {
+const CommentCreator = (props) => {
   const [formComplete, setFormComplete] = useState(false);
   const [text, setText] = useState({ errMsg: '' });
 
   const auth = useAuthContext();
   const status = useStatusContext();
-  const { parent, setLastEntrySubmitted } = props;
+  const { parent, setLastCommentSubmitted } = props;
 
   const updateInputText = (event) => {
     let currValidity = true;
     let currErrMsg = '';
     const currValue = event.target.value;
 
-    // Blank entry
+    // Blank comment
     if (currValue.length === 0) {
-      currErrMsg = 'Cannot submit blank entry.';
+      currErrMsg = 'Cannot submit blank comment.';
     }
 
     // Length check
-    if (currValue.length < 8 || currValue.length > 5000) {
-      currErrMsg = 'Entries must be between 8 and 5000 characters.';
+    if (currValue.length < 8 || currValue.length > 600) {
+      currErrMsg = 'Comment must be between 8 and 5000 characters.';
     }
 
     // Validity check
@@ -43,7 +42,7 @@ const EntryCreator = (props) => {
   }
 
   const handleSubmit = (event) => {
-    const url = `https://journey-social-media-server.herokuapp.com/entries/${parent._id}/new`;
+    const url = `https://journey-social-media-server.herokuapp.com/comments/${parent._id}/new`;
     event.preventDefault();
 
     // Start Loading
@@ -62,7 +61,7 @@ const EntryCreator = (props) => {
 
         // Loading Complete
         status.setIsLoading(false);
-        setLastEntrySubmitted(res.data.entry);
+        setLastCommentSubmitted(res.data.comment);
       })
       .catch(err => {
         console.log(err);
@@ -84,15 +83,13 @@ const EntryCreator = (props) => {
   }, [text]);
   
   return (
-    <div className='content-panel card-item input-container'>
+    <div className='flex flex-col'>
       <form onSubmit={ handleSubmit }>
-        <div className='entry-creator-container'>
-          <TextareaAutosize minRows={4} onChange={ updateInputText } maxLength={5000} className='input-field entry-creator-field' placeholder="Share what's on your mind!"/>
-          <button className={formComplete ? 'button ml-auto mt-4' : 'button ml-auto mt-4 disabled-btn'}>Post Entry</button>
-        </div>
+        <TextareaAutosize onChange={ updateInputText } maxLength={600} className='comment-field' type='text' placeholder='Share your thoughts!' />
+        <button className='button ml-auto mt-4'>Post Comment</button>
       </form>
     </div>
   );
 }
 
-export default EntryCreator;
+export default CommentCreator;
