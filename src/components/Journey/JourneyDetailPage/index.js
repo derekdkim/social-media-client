@@ -7,6 +7,7 @@ import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyEntry from '../JourneyEntry';
 import EntryCreator from '../../Entry/EntryCreator';
+import JourneyEditor from '../JourneyEditor';
 
 const JourneyDetailPage = () => {
   const [journey, setJourney] = useState(null);
@@ -146,8 +147,9 @@ const JourneyDetailPage = () => {
             </div>
             <div className='card-item'>
               { isAuthor 
-                  ? <div>
-                      <button className='button w-full mb-4'>Edit Journey Details</button>
+                  ? 
+                  <div>
+                      <JourneyEditor journey={ journey } />
                       <button onClick={ deleteJourney } className='button w-full decline-btn'>Delete this journey</button>
                     </div>
                   : isParticipant 

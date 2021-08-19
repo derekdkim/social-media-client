@@ -10,10 +10,17 @@ const LoadingModal = () => {
   const status = useStatusContext();
 
   useEffect(() => {
-    setTimeout(() => {
+    /* Start countdown to "long load" message when loading.
+       Addresses long wait time when waking up API from hibernation on Heroku.
+       Heroku puts API to sleep after 30 minutes of inactivity */
+    if (status.isLoading) {
+      setTimeout(() => {
       setLongLoad(true);
     }, 2000);
-  }, []);
+    } else {
+      setLongLoad(false);
+    }
+  }, [status.isLoading]);
 
   return (
     <div className='loading-container'>

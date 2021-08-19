@@ -83,8 +83,8 @@ const CommentCreator = (props) => {
   }, [text]);
   
   return (
-    <div className='flex flex-col'>
-      <form onSubmit={ handleSubmit }>
+    <div>
+      <form onSubmit={ handleSubmit } className='flex flex-col'>
         <TextareaAutosize onChange={ updateInputText } maxLength={600} className='comment-field' type='text' placeholder='Share your thoughts!' />
         <button className='button ml-auto mt-4'>Post Comment</button>
       </form>
