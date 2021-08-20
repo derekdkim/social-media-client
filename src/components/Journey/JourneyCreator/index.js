@@ -17,6 +17,7 @@ const JourneyCreator = () => {
 
   const auth = useAuthContext();
 
+  /* Input Value Updaters */
   const updateTitle = (e) => {
     setTitle(e.target.value);
   }

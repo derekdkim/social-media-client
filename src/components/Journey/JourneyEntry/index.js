@@ -83,7 +83,7 @@ const JourneyEntry = (props) => {
       </div>
       { commentsTab &&
           <div>
-            <h5 className='m-2'>Comments</h5>
+            <h5 className='m-2'>{commentsList !== null && commentsList.length} Comments</h5>
             <div className='card-item'>
               <div>
                 { commentsList !== null

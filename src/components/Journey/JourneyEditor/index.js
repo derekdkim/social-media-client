@@ -6,15 +6,20 @@ import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 
 const JourneyEditor = (props) => {
+  // Editor settings
   const [editMode, setEditMode] = useState(false);
   const [editDate, setEditDate] = useState(false);
-  const [workingDesc, setWorkingDesc] = useState('');
-  const [workingDueDate, setWorkingDueDate] = useState(null);
+  // Input value states
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputDesc, setInputDesc] = useState('');
+  const [inputDueDate, setInputDueDate] = useState(null);
+  const [inputPrivacy, setInputPrivacy] = useState(0);
 
   const { journey } = props;
   const auth = useAuthContext();
   const status = useStatusContext();
 
+  /* Open/close Editors */
   const enableEditor = () => {
     if (!editMode) {
       setEditMode(true);
@@ -29,39 +34,54 @@ const JourneyEditor = (props) => {
 
   const disableDateEditor = () => {
     if (editDate) {
-      // Clear the workingDueDate
-      setWorkingDueDate(null);
+      // Clear the inputDueDate
+      setInputDueDate(null);
 
       // Stop rendering the editor panel
       setEditDate(false);
     }
   }
 
+  /* Value Updaters */
+  const updateTitle = (event) => {
+    if (event.target.value !== inputTitle) {
+      setInputTitle(event.target.value);
+    }
+  }
+
   const updateDesc = (event) => {
-    if (event.target.value !== workingDesc) {
-      setWorkingDesc(event.target.value);
+    if (event.target.value !== inputDesc) {
+      setInputDesc(event.target.value);
     }
   }
 
   const updateDate = (event) => {
-    if (event.target.value !== workingDueDate) {
-      setWorkingDueDate(event.target.value);
+    if (event.target.value !== inputDueDate) {
+      setInputDueDate(event.target.value);
+    }
+  }
+
+  const updatePrivacy = (event) => {
+    if (event.target.value !== inputPrivacy) {
+      setInputPrivacy(parseInt(event.target.value));
     }
   }
   
   const submitEdit = () => {
     let input = {
-      desc: workingDesc
+      title: inputTitle,
+      desc: inputDesc,
+      privacy: inputPrivacy
     };
 
     // Placeholder if the user submitted a blank description
-    if (workingDesc.length > 1) {
+    if (inputDesc.length > 1) {
       input.desc = 'No description.';
     }
 
     // Add/update due date if the user chose to edit the date
-    if (editDate && workingDueDate !== null) {
-      input.dueDate = workingDueDate
+    if (editDate && inputDueDate !== null) {
+      input.dueDate = inputDueDate
     }
 
     // Start Loading
@@ -85,10 +105,17 @@ const JourneyEditor = (props) => {
       })
   }
 
+  // Initialize states with props journey data
   useEffect(() => {
-    // Set desc props to state for editing
-    if (journey.desc) {
-      setWorkingDesc(journey.desc);
+    if (journey) {
+      setInputTitle(journey.title);
+      setInputDesc(journey.desc);
+      setInputPrivacy(journey.privacy);
+
+      // Add due date if it exists
+      if (journey.dueDate) {
+        setInputDueDate(new Date(journey.dueDate));
+      }
     }
   }, []);
 
@@ -97,13 +124,34 @@ const JourneyEditor = (props) => {
       {/* Conditional rendering depending on button click */}
       { editMode
           ? /* Editor */
-          <div className='card-item'>
+          <div className='content-panel card-item'>
+            {/* Title */}
+            <div className='input-container'>
+              <label htmlFor='journey-title-edit'>Title</label>
+              <input type='text' onChange={ updateTitle } value={ inputTitle } maxLength={140} className='input-field' id='journey-title-edit'></input>
+            </div>
+            {/* Description */}
+            <div className='input-container'>
+              <label htmlFor='journey-desc-edit'>Description</label>
+              <TextareaAutosize onChange={ updateDesc } value={ inputDesc } className='input-field' id='journey-desc-edit' />
+            </div>
+            {/* Privacy */}
+            <div className='input-container'>
+              <label htmlFor='journey-privacy-edit'>Choose who can see your journey</label>
+              <select name='privacy' onChange={ updatePrivacy } value={ inputPrivacy } className='input-field' id='journey-privacy-edit'>
+                <option value='0'>Public</option>
+                <option value='1'>Friends Only</option>
+                <option value='2'>Private</option>
+              </select>
+            </div>
             {/* Date Editor */}
-            <div>
+            <div className='input-container'>
+              <p>Do you want to add/change the due date?</p>
               { editDate
                   ? /* Date Input */
-                  <div>
-                    <input onChange={ updateDate } type='date'></input>
+                  <div className='input-container'>
+                    <label htmlFor='journey-date-edit'>New Due Date</label>
+                    <input onChange={ updateDate } value={ inputDueDate !== null ? inputDueDate : new Date() } type='date' className='input-field' id='journey-date-edit'></input>
                     <button onClick={ disableDateEditor } className='button w-full mb-4'>Cancel Changes</button>
                   </div>
 
@@ -111,14 +159,13 @@ const JourneyEditor = (props) => {
                   <button onClick={ enableDateEditor } className='button w-full mb-4'>Add/Change Due Date</button>
               }
             </div>
-            <TextareaAutosize onChange={ updateDesc } value={ workingDesc } className='content-panel card-item' />
             <button onClick={ submitEdit } className='button w-full mb-4'>Save Journey Details</button>
           </div>
 
           : /* Viewer */
           <div>
             <div className='content-panel card-item'>
-              <p>{ workingDesc }</p>
+              <p>{ inputDesc }</p>
             </div>
             <button onClick={ enableEditor } className='button w-full mb-4'>Edit Journey Details</button>
           </div>

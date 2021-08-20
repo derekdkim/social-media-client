@@ -8,6 +8,7 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyEntry from '../JourneyEntry';
 import EntryCreator from '../../Entry/EntryCreator';
 import JourneyEditor from '../JourneyEditor';
+import { formatPrivacy } from '../../util/stringFormatter';
 
 const JourneyDetailPage = () => {
   const [journey, setJourney] = useState(null);
@@ -128,22 +129,23 @@ const JourneyDetailPage = () => {
       { journey != null &&
         <div className='page-container journey-det-container'>
           <div>
-            <h1 className='text-3xl text-center card-item dbrown-text'>{journey.title}</h1>
+            <h1 className='text-3xl text-center card-item dbrown-text'>{ journey.title }</h1>
           </div>
           {/* Side Tab */}
           <div className='journey-info-container'>
             <div className='content-panel card-item'>
               <ul>
-                <li>Created by {journey.author.username}</li>
-                <li>Started on {timestamp.toDateString()}</li>
+                <li>Created by { journey.author.username }</li>
+                <li>Started on { timestamp.toDateString() }</li>
+                <li>Privacy: { formatPrivacy() }</li>
                 { journey.dueDate !== undefined && 
-                  <li>Due Date: {dueDate.toDateString()}</li>
+                  <li>Due Date: { dueDate.toDateString() }</li>
                 }
-                <li><a href=''>{journey.participants.length + 1}</a> Participants</li>
+                <li><a href=''>{ journey.participants.length + 1 }</a> Participants</li>
               </ul>
             </div>
             <div className='content-panel card-item'>
-              <p>{journey.desc}</p>
+              <p>{ journey.desc }</p>
             </div>
             <div className='card-item'>
               { isAuthor 
@@ -163,13 +165,13 @@ const JourneyDetailPage = () => {
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
-                  <EntryCreator parent={journey} setLastEntrySubmitted={setLastEntrySubmitted} />
+                  <EntryCreator parent={ journey } setLastEntrySubmitted={ setLastEntrySubmitted } />
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }
             {/* Entries List */}
             { renderEntries  
-              ? entries.map((entry, index) => <JourneyEntry entry={entry} key={index} />)
+              ? entries.map((entry, index) => <JourneyEntry entry={ entry } key={ index } />)
               : <div className='content-panel card-item'>There are currently no entries in this journey. Create one!</div>
             }
           </div>
