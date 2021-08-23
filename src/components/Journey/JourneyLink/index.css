@@ -11,7 +11,7 @@
 }
 
 .tags {
-  @apply row-start-2 col-span-2;
+  @apply row-start-2;
   @apply flex content-end;
 }
 

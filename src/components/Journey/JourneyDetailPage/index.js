@@ -183,7 +183,7 @@ const JourneyDetailPage = () => {
                 { journey.dueDate !== undefined && 
                   <li>Due Date: { dueDate.toDateString() }</li>
                 }
-                <li><a href=''>{ journey.participants.length + 1 }</a> Participants</li>
+                <li>{ journey.participants.length + 1 } Participants</li>
               </ul>
             </div>
             {/* Journey Description */}

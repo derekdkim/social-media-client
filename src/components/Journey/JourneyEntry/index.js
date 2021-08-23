@@ -7,7 +7,6 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 import { UserIcon } from '../../../images';
 import CommentCreator from '../../Comment/CommentCreator';
 import JourneyComment from '../JourneyComment';
-import comments from '../../../placeholders/comments';
 
 const JourneyEntry = (props) => {
   const [entryLiked, updateEntryLiked] = useState(false);

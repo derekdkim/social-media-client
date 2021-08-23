@@ -30,7 +30,7 @@ const EntryCreator = (props) => {
     }
 
     // Validity check
-    if (currErrMsg != '') {
+    if (currErrMsg !== '') {
       currValidity = false; 
     }
 

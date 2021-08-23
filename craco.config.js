@@ -6,5 +6,8 @@ module.exports = {
         require('autoprefixer')
       ]
     }
+  },
+  eslint: {
+    enable: false
   }
 }

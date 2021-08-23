@@ -29,7 +29,7 @@ const CommentCreator = (props) => {
     }
 
     // Validity check
-    if (currErrMsg != '') {
+    if (currErrMsg !== '') {
       currValidity = false; 
     }
 
