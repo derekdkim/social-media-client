@@ -15,7 +15,10 @@ const LoadingModal = () => {
        Heroku puts API to sleep after 30 minutes of inactivity */
     if (status.isLoading) {
       setTimeout(() => {
-      setLongLoad(true);
+        // If status is still loading by the end of countdown, move to long load
+        if(status.isLoading) {
+          setLongLoad(true);
+        }
     }, 2000);
     } else {
       setLongLoad(false);
@@ -25,9 +28,9 @@ const LoadingModal = () => {
   return (
     <div className='loading-container'>
       { status.isLoading &&
-        <div className={ status.isLoading ? 'loading-indicator loading' : 'loading-indicator inactive' }>
-          <div className='loading-modal'>
-            <img className='loading-indicator--img' src={ loadingGIF } alt='loading' />
+        <div className={ status.isLoading ? 'modal-container loading' : 'modal-container inactive' }>
+          <div className='modal'>
+            <img className='modal-container--img' src={ loadingGIF } alt='loading' />
             <p>{ longLoad ? 'Waking up API on Heroku...' : 'loading...' }</p>
           </div>
         </div>

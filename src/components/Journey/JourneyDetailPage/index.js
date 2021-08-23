@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -9,18 +9,27 @@ import JourneyEntry from '../JourneyEntry';
 import EntryCreator from '../../Entry/EntryCreator';
 import JourneyEditor from '../JourneyEditor';
 import { formatPrivacy } from '../../util/stringFormatter';
+import ConfirmModal from '../../Modal/ConfirmModal';
 
 const JourneyDetailPage = () => {
+  // Journey data
   const [journey, setJourney] = useState(null);
-  const [isParticipant, setIsParticipant] = useState(false);
-  const [isAuthor, setIsAuthor] = useState(false);
   const [timestamp, setTimestamp] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
-  const [entryWrite, setEntryWrite] = useState(false);
   const [entries, setEntries] = useState(null);
+
+  // UI Access states
+  const [isParticipant, setIsParticipant] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [entryWrite, setEntryWrite] = useState(false);
+  const [confirmActive, setConfirmActive] = useState(false);
+
+  // Rendering states
   const [renderEntries, setRenderEntries] = useState(false);
   const [lastEntrySubmitted, setLastEntrySubmitted] = useState(null);
+  const [redirectPage, setRedirectPage] = useState(false);
 
+  // Props and global context
   const { id } = useParams();
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -35,10 +44,43 @@ const JourneyDetailPage = () => {
     setIsParticipant(false);
   }
 
+  // DELETE - Only accessible via ConfirmModal
   const deleteJourney = () => {
+    // Start loading
+    status.setIsLoading(true);
 
+    // Start deleting
+    axios.delete(`https://journey-social-media-server.herokuapp.com/journeys/${id}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+      })
+      .then(() => {
+        // Loading Complete
+        status.setIsLoading(false);
+
+        // Redirect page
+        setRedirectPage(true);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
+  // Event handlers for the Deletion button and Confirm Modal
+  const openDeletionConfirm = () => {
+    if (!confirmActive) {
+      setConfirmActive(true);
+    }
+  }
+
+  const closeDeletionConfirm = () => {
+    if (confirmActive) {
+      setConfirmActive(false);
+    }
+  }
+  
   // Button event handlers to toggle Entry Creator on and off
   const openEntryCreator = () => {
     if (!entryWrite) {
@@ -144,15 +186,19 @@ const JourneyDetailPage = () => {
                 <li><a href=''>{ journey.participants.length + 1 }</a> Participants</li>
               </ul>
             </div>
-            <div className='content-panel card-item'>
-              <p>{ journey.desc }</p>
-            </div>
-            <div className='card-item'>
+            {/* Journey Description */}
+            {/* Only for non-author, desc is shown as part of JourneyEditor for authors */
+              !isAuthor &&
+              <div className='content-panel card-item'>
+                <p>{ journey.desc }</p>
+              </div>
+            }
+            <div className='my-4'>
               { isAuthor 
                   ? 
                   <div>
                       <JourneyEditor journey={ journey } />
-                      <button onClick={ deleteJourney } className='button w-full decline-btn'>Delete this journey</button>
+                      <button onClick={ openDeletionConfirm } className='button w-full decline-btn'>Delete this journey</button>
                     </div>
                   : isParticipant 
                   ? <button onClick={ leaveJourney } className='button w-full decline-btn'>Leave this journey</button>
@@ -176,6 +222,17 @@ const JourneyDetailPage = () => {
             }
           </div>
         </div>
+      }
+      { /* Confirm Modal for Deletion */
+        confirmActive &&
+        <ConfirmModal 
+          callbackEvent={ deleteJourney } 
+          cancelEvent={ closeDeletionConfirm }
+          dialogText='Are you sure you want to delete this journey?'
+        />
+      }
+      { /* Redirect after Deletion */
+        redirectPage && <Redirect to='/my-journeys'/>
       }
     </div>
 

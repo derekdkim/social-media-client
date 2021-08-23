@@ -145,18 +145,18 @@ const JourneyEditor = (props) => {
               </select>
             </div>
             {/* Date Editor */}
-            <div className='input-container'>
+            <div className='input-container card-item-y'>
               <p>Do you want to add/change the due date?</p>
               { editDate
                   ? /* Date Input */
-                  <div className='input-container'>
+                  <div className='input-container card-item-y'>
                     <label htmlFor='journey-date-edit'>New Due Date</label>
                     <input onChange={ updateDate } value={ inputDueDate !== null ? inputDueDate : new Date() } type='date' className='input-field' id='journey-date-edit'></input>
-                    <button onClick={ disableDateEditor } className='button w-full mb-4'>Cancel Changes</button>
+                    <button onClick={ disableDateEditor } className='button w-full my-4'>Cancel Changes</button>
                   </div>
 
                   : /* Button to bring up Date Editor */
-                  <button onClick={ enableDateEditor } className='button w-full mb-4'>Add/Change Due Date</button>
+                  <button onClick={ enableDateEditor } className='button w-full my-4'>Add/Change Due Date</button>
               }
             </div>
             <button onClick={ submitEdit } className='button w-full mb-4'>Save Journey Details</button>
@@ -164,7 +164,7 @@ const JourneyEditor = (props) => {
 
           : /* Viewer */
           <div>
-            <div className='content-panel card-item'>
+            <div className='content-panel p-2 my-4'>
               <p>{ inputDesc }</p>
             </div>
             <button onClick={ enableEditor } className='button w-full mb-4'>Edit Journey Details</button>

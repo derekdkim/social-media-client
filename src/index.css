@@ -55,6 +55,10 @@
     @apply m-4 p-2;
   }
 
+  .card-item-y {
+    @apply my-4 py-2;
+  }
+
   .only-tab {
     @apply mt-20;
   }
