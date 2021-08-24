@@ -170,7 +170,7 @@ const JourneyDetailPage = () => {
           status.setUpdateEntries(false);
         });
     }
-  }, [journey, lastEntryModified, status.updateEntries]);
+  }, [journey, status.updateEntries]);
 
   return (
     <div>
@@ -217,7 +217,7 @@ const JourneyDetailPage = () => {
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
-                  <EntryCreator parent={ journey } setLastEntryModified={ setLastEntryModified } />
+                  <EntryCreator parent={ journey } closeEntryCreator={ closeEntryCreator } setLastEntryModified={ setLastEntryModified } />
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }

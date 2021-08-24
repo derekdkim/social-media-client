@@ -5,10 +5,10 @@ import axios from 'axios';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 
-const EntryEditor = (props) => {
+const CommentEditor = (props) => {
   const [inputText, setInputText] = useState('');
 
-  const { entry, closeEditor } = props;
+  const { comment, closeEditor } = props;
   const auth = useAuthContext();
   const status = useStatusContext();
 
@@ -23,7 +23,7 @@ const EntryEditor = (props) => {
     status.setIsLoading(true);
 
     // Submit request
-    axios.put(`https://journey-social-media-server.herokuapp.com/entries/${entry.parent._id}/${entry._id}`, 
+    axios.put(`https://journey-social-media-server.herokuapp.com/comments/${comment._id}`, 
       {
         text: inputText
       },
@@ -36,10 +36,11 @@ const EntryEditor = (props) => {
         // Finish Loading
         status.setIsLoading(false);
 
+        // Update Comments
+        status.setUpdateEntries(true);
+
         // Close Editor
         closeEditor();
-
-        status.setUpdateEntries(true);
       })
       .catch(err => {
         console.log(err);
@@ -49,8 +50,8 @@ const EntryEditor = (props) => {
   }
 
   useEffect(() => {
-    if (entry) {
-      setInputText(entry.text);
+    if (comment) {
+      setInputText(comment.text);
     }
   }, []);
 
@@ -58,11 +59,15 @@ const EntryEditor = (props) => {
     <div>
       <TextareaAutosize value={ inputText } onChange={ updateText } className='input-field w-full' />
       <div className='flex justify-end mt-4'>
-        <button onClick={ closeEditor } className='button decline-btn'>Cancel</button>
-        <button onClick={ submitEdit } className='button mx-4 px-6'>Save</button>
+        <button onClick={ closeEditor } className='button decline-btn'>
+          <i className='fas fa-times'></i>
+        </button>
+        <button onClick={ submitEdit } className='button mx-4 px-6'>
+          <i className='fas fa-check'></i>
+        </button>
       </div>
     </div>
   );
 }
 
-export default EntryEditor;
+export default CommentEditor;

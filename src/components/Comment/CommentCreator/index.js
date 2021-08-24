@@ -11,7 +11,7 @@ const CommentCreator = (props) => {
 
   const auth = useAuthContext();
   const status = useStatusContext();
-  const { parent, setLastCommentSubmitted } = props;
+  const { parent } = props;
 
   const updateInputText = (event) => {
     let currValidity = true;
@@ -61,7 +61,9 @@ const CommentCreator = (props) => {
 
         // Loading Complete
         status.setIsLoading(false);
-        setLastCommentSubmitted(res.data.comment);
+
+        // Re-render Comments
+        status.setUpdateComments(true);
       })
       .catch(err => {
         console.log(err);

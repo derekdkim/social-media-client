@@ -14,7 +14,6 @@ const JourneyEntry = (props) => {
   const [entryLiked, updateEntryLiked] = useState(false);
   const [commentsList, setCommentsList] = useState(null);
   const [timestamp, setTimestamp] = useState(new Date());
-  const [lastCommentSubmitted, setLastCommentSubmitted] = useState(null);
 
   // UI Toggle states
   const [commentsTab, setCommentsTab] = useState(false);
@@ -118,9 +117,18 @@ const JourneyEntry = (props) => {
     setTimestamp(new Date(entry.timestamp));
   }, [entry.timestamp]);
 
+  // Force update after DB changes
+  useEffect(() => {
+    if (status.updateComments) {
+      getComments();
+      status.setUpdateComments(false);
+    }
+  }, [status.updateComments]);
+
+  // Get comments on component mounting
   useEffect(() => {
     getComments();
-  }, [lastCommentSubmitted]);
+  }, []);
 
   return (
     <div className='content-panel card-item'>
@@ -133,7 +141,7 @@ const JourneyEntry = (props) => {
         <div className='ml-auto p-2'>
           {/* Editor Button */}
           { editMode
-            ? /* Close Editor & Delete Button */
+            ? /* Close Editor Button */
             <button onClick={ closeEditor } >
               <i className='fas fa-times' ></i>
             </button>
@@ -169,7 +177,7 @@ const JourneyEntry = (props) => {
                   ? commentsList.map((e, i) => <JourneyComment comment={ e } key={ i } />)
                   : <p>No comments yet. Be the first to write one!</p> }
               </div>
-              <CommentCreator parent={entry} setLastCommentSubmitted={ setLastCommentSubmitted } />
+              <CommentCreator parent={entry} />
             </div>
           </div>
       }

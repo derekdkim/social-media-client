@@ -4,6 +4,7 @@ import StatusContext from './StatusContext';
 const StatusContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [updateEntries, setUpdateEntries] = useState(false);
+  const [updateComments, setUpdateComments] = useState(false);
 
   return (
     <StatusContext.Provider
@@ -11,7 +12,9 @@ const StatusContextProvider = ({ children }) => {
         isLoading: isLoading,
         setIsLoading: setIsLoading,
         updateEntries: updateEntries,
-        setUpdateEntries: setUpdateEntries
+        setUpdateEntries: setUpdateEntries,
+        updateComments: updateComments,
+        setUpdateComments: setUpdateComments
       }}
     >
       { children }

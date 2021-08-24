@@ -66,7 +66,8 @@ const EntryCreator = (props) => {
         // Loading Complete
         status.setIsLoading(false);
 
-        setLastEntryModified(res.data.entry);
+        // Re-render entries
+        status.setUpdateEntries(true);
       })
       .catch(err => {
         console.log(err);
