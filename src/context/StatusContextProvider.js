@@ -3,12 +3,15 @@ import StatusContext from './StatusContext';
 
 const StatusContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [updateEntries, setUpdateEntries] = useState(false);
 
   return (
     <StatusContext.Provider
       value={{
         isLoading: isLoading,
-        setIsLoading: setIsLoading
+        setIsLoading: setIsLoading,
+        updateEntries: updateEntries,
+        setUpdateEntries: setUpdateEntries
       }}
     >
       { children }

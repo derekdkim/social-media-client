@@ -14,6 +14,7 @@ const LoadingModal = () => {
        Addresses long wait time when waking up API from hibernation on Heroku.
        Heroku puts API to sleep after 30 minutes of inactivity */
     if (status.isLoading) {
+      setLongLoad(false);
       setTimeout(() => {
         // If status is still loading by the end of countdown, move to long load
         if(status.isLoading) {

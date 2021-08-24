@@ -26,7 +26,7 @@ const JourneyDetailPage = () => {
 
   // Rendering states
   const [renderEntries, setRenderEntries] = useState(false);
-  const [lastEntrySubmitted, setLastEntrySubmitted] = useState(null);
+  const [lastEntryModified, setLastEntryModified] = useState(null);
   const [redirectPage, setRedirectPage] = useState(false);
 
   // Props and global context
@@ -156,15 +156,21 @@ const JourneyDetailPage = () => {
 
           // Loading Complete
           status.setIsLoading(false);
+          
+          // Reset flag for entry update
+          status.setUpdateEntries(false);
         })
         .catch(err => {
           console.log(err);
 
           // Loading Complete
           status.setIsLoading(false);
+
+          // Reset flag for entry update
+          status.setUpdateEntries(false);
         });
     }
-  }, [journey, lastEntrySubmitted]);
+  }, [journey, lastEntryModified, status.updateEntries]);
 
   return (
     <div>
@@ -193,7 +199,7 @@ const JourneyDetailPage = () => {
                 <p>{ journey.desc }</p>
               </div>
             }
-            <div className='my-4'>
+            <div className='m-4'>
               { isAuthor 
                   ? 
                   <div>
@@ -211,7 +217,7 @@ const JourneyDetailPage = () => {
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
-                  <EntryCreator parent={ journey } setLastEntrySubmitted={ setLastEntrySubmitted } />
+                  <EntryCreator parent={ journey } setLastEntryModified={ setLastEntryModified } />
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }

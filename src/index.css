@@ -74,13 +74,13 @@
   /* Buttons */
   .button {
     @apply text-white hover:text-white select-none outline-none;
-    background-color: #b07d62;
+    background-color: #d4a373;
     @apply border-none rounded-md shadow-lg;
     @apply py-2 px-4;
   }
 
   .button:hover {
-    background-color: #8a5a44;
+    background-color: #fcbf49;
   }
 
   .disabled-btn {

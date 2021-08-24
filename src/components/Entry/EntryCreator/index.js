@@ -12,7 +12,7 @@ const EntryCreator = (props) => {
 
   const auth = useAuthContext();
   const status = useStatusContext();
-  const { parent, setLastEntrySubmitted } = props;
+  const { parent, closeEntryCreator, setLastEntryModified } = props;
 
   const updateInputText = (event) => {
     let currValidity = true;
@@ -60,9 +60,13 @@ const EntryCreator = (props) => {
       .then(res => {
         console.log(res);
 
+        // Close Entry Creator
+        closeEntryCreator();
+
         // Loading Complete
         status.setIsLoading(false);
-        setLastEntrySubmitted(res.data.entry);
+
+        setLastEntryModified(res.data.entry);
       })
       .catch(err => {
         console.log(err);
