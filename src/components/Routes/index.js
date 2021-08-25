@@ -13,6 +13,7 @@ import MyFriendsPage from '../Friends/MyFriendsPage';
 import JourneyDetailPage from '../Journey/JourneyDetailPage';
 import ProfilePage from '../Profile/ProfilePage';
 import FriendRequestPage from '../Friends/FriendRequestPage';
+import ProfileEditPage from '../Profile/ProfileEditPage';
 
 const Routes = () => {
   return (
@@ -26,6 +27,7 @@ const Routes = () => {
       <PrivateRoute path='/my-friends' component={MyFriendsPage} />
       <PrivateRoute path='/journey-details/:id' component={JourneyDetailPage} />
       <PrivateRoute path='/profile' component={ProfilePage} />
+      <PrivateRoute path='/profile-setting' component={ProfileEditPage} />
       <PrivateRoute path='/friend-requests' component={FriendRequestPage} />
     </Switch>
   );

@@ -44,7 +44,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    // Activate loading modal
+    // Start Loading
     status.setIsLoading(true);
 
     // Fetch user info

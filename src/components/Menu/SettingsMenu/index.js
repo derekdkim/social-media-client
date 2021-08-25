@@ -5,10 +5,12 @@ import { useAuthContext } from '../../../context/AuthContextProvider';
 
 const SettingsMenu = (props) => {
   const { settingsRef } = props;
-  const authContext = useAuthContext();
+  const auth = useAuthContext();
 
   const handleLogout = () => {
-    authContext.setLoggedIn(false);
+    auth.setJWT(null);
+    auth.setUUID(null);
+    auth.setLoggedIn(false);
   }
 
   return (
