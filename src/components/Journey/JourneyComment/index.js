@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { formatDistance } from 'date-fns';
+import axios from 'axios';
 import './index.css';
 
 import { UserIcon } from '../../../images';
 import CommentEditor from '../../Comment/CommentEditor';
+import { useAuthContext } from '../../../context/AuthContextProvider';
+import { useStatusContext } from '../../../context/StatusContextProvider';
+import ConfirmModal from '../../Modal/ConfirmModal';
 
 const JourneyComment = (props) => {
   const [entryLiked, updateEntryLiked] = useState(false);
   const [timestamp, setTimestamp] = useState(new Date());
 
   const [editMode, setEditMode] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const { comment } = props;
+  const auth = useAuthContext();
+  const status = useStatusContext();
 
   const openEditor = () => {
     if (!editMode) {
@@ -25,8 +32,48 @@ const JourneyComment = (props) => {
     }
   }
 
+  const openDeleteConfirm = () => {
+    if (!deleteMode) {
+      setDeleteMode(true);
+    }
+  }
+
+  const closeDeleteConfirm = () => {
+    if (deleteMode) {
+      setDeleteMode(false);
+    }
+  }
+
   const handleLikes = () => {
     updateEntryLiked(!entryLiked);
+  }
+
+  const deleteComment = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    // Submit request
+    axios.delete(`https://journey-social-media-server.herokuapp.com/comments/${comment._id}`, 
+      {
+        headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+      })
+      .then(() => {
+        // Finish Loading
+        status.setIsLoading(false);
+
+        // Close Modal
+        setDeleteMode(false);
+
+        // Queue entry re-render
+        status.setUpdateComments(true);
+      })
+      .catch(err => {
+        console.log(err);
+
+        status.setIsLoading(false);
+      })
   }
 
   useEffect(() => {
@@ -70,10 +117,18 @@ const JourneyComment = (props) => {
             <i className='far fa-edit' ></i>
           </button>
         }
-        <button className='ml-6'>
+        <button onClick={ openDeleteConfirm } className='ml-6'>
           <i className='fas fa-trash' ></i>
         </button>
       </div>
+      {/* Delete Confirm Modal */
+        deleteMode &&
+        <ConfirmModal 
+          callbackEvent={ deleteComment }
+          cancelEvent={ closeDeleteConfirm }
+          dialogText='Are you sure you want to delete this comment?'
+        />
+      }
     </div>
   );
 }

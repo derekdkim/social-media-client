@@ -37,7 +37,7 @@ const CommentEditor = (props) => {
         status.setIsLoading(false);
 
         // Update Comments
-        status.setUpdateEntries(true);
+        status.setUpdateComments(true);
 
         // Close Editor
         closeEditor();
