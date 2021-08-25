@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -11,6 +12,8 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 const ProfilePage = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [journeyList, setJourneyList] = useState(null);
+
+  const [isThisMe, setIsThisMe] = useState(false);
   
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -55,6 +58,10 @@ const ProfilePage = () => {
       })
       .then(res => {
         setUserInfo(res.data.user);
+
+        if (res.data.user.uuid === auth.UUID) {
+          setIsThisMe(true);
+        }
         
         // Loading Complete
         status.setIsLoading(false);
@@ -91,7 +98,11 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className='btn-container my-6'>
-            <button className='button'>Send Friend Request</button>
+            {/* Edit Profile instead of Send Friend Req if its the user's own profile */
+              isThisMe
+              ? <Link to='/profile-setting'><button className='button'>Edit Profile</button></Link>
+              : <button className='button'>Send Friend Request</button>
+            }
           </div>
           <div>
             <h4 className='tab-heading'>Current Journeys <span className='text-gray-600 text-base'>{ journeyList !== null ? journeyList.length : 0 }</span></h4>

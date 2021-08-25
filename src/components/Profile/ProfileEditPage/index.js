@@ -13,7 +13,7 @@ const ProfileEditPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [lastName, setLastName] = useState();
   const [birthDate, setBirthDate] = useState(new Date());
 
   const [userInfo, setUserInfo] = useState(null);
@@ -23,6 +23,59 @@ const ProfileEditPage = () => {
 
   const auth = useAuthContext();
   const status = useStatusContext();
+
+  // Input updaters
+  const updateIntro = (event) => {
+    if (event.target.value !== intro) {
+      setIntro(event.target.value);
+    }
+  }
+
+    const updateCurrentPassword = (event) => {
+    if (event.target.value !== currentPassword) {
+      setCurrentPassword(event.target.value);
+    }
+  }
+
+  const updateNewPassword = (event) => {
+    if (event.target.value !== newPassword) {
+      setNewPassword(event.target.value);
+    }
+  }
+
+  const updateFirstName = (event) => {
+    if (event.target.value !== firstName) {
+      setFirstName(event.target.value);
+    }
+  }
+
+  const updateLastName = (event) => {
+    if (event.target.value !== lastName) {
+      setLastName(event.target.value);
+    }
+  }
+
+  const updateBirthDate = (event) => {
+    if (event.target.value !== birthDate) {
+      setBirthDate(event.target.value);
+    }
+  }
+
+  const editIntro = (event) => {
+    event.preventDefault();
+
+    editUser({ intro: intro });
+  }
+
+  const editNameBirthday = (event) => {
+    event.preventDefault();
+
+    editUser({
+      firstName: firstName,
+      lastName: lastName,
+      birthDate : birthDate
+    });
+  }
 
   const editUser = (input) => {
     // Start Loading
@@ -99,6 +152,16 @@ const ProfileEditPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    // Populate input fields on mount
+    if (userInfo !== null) {
+      setIntro(userInfo.intro);
+      setFirstName(userInfo.firstName);
+      setLastName(userInfo.lastName);
+      setBirthDate(new Date(userInfo.birthDate));
+    }
+  },[userInfo])
+
   return (
     <div>
       {/* Only render once API has loaded */
@@ -106,10 +169,10 @@ const ProfileEditPage = () => {
         <div className='page-container profile-page one-tab-container'>
           {/* Intro Edit Tab */}
           <div className='card-item'>
-            <form>
+            <form onSubmit={ editIntro } >
               <div className='input-container'>
                 <label htmlFor='intro-input'>About Me</label>
-                <TextareaAutosize className='input-field' id='intro-input' />
+                <TextareaAutosize onChange={ updateIntro } value={ intro }className='input-field' id='intro-input' />
               </div>
               <button className='button'>Save Intro</button>
             </form>
@@ -120,11 +183,11 @@ const ProfileEditPage = () => {
             <form>
               <div className='input-container'>
                 <label htmlFor='current-pw-input'>Current Password</label>
-                <input type='password' id='current-pw-input' className='input-field'></input>
+                <input onChange={ updateCurrentPassword } value={ currentPassword }type='password' id='current-pw-input' className='input-field'></input>
               </div>
               <div className='input-container'>
                 <label htmlFor='new-pw-input'>New Password</label>
-                <input type='password' id='new-pw-input' className='input-field'></input>
+                <input onChange={ updateNewPassword } value={ newPassword } type='password' id='new-pw-input' className='input-field'></input>
               </div>
               <button className='button'>Save Password</button>
             </form>
@@ -132,18 +195,18 @@ const ProfileEditPage = () => {
           <hr></hr>
           {/* Personal Info Edit Tab */}
           <div className='card-item'>
-            <form>
+            <form onSubmit={ editNameBirthday } >
               <div className='input-container'>
                 <label htmlFor='first-name-input'>First Name</label>
-                <input type='text' id='first-name-input' className='input-field'></input>
+                <input onChange={ updateFirstName } value={ firstName } type='text' id='first-name-input' className='input-field'></input>
               </div>
               <div className='input-container'>
                 <label htmlFor='last-name-input'>Last Name</label>
-                <input type='text' id='last-name-input' className='input-field'></input>
+                <input onChange={ updateLastName } value={ lastName } type='text' id='last-name-input' className='input-field'></input>
               </div>
               <div className='input-container'>
                 <label htmlFor='birth-date-input'>Birthday</label>
-                <input type='date' id='birth-date-input' className='input-field'></input>
+                <input onChange={ updateBirthDate } value={ birthDate } type='date' id='birth-date-input' className='input-field'></input>
               </div>
               <button className='button'>Save</button>
             </form>

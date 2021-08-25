@@ -117,18 +117,6 @@ const SignupPage = () => {
     let currErrMsg = '';
     const currValue = event.target.value;
 
-    // // Length check
-    // if (currValue.length < 1) {
-    //   currErrMsg = 'Name must not be blank';
-    //   currValidity = false;
-    // }
-
-    // // Character check
-    // if (!(/^[a-z]+$/i.test(currValue))) {
-    //   currErrMsg = 'Name must consist of alphabetical letters.';
-    //   currValidity = false;
-    // }
-
     setBirthday({
         value: currValue,
         valid: currValidity,
