@@ -6,7 +6,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import ConfirmModal from '../../Modal/ConfirmModal';
-import { set } from 'date-fns';
 
 const ProfileEditPage = () => {
   const [intro, setIntro] = useState('');
@@ -20,6 +19,10 @@ const ProfileEditPage = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [redirectToIndex, setRedirectToIndex] = useState(false);
   const [redirectToProfile, setRedirectToProfile] = useState(false);
+
+  // Account Deletion States
+  const [verificationPassword, setVerificationPassword] = useState(null);
+  const [verifyMode, setVerifyMode] = useState(false);
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -61,9 +64,20 @@ const ProfileEditPage = () => {
     }
   }
 
+  const updateVerificationPassword = (event) => {
+    if (event.target.value !== verificationPassword) {
+      setVerificationPassword(event.target.value);
+    }
+  }
+
+  const openVerifyMode = () => {
+    if (!verifyMode) {
+      setVerifyMode(true);
+    }
+  }
+
   const editIntro = (event) => {
     event.preventDefault();
-    console.log(intro);
 
     editUser({ intro: intro });
   }
@@ -78,6 +92,15 @@ const ProfileEditPage = () => {
       firstName: firstName,
       lastName: lastName,
       birthDate : new Date(formattedBirthDate)
+    });
+  }
+
+  const editPassword = (event) => {
+    event.preventDefault();
+
+    editUser({
+      currentPassword: currentPassword,
+      newPassword: newPassword
     });
   }
 
@@ -98,7 +121,7 @@ const ProfileEditPage = () => {
         status.setIsLoading(false);
 
         // Redirect to Updated Profile
-        // setRedirectToProfile(true);
+        setRedirectToProfile(true);
       })
       .catch(err => {
         // Finish Loading
@@ -121,14 +144,33 @@ const ProfileEditPage = () => {
   }
 
   const deleteAccount = () => {
-    // TODO: CREATE DELETEUSER ENDPOINT IN API
-    // Clear auth
-    auth.setJWT(null);
-    auth.setUUID(null);
-    auth.setLoggedIn(false);
+    // Start Loading
+    status.setIsLoading(true);
 
-    // Redirect to index
-    setRedirectToIndex(true);
+    axios.delete('https://journey-social-media-server.herokuapp.com/users/delete-account',
+      {
+        data: {
+          currentPassword: verificationPassword
+        },
+        headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+      })
+      .then(() => {
+        // Clear auth
+        auth.setJWT(null);
+        auth.setUUID(null);
+        auth.setLoggedIn(false);
+
+        // Finish Loading
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+
+        // Finish Loading
+        status.setIsLoading(true);
+      });
   }
 
   // Load User Info from API
@@ -178,7 +220,7 @@ const ProfileEditPage = () => {
             <form onSubmit={ editIntro } >
               <div className='input-container'>
                 <label htmlFor='intro-input'>About Me</label>
-                <TextareaAutosize onChange={ updateIntro } value={ intro }className='input-field' id='intro-input' />
+                <TextareaAutosize onChange={ updateIntro } value={ intro } className='input-field' id='intro-input' />
               </div>
               <button className='button'>Save Intro</button>
             </form>
@@ -186,10 +228,10 @@ const ProfileEditPage = () => {
           <hr></hr>
           {/* Password Edit Tab */}
           <div className='card-item'>
-            <form>
+            <form onSubmit={ editPassword } >
               <div className='input-container'>
                 <label htmlFor='current-pw-input'>Current Password</label>
-                <input onChange={ updateCurrentPassword } value={ currentPassword }type='password' id='current-pw-input' className='input-field'></input>
+                <input onChange={ updateCurrentPassword } value={ currentPassword } type='password' id='current-pw-input' className='input-field'></input>
               </div>
               <div className='input-container'>
                 <label htmlFor='new-pw-input'>New Password</label>
@@ -220,7 +262,19 @@ const ProfileEditPage = () => {
           <hr></hr>
           {/* Delete Account */}
           <div className='card-item'>
-            <button onClick={ openDeleteConfirm } className='button decline-btn'>Delete Account</button>
+            {/* Verify Password for Account Deletion*/
+              verifyMode
+              ? /* Expose input field for password and button to open confirm modal */
+              <div>
+                <div className='input-container'>
+                  <label htmlFor='current-pw-input'>Please enter your password to delete your account</label>
+                  <input onChange={ updateVerificationPassword } value={ verificationPassword } type='password' id='current-pw-input' className='input-field'></input>
+                </div>
+                <button onClick={ openDeleteConfirm } className={ verificationPassword !== null ? 'button decline-btn' : 'button decline-btn disabled-btn' }>Delete Account</button>
+              </div>
+              : /* 'First line defence' button to open verification mode */
+              <button onClick={ openVerifyMode } className='button decline-btn'>Delete Account</button>
+            }
           </div>
         </div>
       }

@@ -28,6 +28,8 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     // Prevent page refresh
     event.preventDefault();
+
+    // Start Loading
     status.setIsLoading(true);
 
     axios.post('https://journey-social-media-server.herokuapp.com/users/log-in', {
@@ -49,9 +51,15 @@ const LoginPage = () => {
           auth.setLoggedIn(false);
           status.setIsLoading(false);
         }
+
+        // Finish Loading
+        status.setIsLoading(false);
       })
       .catch(err => {
         console.log(err);
+
+        // Finish Loading
+        status.setIsLoading(false);
       })
   }
 
