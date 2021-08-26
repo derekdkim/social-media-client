@@ -14,7 +14,7 @@ const ProfileEditPage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState();
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState('1999-01-01');
 
   const [userInfo, setUserInfo] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
@@ -63,6 +63,7 @@ const ProfileEditPage = () => {
 
   const editIntro = (event) => {
     event.preventDefault();
+    console.log(intro);
 
     editUser({ intro: intro });
   }
@@ -70,10 +71,13 @@ const ProfileEditPage = () => {
   const editNameBirthday = (event) => {
     event.preventDefault();
 
+    // Fix error where JS causes the date to be off by one day if no time is added
+    const formattedBirthDate = birthDate + 'T00:00:00'; 
+
     editUser({
       firstName: firstName,
       lastName: lastName,
-      birthDate : birthDate
+      birthDate : new Date(formattedBirthDate)
     });
   }
 
@@ -94,7 +98,7 @@ const ProfileEditPage = () => {
         status.setIsLoading(false);
 
         // Redirect to Updated Profile
-        setRedirectToProfile(true);
+        // setRedirectToProfile(true);
       })
       .catch(err => {
         // Finish Loading
@@ -158,7 +162,9 @@ const ProfileEditPage = () => {
       setIntro(userInfo.intro);
       setFirstName(userInfo.firstName);
       setLastName(userInfo.lastName);
-      setBirthDate(new Date(userInfo.birthDate));
+
+      // Format the birthdate to be compatible with date picker
+      setBirthDate(new Date(userInfo.birthDate).toISOString().substr(0, 10));
     }
   },[userInfo])
 

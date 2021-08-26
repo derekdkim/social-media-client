@@ -134,8 +134,8 @@ const JourneyCreator = () => {
           </div>
           <div className='input-container'>
             <label htmlFor='journey-privacy-input'>Choose who can see your journey</label>
-            <select onChange={ updatePrivacy } name='privacy' id='privacy-select' className='input-field'>
-              <option value='0' selected>Public</option>
+            <select onChange={ updatePrivacy } defaultValue='0' name='privacy' id='privacy-select' className='input-field'>
+              <option value='0'>Public</option>
               <option value='1'>Friends Only</option>
               <option value='2'>Private</option>
             </select>
