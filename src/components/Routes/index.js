@@ -13,7 +13,7 @@ import MyFriendsPage from '../Friends/MyFriendsPage';
 import JourneyDetailPage from '../Journey/JourneyDetailPage';
 import ProfilePage from '../Profile/ProfilePage';
 import FriendRequestPage from '../Friends/FriendRequestPage';
-import ProfileEditPage from '../Profile/ProfileEditPage';
+import ProfileEditPage from '../Profile/Edit/ProfileEditPage';
 
 const Routes = () => {
   return (
