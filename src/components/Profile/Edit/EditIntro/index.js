@@ -6,7 +6,9 @@ import TextareaAutosize from 'react-textarea-autosize';
 const EditIntro = (props) => {
   const { intro, editUser } = props;
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    mode: 'onChange'
+  });
   
   const editIntro = (data, e) => {
     e.preventDefault();

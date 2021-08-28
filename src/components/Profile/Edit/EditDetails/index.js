@@ -5,7 +5,9 @@ import { ErrorMessage } from '@hookform/error-message';
 const EditDetails = (props) => {
   const { firstName, lastName, birthDate, editUser } = props;
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    mode: 'onChange'
+  });
   
   const editNameBirthday = (data, e) => {
     e.preventDefault();

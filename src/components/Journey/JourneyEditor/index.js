@@ -152,7 +152,7 @@ const JourneyEditor = (props) => {
                   <div className='input-container card-item-y'>
                     <label htmlFor='journey-date-edit'>New Due Date</label>
                     <input onChange={ updateDate } value={ inputDueDate !== null ? inputDueDate : new Date() } type='date' className='input-field' id='journey-date-edit'></input>
-                    <button onClick={ disableDateEditor } className='button w-full my-4'>Cancel Changes</button>
+                    <button onClick={ disableDateEditor } className='button w-full my-4'>I don't want to change the date</button>
                   </div>
 
                   : /* Button to bring up Date Editor */
