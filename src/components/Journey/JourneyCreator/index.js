@@ -91,7 +91,7 @@ const JourneyCreator = () => {
               {...register('title', {
                 required: 'Title cannot be blank',
                 minLength: 1,
-                maxLength: { value: 30, message: 'Title cannot exceed 30 characters.' }
+                maxLength: { value: 50, message: 'Title cannot exceed 50 characters.' }
               })} 
               id='journey-title-input' 
               className='input-field' 
