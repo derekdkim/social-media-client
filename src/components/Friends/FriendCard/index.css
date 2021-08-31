@@ -3,6 +3,6 @@
   @apply p-2;
 }
 
-.unfriend-btn {
+.friend-btn {
   @apply ml-auto mr-4 h-8 w-8 self-center;
 }

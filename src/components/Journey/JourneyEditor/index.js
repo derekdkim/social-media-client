@@ -71,6 +71,9 @@ const JourneyEditor = (props) => {
           // Go back to View Mode
           setEditMode(false);
 
+          // Set journey to update and re-render
+          status.setUpdateJourney(true);
+
           // Loading Complete
           status.setIsLoading(false);    
         })

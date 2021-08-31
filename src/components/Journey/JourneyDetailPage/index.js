@@ -26,7 +26,6 @@ const JourneyDetailPage = () => {
 
   // Rendering states
   const [renderEntries, setRenderEntries] = useState(false);
-  const [lastEntryModified, setLastEntryModified] = useState(null);
   const [redirectPage, setRedirectPage] = useState(false);
 
   // Props and global context
@@ -94,8 +93,7 @@ const JourneyDetailPage = () => {
     }
   }
 
-  // Fetch API data on component mount
-  useEffect(() => {
+  const fetchJourney = () => {
     if (auth.loggedIn && id) {
       // Start Loading
       status.setIsLoading(true);
@@ -120,7 +118,6 @@ const JourneyDetailPage = () => {
               setDueDate(new Date(res.data.journey.dueDate));
             }
 
-
             // Loading Complete
             status.setIsLoading(false);
           }
@@ -132,10 +129,9 @@ const JourneyDetailPage = () => {
           status.setIsLoading(false);
         });
     }
-  }, []);
+  }
 
-  // Fetch entries data from API after fetching journey data
-  useEffect(() => {
+  const fetchEntries = () => {
     if (journey) {
       // Start Loading
       status.setIsLoading(true);
@@ -170,7 +166,33 @@ const JourneyDetailPage = () => {
           status.setUpdateEntries(false);
         });
     }
-  }, [journey, status.updateEntries]);
+  }
+
+  // Fetch API data on component mount
+  useEffect(() => {
+    fetchJourney();
+  }, []);
+
+  // Fetch API data again after editing
+  useEffect(() => {
+    if (status.updateJourney) {
+      fetchJourney();
+      status.setUpdateJourney(false);
+    }
+  }, [status.updateJourney]);
+
+  // Fetch entries data from API after fetching journey data
+  useEffect(() => {
+    fetchEntries();
+  }, [journey]);
+
+  // Fetch entries after editing
+  useEffect(() => {
+    if (status.updateEntries) {
+      fetchEntries();
+      status.setUpdateEntries(false);
+    }
+  }, [status.updateEntries]);
 
   return (
     <div>
@@ -185,7 +207,7 @@ const JourneyDetailPage = () => {
               <ul>
                 <li>Created by { journey.author.username }</li>
                 <li>Started on { timestamp.toDateString() }</li>
-                <li>Privacy: { formatPrivacy() }</li>
+                <li>Privacy: { formatPrivacy(journey.privacy) }</li>
                 { journey.dueDate !== undefined && 
                   <li>Due Date: { dueDate.toDateString() }</li>
                 }
@@ -217,7 +239,7 @@ const JourneyDetailPage = () => {
             { entryWrite
               ? <div>
                   <button onClick={ closeEntryCreator } className='button'>-</button>
-                  <EntryCreator parent={ journey } closeEntryCreator={ closeEntryCreator } setLastEntryModified={ setLastEntryModified } />
+                  <EntryCreator parent={ journey } closeEntryCreator={ closeEntryCreator } />
                 </div> 
               : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
             }

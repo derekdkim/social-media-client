@@ -25,9 +25,9 @@ const JourneyLink = (props) => {
   return (
     <div className='journey-link-container content-panel card-item'>
       <Link to={`/journey-details/${journey._id}`}><h3 className='journey-title'>{title}</h3></Link>
-      <p className='journey-due-date'>{dueDateExists ? `Due Date: ${dueDate.toDateString()}` : 'Endless Journey'}</p>
-      <div className='mx-2 p-2'>{journey.participants.length} Participants</div>
-      <div className='journey-due-date'>{formatPrivacy(journey.privacy)}</div>
+      <p className='right-item'>{dueDateExists ? `Due Date: ${dueDate.toDateString()}` : 'Endless Journey'}</p>
+      <div className='mx-2 pb-2 flex items-end'>{journey.participants.length} Participants</div>
+      <div className='right-item flex items-end'>{formatPrivacy(journey.privacy)}</div>
     </div>
   );
 }

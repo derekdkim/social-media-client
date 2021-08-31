@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
 
@@ -7,7 +8,7 @@ import { useStatusContext } from '../../context/StatusContextProvider';
 import JourneyLink from '../Journey/JourneyLink';
 
 const IndexPage = () => {
-  const [journeyList, setJourneyList] = useState(null);
+  const [journeyList, setJourneyList] = useState([]);
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -42,14 +43,19 @@ const IndexPage = () => {
     <div className='page-container index-page'>
       <div className='tab-left'>
         <div className='welcome-panel'>
-          <h1 className='dbrown-text'>Welcome back, User!</h1>
+          <h1 className='dbrown-text'>Welcome back, {auth.firstName}!</h1>
         </div>
         <div className='journey-container'>
           <h3 className='tab-heading dbrown-text'>Your current journeys:</h3>
-            { journeyList != null
-              ? journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
-              : <p>Looks like you're not on any journeys right now.</p>
-            }
+          { journeyList.length > 0
+            /* Limit to 5 most recent journeys -- slice() cuts to the entire length of array if it is smaller than the end argument */
+            ? journeyList.slice(0, 5).map((journey, index) => <JourneyLink journey={journey} key={index} />)
+            : <p>Looks like you're not on any journeys right now.</p>
+          }
+          { /* See more link*/
+            journeyList.length > 5 &&
+            <Link to='/my-journeys'><p className='text-right'>See more</p></Link>
+          }
         </div>
       </div>
       <div className='tab-right'>

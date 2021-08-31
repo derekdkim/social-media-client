@@ -5,6 +5,8 @@ const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [JWT, setJWT] = useState(null);
   const [UUID, setUUID] = useState(null);
+  const [id, setId] = useState(null);
+  const [firstName, setFirstName] = useState('User');
 
   return (
     <AuthContext.Provider
@@ -14,7 +16,11 @@ const AuthContextProvider = ({ children }) => {
         JWT: JWT,
         setJWT: setJWT,
         UUID: UUID,
-        setUUID: setUUID
+        setUUID: setUUID,
+        id,
+        setId,
+        firstName,
+        setFirstName
       }}
     >
       { children }

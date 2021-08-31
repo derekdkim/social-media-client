@@ -67,10 +67,10 @@ const CommentEditor = (props) => {
           className='input-field w-full' 
         />
         <div className='flex justify-end mt-4'>
-          <button onClick={ closeEditor } className='button decline-btn'>
+          <button type='button' onClick={ closeEditor } className='button decline-btn'>
             <i className='fas fa-times'></i>
           </button>
-          <button className={ isValid ? 'button mx-4 px-6' : 'button mx-4 px-6 disabled-btn' }>
+          <button type='submit' className={ isValid ? 'button mx-4 px-6' : 'button mx-4 px-6 disabled-btn' }>
             <i className='fas fa-check'></i>
           </button>
         </div>

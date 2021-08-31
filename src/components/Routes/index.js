@@ -14,6 +14,7 @@ import JourneyDetailPage from '../Journey/JourneyDetailPage';
 import ProfilePage from '../Profile/ProfilePage';
 import FriendRequestPage from '../Friends/FriendRequestPage';
 import ProfileEditPage from '../Profile/Edit/ProfileEditPage';
+import FriendSearch from '../Friends/FriendSearch';
 
 const Routes = () => {
   return (
@@ -29,6 +30,7 @@ const Routes = () => {
       <PrivateRoute path='/profile' component={ProfilePage} />
       <PrivateRoute path='/profile-setting' component={ProfileEditPage} />
       <PrivateRoute path='/friend-requests' component={FriendRequestPage} />
+      <PrivateRoute path='/friend-search' component={FriendSearch} />
     </Switch>
   );
 }

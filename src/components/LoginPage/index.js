@@ -36,8 +36,15 @@ const LoginPage = () => {
             auth.setJWT(res.data.token);
             // Save current user UUID to auth Context -- Important for recognizing if user is a participant or author
             auth.setUUID(res.data.user.uuid);
+            // Save user ID for friend requests and statuses
+            auth.setId(res.data.user._id);
+            // Save user's first name for greeting
+            auth.setFirstName(res.data.user.firstName);
+
             // [CHANGE LATER]: Placeholder indicator for being logged in
             auth.setLoggedIn(true);
+
+            console.log('login successful');
           } else {
             setJWTErrMsg('Login failed. Please try again.');
             auth.setLoggedIn(false);

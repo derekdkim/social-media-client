@@ -5,12 +5,15 @@ const StatusContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [updateEntries, setUpdateEntries] = useState(false);
   const [updateComments, setUpdateComments] = useState(false);
+  const [updateJourney, setUpdateJourney] = useState(false);
 
   return (
     <StatusContext.Provider
       value={{
         isLoading: isLoading,
         setIsLoading: setIsLoading,
+        updateJourney: updateJourney,
+        setUpdateJourney: setUpdateJourney,
         updateEntries: updateEntries,
         setUpdateEntries: setUpdateEntries,
         updateComments: updateComments,
