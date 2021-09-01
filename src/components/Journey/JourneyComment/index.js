@@ -10,7 +10,7 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 import ConfirmModal from '../../Modal/ConfirmModal';
 
 const JourneyComment = (props) => {
-  const [entryLiked, updateEntryLiked] = useState(false);
+  const [commentLiked, setCommentLiked] = useState(false);
   const [timestamp, setTimestamp] = useState(new Date());
 
   const [editMode, setEditMode] = useState(false);
@@ -45,7 +45,55 @@ const JourneyComment = (props) => {
   }
 
   const handleLikes = () => {
-    updateEntryLiked(!entryLiked);
+    if (commentLiked) {
+      unlikeComment();
+    } else {
+      likeComment();
+    }
+  }
+
+  const likeComment = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/comments/${comment._id}/like`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      setCommentLiked(true);
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
+  }
+
+  const unlikeComment = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/comments/${comment._id}/unlike`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      setCommentLiked(false);
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
   }
 
   const deleteComment = () => {
@@ -81,6 +129,14 @@ const JourneyComment = (props) => {
     setTimestamp(new Date(comment.timestamp));
   }, []);
 
+  // Check if user already has liked this entry
+  useEffect(() => {
+    // If user already liked entry, set state to liked
+    if (comment.likedBy.includes(auth.UUID)) {
+      setCommentLiked(true);
+    }
+  }, [commentLiked]);
+
   return (
     <div className='comment-container'>
       <div className='flex-shrink-0'>
@@ -101,7 +157,7 @@ const JourneyComment = (props) => {
           }
         </div>
         <div className='p-1'>
-          <i onClick={ handleLikes } className={ entryLiked ? 'fas fa-heart red' : 'far fa-heart' }></i>
+          <i onClick={ handleLikes } className={ commentLiked ? 'fas fa-heart red' : 'far fa-heart' }></i>
           <span className='ml-2'>{ comment.likedBy.length }</span>
         </div>
       </div>

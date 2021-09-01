@@ -14,6 +14,7 @@ import ConfirmModal from '../../Modal/ConfirmModal';
 const JourneyDetailPage = () => {
   // Journey data
   const [journey, setJourney] = useState(null);
+  const [author, setAuthor] = useState('');
   const [timestamp, setTimestamp] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
   const [entries, setEntries] = useState(null);
@@ -108,19 +109,23 @@ const JourneyDetailPage = () => {
           // Commit fetched journey data to state
           setJourney(res.data.journey);
 
+          // Set dates to readable format
+          setTimestamp(new Date(res.data.journey.timestamp));
+          // Due Date is optional
+          if (res.data.journey.dueDate !== undefined) {
+            setDueDate(new Date(res.data.journey.dueDate));
+          }
+          // Save author to state
+          // Due to removing due date not populating author in updated journey, which causes the "Created by" field to be empty
+          setAuthor(res.data.journey.author);
+
+          // Grant edit permission if author
           if (res.data.journey.author.uuid === auth.UUID) {
             setIsAuthor(true);
-            
-            // Set dates to readable format
-            setTimestamp(new Date(res.data.journey.timestamp));
-            // Due Date is optional
-            if (res.data.journey.dueDate !== undefined) {
-              setDueDate(new Date(res.data.journey.dueDate));
-            }
-
-            // Loading Complete
-            status.setIsLoading(false);
           }
+
+          // Loading Complete
+          status.setIsLoading(false);
         })
         .catch(err => {
           console.log(err);
@@ -168,6 +173,31 @@ const JourneyDetailPage = () => {
     }
   }
 
+  const removeDueDate = () => {
+    // No point if it doesn't have a dueDate to begin with
+    if (journey.dueDate) {
+      // Start Loading
+      status.setIsLoading(true);
+
+      axios.put(`https://journey-social-media-server.herokuapp.com/journeys/${journey._id}/remove-due-date`, {}, {
+          headers: {
+            'Authorization': `Bearer ${auth.JWT}`
+          }
+        })
+        .then(res => {
+          if (res.data.journey) {
+            setJourney(res.data.journey);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+
+          // Finished Loading
+          status.setIsLoading(false);
+        })
+    }
+  }
+
   // Fetch API data on component mount
   useEffect(() => {
     fetchJourney();
@@ -205,7 +235,7 @@ const JourneyDetailPage = () => {
           <div className='journey-info-container'>
             <div className='content-panel card-item'>
               <ul>
-                <li>Created by { journey.author.username }</li>
+                <li>Created by { author.username }</li>
                 <li>Started on { timestamp.toDateString() }</li>
                 <li>Privacy: { formatPrivacy(journey.privacy) }</li>
                 { journey.dueDate !== undefined && 
@@ -226,6 +256,10 @@ const JourneyDetailPage = () => {
                   ? 
                   <div>
                       <JourneyEditor journey={ journey } />
+                      { /* Option to remove due date if it exists*/
+                        journey.dueDate !== undefined &&
+                        <button onClick={ removeDueDate } className='button w-full mb-4'>Remove Due Date</button>
+                      }
                       <button onClick={ openDeletionConfirm } className='button w-full decline-btn'>Delete this journey</button>
                     </div>
                   : isParticipant 

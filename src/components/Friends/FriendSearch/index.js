@@ -4,12 +4,14 @@ import axios from 'axios';
 
 import FriendCard from '../FriendCard';
 import { useStatusContext } from '../../../context/StatusContextProvider';
+import { useAuthContext } from '../../../context/AuthContextProvider';
 
 const FriendSearch = () => {
   const [searchRes, setSearchRes] = useState([]);
   const [renderResults, setRenderResults] = useState(false);
 
   const status = useStatusContext();
+  const auth = useAuthContext();
 
   const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: 'onChange'
@@ -25,8 +27,11 @@ const FriendSearch = () => {
       // Make search request
       axios.get(`https://journey-social-media-server.herokuapp.com/users/search/${data.query}`)
         .then(res => {
+          // Filter out user's own data
+          const filteredRes = res.data.result.filter(user => user.uuid !== auth.UUID);
+
           // Save search results to state
-          setSearchRes(res.data.result);
+          setSearchRes(filteredRes);
 
           // Render results
           setRenderResults(true);

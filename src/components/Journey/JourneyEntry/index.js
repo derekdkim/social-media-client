@@ -25,7 +25,11 @@ const JourneyEntry = (props) => {
   const { entry } = props;
 
   const handleLikes = () => {
-    updateEntryLiked(!entryLiked);
+    if (entryLiked) {
+      unlikeEntry();
+    } else {
+      likeEntry();
+    }
   }
 
   const toggleComments = () => {
@@ -57,6 +61,50 @@ const JourneyEntry = (props) => {
     if (deleteMode) {
       setDeleteMode(false);
     }
+  }
+
+  const likeEntry = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/entries/${entry.parent._id}/${entry._id}/like`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      updateEntryLiked(true);
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
+  }
+
+  const unlikeEntry = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/entries/${entry.parent._id}/${entry._id}/unlike`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      updateEntryLiked(false);
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
   }
 
   const deleteEntry = () => {
@@ -125,6 +173,14 @@ const JourneyEntry = (props) => {
     }
   }, [status.updateComments]);
 
+  // Check if user already has liked this entry
+  useEffect(() => {
+    // If user already liked entry, set state to liked
+    if (entry.likedBy.includes(auth.UUID)) {
+      updateEntryLiked(true);
+    }
+  }, [entryLiked]);
+
   // Get comments on component mounting
   useEffect(() => {
     getComments();
@@ -164,6 +220,7 @@ const JourneyEntry = (props) => {
         }
       </div>
       <div className='icon-footer'>
+        <span className='mx-2'>{ entry.likedBy.length }</span>
         <i onClick={ handleLikes } className={ entryLiked ? 'fas fa-heart red' : 'far fa-heart' }></i>
         <i onClick={ toggleComments } className={ commentsTab ? 'fas fa-comment' : 'far fa-comment' }></i>
       </div>

@@ -61,7 +61,7 @@ const FriendCard = (props) => {
       // Start Loading
       status.setIsLoading(true);
 
-      axios.post(`https://journey-social-media-server.herokuapp.com/friends/${user._id}/remove`, {},
+      axios.put(`https://journey-social-media-server.herokuapp.com/friends/${user._id}/remove`, {},
       {
         headers: {
           'Authorization': `Bearer ${auth.JWT}`
