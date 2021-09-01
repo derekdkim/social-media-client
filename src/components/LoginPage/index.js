@@ -84,7 +84,7 @@ const LoginPage = () => {
                 required: 'Username cannot be blank'
               })}
               type='text'
-              className='text-input'
+              className='text-input input-field'
               id='login-username-input'
             ></input>
           </div>
@@ -96,7 +96,7 @@ const LoginPage = () => {
                 required: 'Password cannot be blank'
               })}
               type='password'
-              className='text-input'
+              className='text-input input-field'
               id='login-password-input'
             ></input>
           </div>

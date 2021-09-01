@@ -34,6 +34,10 @@
     @apply border-gray-600 bg-gray-400 bg-opacity-20;
   }
 
+  .input-field:focus {
+    @apply bg-blue-100;
+  }
+
   .comment-field {
     @apply border-b-2;
   }

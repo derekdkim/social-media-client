@@ -29,12 +29,12 @@ const Header = () => {
       <div className='header-left'>
         { authContext.loggedIn &&
             <div className='hamburger-menu-container'>
-              <button onClick={ toggleNav } >
-                <img className='menu-icon' src={ HamburgerMenuIcon } alt='hamburger-menu' />
+              <button onClick={ toggleNav } className='hamburger-btn' >
+                <img className={ isNavActive ? 'menu-icon animate-200' : 'menu-icon' } src={ HamburgerMenuIcon } alt='hamburger-menu' />
               </button>
             </div> 
         }
-        <div className='home-container'>
+        <div className={authContext.loggedIn ? 'hidden md:flex' : 'flex'}>
           <Link className='flex justify-center content-center' to='/'>
             <div className='logo-container'>
               <img className='logo-icon' src={ LogoIcon } alt='tent-logo'/>
@@ -44,24 +44,28 @@ const Header = () => {
         </div>
       </div>
       { /* Placeholder for authentication -- Currently have unstyled sign-up & log-in buttons as placeholders */
-        authContext.loggedIn ? <div className='header-right'>
-        <div className='search-bar'>
-          <img className='search-bar-icon' src={ SearchIcon } alt='search-icon'/>
-          <input type='text' className='search-bar-input'/>
-        </div>
-        <div className='profile-container'>
-          <div className='avatar-container'>
-            <button onClick={ toggleSettings }>
-              <img src={ UserIcon } className='avatar' alt='profile-pic'/>
-            </button>
+        authContext.loggedIn 
+        ? 
+        <div className='header-right'>
+          <div className='search-bar'>
+            <i className='fas fa-search search-bar-icon' alt='search-icon'/>
+            <input type='text' className='search-bar-input'/>
           </div>
-          { isSettingsActive && <SettingsMenu settingsRef={ settingsRef } /> }
-        </div>
-      </div> 
-        : <div className='header-right'>
-          <Link to='/sign-up'><button className='button'>Sign Up</button></Link>
-          <Link to='/log-in'><button className='button'>Log In</button></Link>
-        </div> }
+          <div className='profile-container'>
+            <div className='avatar-container'>
+              <button onClick={ toggleSettings }>
+                <img src={ UserIcon } className='avatar' alt='profile-pic'/>
+              </button>
+            </div>
+            { isSettingsActive && <SettingsMenu settingsRef={ settingsRef } /> }
+          </div>
+        </div> 
+        : 
+        <div className='header-right card-item'>
+          <Link to='/sign-up'><button type='button' className='button mx-4'>Sign Up</button></Link>
+          <Link to='/log-in'><button type='button' className='button'>Log In</button></Link>
+        </div> 
+      }
     </div>
   );
 };

@@ -92,7 +92,7 @@ const SignupPage = () => {
                 }
               })}
               type='text'
-              className='text-input'
+              className='text-input input-field'
               id='signup-username-input'
             ></input>
             <ErrorMessage errors={ errors } name="username">
@@ -120,7 +120,7 @@ const SignupPage = () => {
                 }
               })}
               type='password'
-              className='text-input'
+              className='text-input input-field'
               id='signup-password-input'
             ></input>
             <ErrorMessage errors={ errors } name="password">
@@ -148,7 +148,7 @@ const SignupPage = () => {
                 }
               })}
               type='text'
-              className='text-input'
+              className='text-input input-field'
               id='signup-firstname-input'
             ></input>
             <ErrorMessage errors={ errors } name="firstName">
@@ -176,7 +176,7 @@ const SignupPage = () => {
                 }
               })}
               type='text'
-              className='text-input'
+              className='text-input input-field'
               id='signup-lastname-input'
             ></input>
             <ErrorMessage errors={ errors } name="lastName">
@@ -204,15 +204,15 @@ const SignupPage = () => {
                 }
               })}
               type='date'
-              className='date-input'
+              className='date-input input-field'
               id='signup-birthday-input'
             ></input>
             <ErrorMessage errors={ errors } name="birthDate">
               {({ messages }) =>
                 messages &&
-                Object.entries(messages).map(([type, message]) => (
+                Object.entries(messages).map(([type, message]) => 
                   <p key={type} className='text-input-error'>{message}</p>
-                ))
+                )
               }
             </ErrorMessage>
           </div>
