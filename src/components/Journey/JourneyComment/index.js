@@ -11,6 +11,7 @@ import ConfirmModal from '../../Modal/ConfirmModal';
 
 const JourneyComment = (props) => {
   const [commentLiked, setCommentLiked] = useState(false);
+  const [likedByCount, setLikedByCount] = useState(0);
   const [timestamp, setTimestamp] = useState(new Date());
 
   const [editMode, setEditMode] = useState(false);
@@ -64,6 +65,9 @@ const JourneyComment = (props) => {
     .then(res => {
       setCommentLiked(true);
 
+      // Update Like Count
+      setLikedByCount(res.data.likedCount);
+
       // Finish Loading
       status.setIsLoading(false);
     })
@@ -85,6 +89,9 @@ const JourneyComment = (props) => {
     })
     .then(res => {
       setCommentLiked(false);
+
+      // Update Like Count
+      setLikedByCount(res.data.likedCount);
 
       // Finish Loading
       status.setIsLoading(false);
@@ -135,7 +142,12 @@ const JourneyComment = (props) => {
     if (comment.likedBy.includes(auth.UUID)) {
       setCommentLiked(true);
     }
-  }, [commentLiked]);
+
+    // Update Like Count
+    setLikedByCount(comment.likedBy.length);
+  }, [comment]);
+
+
 
   return (
     <div className='comment-container'>
@@ -158,7 +170,7 @@ const JourneyComment = (props) => {
         </div>
         <div className='p-1'>
           <i onClick={ handleLikes } className={ commentLiked ? 'fas fa-heart red' : 'far fa-heart' }></i>
-          <span className='ml-2'>{ comment.likedBy.length }</span>
+          <span className='ml-2'>{ likedByCount }</span>
         </div>
       </div>
       <div className='ml-auto p-2'>

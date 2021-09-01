@@ -16,7 +16,7 @@ const ExploreJourneyCard = (props) => {
 
   return (
     <div className='content-panel card-item explore-journey-container'>
-      <Link to='/journey-details'><h4 className='tab-heading text-center'>{journey.title}</h4></Link>
+      <Link to={ `/journey-details/${journey._id}` }><h4 className='tab-heading text-center'>{journey.title}</h4></Link>
       <p className='my-2'>by {journey.author.username}</p>
       <div>
         <p className='my-2'>{journey.desc}</p>
@@ -32,7 +32,7 @@ const ExploreJourneyCard = (props) => {
               'Endless Journey'
             }</p>
         </div>
-        <Link to='/journey-details'><button className='button hidden md:block explore-journey-btn'>See details</button></Link>
+        <Link to={ `/journey-details/${journey._id}` }><button className='button hidden md:block explore-journey-btn'>See details</button></Link>
         <div className='mt-auto'>
           <span>{journey.participants.length}</span>
           <span className='ml-2'>Participants</span>

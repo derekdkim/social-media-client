@@ -18,12 +18,15 @@ const JourneyDetailPage = () => {
   const [timestamp, setTimestamp] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
   const [entries, setEntries] = useState(null);
+  const [likedByCount, setLikedByCount] = useState(0);
+  const [participantCount, setParticipantCount] = useState(0);
 
   // UI Access states
   const [isParticipant, setIsParticipant] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
   const [entryWrite, setEntryWrite] = useState(false);
   const [confirmActive, setConfirmActive] = useState(false);
+  const [journeyLiked, setJourneyLiked] = useState(false);
 
   // Rendering states
   const [renderEntries, setRenderEntries] = useState(false);
@@ -35,13 +38,65 @@ const JourneyDetailPage = () => {
   const status = useStatusContext();
 
   const joinJourney = () => {
-    // TODO: Connect to API
-    setIsParticipant(true);
+    if (!isParticipant) {
+      // Start Loading
+      status.setIsLoading(true);
+
+      axios.put(`https://journey-social-media-server.herokuapp.com/journeys/join/${id}`, {}, {
+        headers: {
+          'Authorization' : `Bearer ${auth.JWT}`
+        }
+      })
+      .then(res => {
+        if (res.data.message === 'success') {
+          // Update Participant Count
+          setParticipantCount(res.data.participants.length);
+
+          // Set user as participant
+          setIsParticipant(true);
+        }
+
+        // Loading Complete
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+
+        // Loading Complete
+        status.setIsLoading(false);
+      });
+    }
   }
 
   const leaveJourney = () => {
-    // TODO: Connect to API
-    setIsParticipant(false);
+    if (isParticipant) {
+      // Start Loading
+      status.setIsLoading(true);
+
+      axios.put(`https://journey-social-media-server.herokuapp.com/journeys/leave/${id}`, {}, {
+        headers: {
+          'Authorization' : `Bearer ${auth.JWT}`
+        }
+      })
+      .then(res => {
+        if (res.data.message === 'success') {
+          // Update Participant Count
+          setParticipantCount(res.data.participants.length);
+
+          // Set user as being no longer a participant
+          setIsParticipant(false);
+        }
+
+        // Loading Complete
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+
+        // Loading Complete
+        status.setIsLoading(false);
+      });
+    }
   }
 
   // DELETE - Only accessible via ConfirmModal
@@ -65,7 +120,19 @@ const JourneyDetailPage = () => {
       })
       .catch(err => {
         console.log(err);
+
+        // Loading Complete
+        status.setIsLoading(false);
       });
+  }
+
+  // Like Journey State toggle
+  const handleLikes = () => {
+    if (journeyLiked) {
+      unlikeJourney();
+    } else {
+      likeJourney();
+    }
   }
 
   // Event handlers for the Deletion button and Confirm Modal
@@ -111,10 +178,18 @@ const JourneyDetailPage = () => {
 
           // Set dates to readable format
           setTimestamp(new Date(res.data.journey.timestamp));
+
           // Due Date is optional
           if (res.data.journey.dueDate !== undefined) {
             setDueDate(new Date(res.data.journey.dueDate));
           }
+
+          // Set like count
+          setLikedByCount(res.data.journey.likedBy.length);
+
+          // Set participants count
+          setParticipantCount(res.data.journey.participants.length);
+
           // Save author to state
           // Due to removing due date not populating author in updated journey, which causes the "Created by" field to be empty
           setAuthor(res.data.journey.author);
@@ -198,6 +273,56 @@ const JourneyDetailPage = () => {
     }
   }
 
+  const likeJourney = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/journeys/like/${journey._id}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      setJourneyLiked(true);
+
+      // Update Like Count
+      setLikedByCount(res.data.likedCount);   
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
+  }
+
+  const unlikeJourney = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    axios.put(`https://journey-social-media-server.herokuapp.com/journeys/unlike/${journey._id}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+    })
+    .then(res => {
+      setJourneyLiked(false);
+
+      // Update Like Count
+      setLikedByCount(res.data.likedCount);
+
+      // Finish Loading
+      status.setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+
+      status.setIsLoading(false);
+    });
+  }
+
   // Fetch API data on component mount
   useEffect(() => {
     fetchJourney();
@@ -224,6 +349,21 @@ const JourneyDetailPage = () => {
     }
   }, [status.updateEntries]);
 
+  // Check if user already has liked this entry
+  useEffect(() => {
+    if (journey !== null) {
+      // If user already liked entry, set state to liked
+      if (journey.likedBy.includes(auth.UUID)) {
+        setJourneyLiked(true);
+      }
+      // If user is already a participant, set as participant
+      if (journey.participants.includes(auth.UUID)) {
+        setIsParticipant(true);
+      }
+      // NOTE: Like Count and Participant Count are updated directly from the fetch request callback
+    }
+  }, [journey]);
+
   return (
     <div>
       { journey != null &&
@@ -231,8 +371,31 @@ const JourneyDetailPage = () => {
           <div>
             <h1 className='text-3xl text-center card-item dbrown-text'>{ journey.title }</h1>
           </div>
-          {/* Side Tab */}
+          {/* Side Info Tab */}
           <div className='journey-info-container'>
+            {/* Likes Tab */}
+            <div className='content-panel card-item flex flex-row justify-around items-center'>
+              <div className='text-xl'>
+                <i className='fas fa-heart red mx-2'></i>
+                <span>{ likedByCount }</span>
+              </div>
+              <div className='text-lg'>
+                {/* Show either Like or Unlike button */
+                  journeyLiked
+                  ? /* Unlike Option */
+                  <button onClick={ handleLikes } className='button'>
+                    <i className='fas fa-heart-broken red mx-2'></i>
+                    <span className='mx-2'>Unlike</span>
+                  </button>
+                  : /* Like Option */
+                  <button onClick={ handleLikes } className='button'>
+                    <i className='fas fa-heart red mx-2'></i>
+                    <span className='mx-2'>Like</span>
+                  </button>
+                }
+              </div>
+            </div>
+            {/* Journey Details Tab */}
             <div className='content-panel card-item'>
               <ul>
                 <li>Created by { author.username }</li>
@@ -241,7 +404,7 @@ const JourneyDetailPage = () => {
                 { journey.dueDate !== undefined && 
                   <li>Due Date: { dueDate.toDateString() }</li>
                 }
-                <li>{ journey.participants.length + 1 } Participants</li>
+                <li>{ participantCount } Participants</li>
               </ul>
             </div>
             {/* Journey Description */}

@@ -11,7 +11,8 @@ import EntryEditor from '../../Entry/EntryEditor';
 import ConfirmModal from '../../Modal/ConfirmModal';
 
 const JourneyEntry = (props) => {
-  const [entryLiked, updateEntryLiked] = useState(false);
+  const [entryLiked, setEntryLiked] = useState(false);
+  const [likedByCount, setLikedByCount] = useState(0);
   const [commentsList, setCommentsList] = useState(null);
   const [timestamp, setTimestamp] = useState(new Date());
 
@@ -73,7 +74,10 @@ const JourneyEntry = (props) => {
       }
     })
     .then(res => {
-      updateEntryLiked(true);
+      setEntryLiked(true);
+
+      // Update likedByCount
+      setLikedByCount(res.data.likedCount);
 
       // Finish Loading
       status.setIsLoading(false);
@@ -95,7 +99,10 @@ const JourneyEntry = (props) => {
       }
     })
     .then(res => {
-      updateEntryLiked(false);
+      setEntryLiked(false);
+
+      // Update likedByCount
+      setLikedByCount(res.data.likedCount);
 
       // Finish Loading
       status.setIsLoading(false);
@@ -177,9 +184,12 @@ const JourneyEntry = (props) => {
   useEffect(() => {
     // If user already liked entry, set state to liked
     if (entry.likedBy.includes(auth.UUID)) {
-      updateEntryLiked(true);
+      setEntryLiked(true);
     }
-  }, [entryLiked]);
+
+    // Update likedByCount
+    setLikedByCount(entry.likedBy.length);
+  }, [entry]);
 
   // Get comments on component mounting
   useEffect(() => {
@@ -220,7 +230,7 @@ const JourneyEntry = (props) => {
         }
       </div>
       <div className='icon-footer'>
-        <span className='mx-2'>{ entry.likedBy.length }</span>
+        <span className='mx-2'>{ likedByCount }</span>
         <i onClick={ handleLikes } className={ entryLiked ? 'fas fa-heart red' : 'far fa-heart' }></i>
         <i onClick={ toggleComments } className={ commentsTab ? 'fas fa-comment' : 'far fa-comment' }></i>
       </div>
