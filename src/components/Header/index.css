@@ -33,14 +33,14 @@
   @apply flex items-center justify-center;
 }
 
+.animate-hamburger {
+  @apply transition duration-200 ease-out transform rotate-90;
+}
+
 .menu-icon {
   @apply h-auto w-8;
   @apply transition duration-200 ease-out;
   min-width: 2rem;
-}
-
-.animate-200 {
-  @apply transition duration-200 ease-out transform rotate-90;
 }
 
 /* Right Side*/
@@ -70,9 +70,14 @@
 
 .avatar-container {
   @apply w-10 h-10 rounded-full self-center;
+  @apply transition duration-200 ease-out;
+}
+
+.avatar-container:hover {
+  @apply transition duration-200 ease-out transform scale-110;
 }
 
 .settings-menu {
   @apply absolute top-20 right-0 z-50;
-  @apply flex flex-col text-left;
+  @apply flex flex-col text-left m-4 rounded-lg justify-center items-center;
 }

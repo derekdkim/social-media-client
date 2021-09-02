@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <div className='header'>
-      { isNavActive && <HamburgerMenu navRef={ navRef } /> }
+      { isNavActive && <HamburgerMenu navRef={ navRef } toggleNav={ toggleNav } /> }
       <div className='header-left'>
         { authContext.loggedIn &&
             <div className='hamburger-menu-container'>
@@ -57,7 +57,7 @@ const Header = () => {
                 <img src={ UserIcon } className='avatar' alt='profile-pic'/>
               </button>
             </div>
-            { isSettingsActive && <SettingsMenu settingsRef={ settingsRef } /> }
+            { isSettingsActive && <SettingsMenu settingsRef={ settingsRef } toggleSettings={ toggleSettings } /> }
           </div>
         </div> 
         : 

@@ -1,21 +1,15 @@
 .journey-link-container {
-  @apply grid grid-cols-2 grid-rows-2;
-  grid-template-rows: auto;
+  @apply flex flex-col p-4;
 }
 
 .journey-title {
-  @apply m-2 font-bold;
+  @apply font-bold;
+}
+
+.left-item {
+  @apply text-sm md:text-base;
 }
 
 .right-item {
-  @apply ml-auto p-2 text-xs md:text-base text-right;
-}
-
-.tags {
-  @apply row-start-2;
-  @apply flex content-end;
-}
-
-.tag-badge {
-  @apply m-2 border-white self-center text-xs md:text-sm;
+  @apply ml-auto text-xs text-right;
 }

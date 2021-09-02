@@ -72,12 +72,13 @@ const MyJourneyPage = () => {
       </div>
       <div className='one-tab-container'>
         <h1 className='tab-heading dbrown-text'>My Journeys</h1>
-        <div className='journey-list grid lg:grid-cols-2'>
+        <div className='journey-list grid lg:grid-cols-2 my-4'>
           { renderJourneys 
               ? journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
               : <div>You are not currently on any journeys yet.</div>
           }
         </div>
+        <h1 className='tab-heading dbrown-text'>Participating Journeys</h1>
       </div>
     </div>
   );

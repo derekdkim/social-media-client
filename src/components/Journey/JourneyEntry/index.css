@@ -1,5 +1,5 @@
 .author-container {
-  @apply flex flex-row m-2;
+  @apply flex flex-col md:flex-row m-2;
 }
 
 .author-info {

@@ -59,6 +59,10 @@
     @apply m-4 p-2;
   }
 
+  .card-item-6 {
+    @apply m-6 p-2;
+  }
+
   .card-item-y {
     @apply my-4 py-2;
   }

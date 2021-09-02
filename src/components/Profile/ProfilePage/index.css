@@ -3,11 +3,11 @@
 }
 
 .user-info-tab {
-  @apply flex flex-row justify-start lg:justify-center my-8;
+  @apply flex flex-col items-center md:flex-row md:justify-start lg:justify-center my-8;
 }
 
 .username-container {
-  @apply ml-8 flex flex-col justify-center;
+  @apply ml-8 my-4 flex flex-col justify-center;
 }
 
 .profile-tab-left {

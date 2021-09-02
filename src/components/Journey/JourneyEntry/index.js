@@ -199,10 +199,12 @@ const JourneyEntry = (props) => {
   return (
     <div className='content-panel card-item'>
       <div className='author-container'>
-        <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
-        <div className='author-info'>
-          <p className='text-lg font-bold'>{ entry.author.username }</p>
-          <p>{ timestamp.toDateString() }</p>
+        <div className='flex flex-row'>
+          <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
+          <div className='author-info'>
+            <p className='text-lg font-bold'>{ entry.author.username }</p>
+            <p>{ timestamp.toDateString() }</p>
+          </div>
         </div>
         <div className='ml-auto p-2'>
           {/* Editor Button */}
