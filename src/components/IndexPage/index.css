@@ -9,12 +9,11 @@
 }
 
 .tab-right {
-  @apply flex;
-  @apply mx-4 lg:m-20;
+  @apply mx-4 md:mt-20 lg:mr-10;
 }
 
 .progress-panel {
-  @apply  m-4 p-2 lg:p-4 w-full;
+  @apply  flex flex-col justify-center m-4 p-2 lg:p-4 w-full;
 }
 
 .progress-panel-header {

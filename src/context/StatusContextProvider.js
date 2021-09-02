@@ -6,6 +6,8 @@ const StatusContextProvider = ({ children }) => {
   const [updateEntries, setUpdateEntries] = useState(false);
   const [updateComments, setUpdateComments] = useState(false);
   const [updateJourney, setUpdateJourney] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [redirectToSearch, setRedirectToSearch] = useState(false);
 
   return (
     <StatusContext.Provider
@@ -17,7 +19,11 @@ const StatusContextProvider = ({ children }) => {
         updateEntries: updateEntries,
         setUpdateEntries: setUpdateEntries,
         updateComments: updateComments,
-        setUpdateComments: setUpdateComments
+        setUpdateComments: setUpdateComments,
+        searchQuery,
+        setSearchQuery,
+        redirectToSearch,
+        setRedirectToSearch
       }}
     >
       { children }

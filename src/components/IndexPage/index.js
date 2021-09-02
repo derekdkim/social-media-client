@@ -45,6 +45,15 @@ const IndexPage = () => {
         <div className='welcome-panel'>
           <h1 className='dbrown-text'>Welcome back, {auth.firstName}!</h1>
         </div>
+        <div className='progress-panel'>
+          <h3 className='progress-panel-header tab-heading'>Embark on a brand new journey!</h3>
+          <i className='fas fa-hiking fa-8x flex justify-center'></i>
+          <Link to='/explore' className='flex justify-center'>
+            <button className='button my-6'>Explore challenges others are tackling</button>
+          </Link>
+        </div>
+      </div>
+      <div className='tab-right'>
         <div className='journey-container'>
           <h3 className='tab-heading dbrown-text'>Your current journeys:</h3>
           { journeyList.length > 0
@@ -54,16 +63,8 @@ const IndexPage = () => {
           }
           { /* See more link*/
             journeyList.length > 5 &&
-            <Link to='/my-journeys'><p className='text-right'>See more</p></Link>
+            <Link to='/my-journeys'><p>See more</p></Link>
           }
-        </div>
-      </div>
-      <div className='tab-right'>
-        <div className='progress-panel content-panel'>
-          <h3 className='progress-panel-header tab-heading'>Your progress in 2021</h3>
-          <p>Journeys completed this year: 0</p>
-          <p>Total journeys completed: 15</p>
-          <p>Last journey completed:</p>
         </div>
       </div>
     </div>

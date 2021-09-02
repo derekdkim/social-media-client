@@ -46,6 +46,10 @@ const FriendRequestPage = () => {
         <h3 className='tab-heading'>Pending Requests</h3>
         <div>
           {pendingFriends.map((user, i) => <FriendReqCard user={ user } key={ i } />)}
+          {/* No Results Placeholder Text */
+            pendingFriends.length === 0 &&
+            <p className='content-panel card-item'>No potential friends to accept as of this moment.</p>
+          }
         </div>
       </div>
     </div>

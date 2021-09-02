@@ -7,6 +7,6 @@
 }
 
 .comment-content {
-  @apply text-xs md:text-sm;
+  @apply text-xs md:text-sm whitespace-pre-wrap;
   word-break: break-all;
 }

@@ -43,9 +43,6 @@ const MyFriendsPage = () => {
     <div className='page-container'>
       <div className='right-btn-container-outer'>
         <div className='right-btn-container-inner'>
-          <Link to='/friend-search'>
-            <button className='button mr-2 mb-4 md:mb-0'>Search for Friends</button>
-          </Link>
           <Link to='/friend-requests'>
             <button className='button'>View Friend Requests</button>
           </Link>
@@ -55,6 +52,12 @@ const MyFriendsPage = () => {
         <h3 className='tab-heading dbrown-text'>My Friends</h3>
         <div className='friend-list grid lg:grid-cols-2'>
           { friendList.map((friend, index) => <FriendCard user={ friend } key={ index } />) }
+          { /* No Friends Placeholder */
+            friendList.length === 0 &&
+            <p className='content-panel card-item'>
+              It looks like you haven't added any friends yet! Let's try exploring journeys by other users.
+            </p>
+          }
         </div>
       </div>
     </div>

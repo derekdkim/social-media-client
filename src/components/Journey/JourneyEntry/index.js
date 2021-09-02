@@ -251,7 +251,7 @@ const JourneyEntry = (props) => {
           ? /* Edit Mode */
           <EntryEditor entry={ entry } closeEditor={ closeEditor } />
           : /* View Mode */
-          <p>{ entry.text }</p>
+          <p className='whitespace-pre-wrap'>{ entry.text }</p>
         }
       </div>
       <div className='icon-footer'>

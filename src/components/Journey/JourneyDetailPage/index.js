@@ -412,7 +412,7 @@ const JourneyDetailPage = () => {
             {/* Only for non-author, desc is shown as part of JourneyEditor for authors */
               !isAuthor &&
               <div className='content-panel card-item'>
-                <p>{ journey.desc }</p>
+                <p className='whitespace-nowrap'>{ journey.desc }</p>
               </div>
             }
             <div className='m-4'>

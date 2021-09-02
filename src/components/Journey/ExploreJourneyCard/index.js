@@ -18,7 +18,7 @@ const ExploreJourneyCard = (props) => {
       <Link to={ `/journey-details/${journey._id}` }><h4 className='tab-heading text-center'>{journey.title}</h4></Link>
       <p className='my-2 text-sm md:text-base'>by {journey.author.username}</p>
       <div>
-        <p className='my-2 text-sm md:text-base'>{journey.desc}</p>
+        <p className='my-2 text-sm md:text-base whitespace-pre-wrap'>{journey.desc}</p>
       </div>
       <div  className='mt-4 flex flex-row justify-between text-xs'>
         <div>

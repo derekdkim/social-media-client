@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import FriendCard from '../FriendCard';
@@ -13,65 +12,55 @@ const FriendSearch = () => {
   const status = useStatusContext();
   const auth = useAuthContext();
 
-  const { register, handleSubmit, formState: { isValid } } = useForm({
-    mode: 'onChange'
-  });
+  const submitSearch = () => {
+    // Start Loading
+    status.setIsLoading(true);
 
-  const submitSearch = (data, event) => {
-    event.preventDefault();
+    // Make search request
+    axios.get(`https://journey-social-media-server.herokuapp.com/users/search/${status.searchQuery}`)
+      .then(res => {
+        // Filter out user's own data
+        const filteredRes = res.data.result.filter(user => user.uuid !== auth.UUID);
 
-    if (isValid) {
-      // Start Loading
-      status.setIsLoading(true);
+        // Save search results to state
+        setSearchRes(filteredRes);
 
-      // Make search request
-      axios.get(`https://journey-social-media-server.herokuapp.com/users/search/${data.query}`)
-        .then(res => {
-          // Filter out user's own data
-          const filteredRes = res.data.result.filter(user => user.uuid !== auth.UUID);
+        // Render results
+        setRenderResults(true);
 
-          // Save search results to state
-          setSearchRes(filteredRes);
+        // Finish Loading
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
 
-          // Render results
-          setRenderResults(true);
-
-          // Finish Loading
-          status.setIsLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
-
-          // Finish Loading
-          status.setIsLoading(false);
-        })
-    }
+        // Finish Loading
+        status.setIsLoading(false);
+      });
   }
+
+  useEffect(() => {
+    if (status.searchQuery) {
+      submitSearch();
+    }
+
+    status.setRedirectToSearch(false);
+
+  }, [status.searchQuery]);
 
   return (
     <div className='page-container'>
-      { /* Search form */ }
-      <div className='one-tab-container flex justify-center my-4'>
-        <form onSubmit={ handleSubmit(submitSearch) } className='card-item'>
-          <h1 className='tab-heading dbrown-text'>User Search</h1>
-          <input
-            {...register('query', {
-              required: 'Cannot search if there is no query.'
-            })}
-            className='input-field'
-          ></input>
-          <button type='submit' className='button ml-2'><i className='fas fa-search'></i></button>
-        </form>
-      </div>
-      { /* Results - Visible only after submitting search */
-        renderResults &&
-        <div className='one-tab-container'>
-          <h3 className='tab-heading dbrown-text'>Search Results</h3>
-          <div>
-            { searchRes.map((user, index) => <FriendCard user={ user } key={ index } />) }
+      <div className='one-tab-container only-tab'>
+        <h3 className='tab-heading dbrown-text'>Search Results for { status.searchQuery }</h3>
+        { /* Results - Visible only after submitting search */
+          renderResults &&
+          <div className='card-item'>
+            <div>
+              { searchRes.map((user, index) => <FriendCard user={ user } key={ index } />) }
+            </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
   );
 }

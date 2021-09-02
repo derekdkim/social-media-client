@@ -100,8 +100,8 @@ const FriendCard = (props) => {
 
   return (
     <div className='content-panel card-item friend-card-container'>
-      <img src={ UserIcon } className='avatar ml-2' alt='profile-pic'/>
-      <div className='my-4 md:my-0'>
+      <img src={ UserIcon } className='avatar md:ml-2' alt='profile-pic'/>
+      <div className='my-4 md:my-0 text-center'>
         <p className='text-base md:text-xl font-bold'>{ user.username }</p>
         <p className='text-xs md:text-base'>{ user.firstName + ' ' + user.lastName }</p>
       </div>

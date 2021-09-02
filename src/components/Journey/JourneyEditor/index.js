@@ -201,7 +201,7 @@ const JourneyEditor = (props) => {
           : /* Viewer */
           <div>
             <div className='content-panel p-2 my-4'>
-              <p>{ journey.desc }</p>
+              <p className='whitespace-pre-wrap'>{ journey.desc }</p>
             </div>
             <button type='button' onClick={ enableEditor } className='button w-full mb-4'>Edit Journey Details</button>
           </div>

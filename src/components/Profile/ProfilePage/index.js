@@ -94,7 +94,7 @@ const ProfilePage = () => {
           <div>
             <h3 className='tab-heading'>A bit about me</h3>
             <div className='content-panel card-item'>
-              <p>{userInfo.intro}</p>
+              <p className='whitespace-pre-wrap'>{userInfo.intro}</p>
             </div>
           </div>
           <div className='btn-container my-6'>
