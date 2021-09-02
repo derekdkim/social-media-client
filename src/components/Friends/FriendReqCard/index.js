@@ -69,7 +69,7 @@ const FriendReqCard = (props) => {
   }
 
   return (
-    <div className='content-panel card-item flex flex-row'>
+    <div className='content-panel card-item flex flex-col items-center md:flex-row'>
       <div className='card-left'>
         <div className='avatar-container ml-2'>
           <img src={ UserIcon } alt='user' className='avatar' />

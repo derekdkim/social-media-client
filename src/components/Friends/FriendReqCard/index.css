@@ -15,9 +15,9 @@
 }
 
 .card-right {
-  @apply ml-auto p-2 flex flex-col md:flex-row;
+  @apply md:ml-auto p-2 flex flex-row items-center;
 }
 
 .card-btn {
-  @apply my-2 md:mx-2;
+  @apply my-2 mx-2;
 }

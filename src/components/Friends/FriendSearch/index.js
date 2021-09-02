@@ -51,8 +51,8 @@ const FriendSearch = () => {
   return (
     <div className='page-container'>
       { /* Search form */ }
-      <div className='flex justify-center my-4'>
-        <form onSubmit={ handleSubmit(submitSearch) }>
+      <div className='one-tab-container flex justify-center my-4'>
+        <form onSubmit={ handleSubmit(submitSearch) } className='card-item'>
           <h1 className='tab-heading dbrown-text'>User Search</h1>
           <input
             {...register('query', {
@@ -67,7 +67,7 @@ const FriendSearch = () => {
         renderResults &&
         <div className='one-tab-container'>
           <h3 className='tab-heading dbrown-text'>Search Results</h3>
-          <div className='card-item'>
+          <div>
             { searchRes.map((user, index) => <FriendCard user={ user } key={ index } />) }
           </div>
         </div>

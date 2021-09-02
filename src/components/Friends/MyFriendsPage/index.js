@@ -44,7 +44,7 @@ const MyFriendsPage = () => {
       <div className='right-btn-container-outer'>
         <div className='right-btn-container-inner'>
           <Link to='/friend-search'>
-            <button className='button mr-2'>Search for Friends</button>
+            <button className='button mr-2 mb-4 md:mb-0'>Search for Friends</button>
           </Link>
           <Link to='/friend-requests'>
             <button className='button'>View Friend Requests</button>

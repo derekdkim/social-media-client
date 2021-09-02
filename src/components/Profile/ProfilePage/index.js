@@ -105,20 +105,18 @@ const ProfilePage = () => {
             }
           </div>
           <div>
-            <h4 className='tab-heading'>Current Journeys <span className='text-gray-600 text-base'>{ journeyList !== null ? journeyList.length : 0 }</span></h4>
+            <h4 className='tab-heading'>{userInfo.firstName}'s Journeys <span className='text-gray-600 text-base'>{ journeyList !== null ? journeyList.length : 0 }</span></h4>
             <div>
               { journeyList !== null &&
                 journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
               }
             </div>
-            <h5 className='card-item'>View past journeys</h5>
           </div>
           <div>
             <h3 className='tab-heading'>Friends <span className='text-gray-600 text-base'>524</span></h3>
             <div className='friend-grid card-item'>
               {[...Array(24)].map((e, i) => <FriendBadge key={i} />)}
             </div>
-            <p className='card-item'>View all</p>
           </div>
         </div>
       }

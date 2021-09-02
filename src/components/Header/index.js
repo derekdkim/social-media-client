@@ -49,7 +49,7 @@ const Header = () => {
         <div className='header-right'>
           <div className='search-bar'>
             <i className='fas fa-search search-bar-icon' alt='search-icon'/>
-            <input type='text' className='search-bar-input'/>
+            <input type='text' className='search-bar-input' placeholder='Look for friends here'/>
           </div>
           <div className='profile-container'>
             <div className='avatar-container'>

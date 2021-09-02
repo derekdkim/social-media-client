@@ -101,9 +101,9 @@ const FriendCard = (props) => {
   return (
     <div className='content-panel card-item friend-card-container'>
       <img src={ UserIcon } className='avatar ml-2' alt='profile-pic'/>
-      <div>
-        <p className='text-xl font-bold'>{ user.username }</p>
-        <p className='text-base'>{ user.firstName + ' ' + user.lastName }</p>
+      <div className='my-4 md:my-0'>
+        <p className='text-base md:text-xl font-bold'>{ user.username }</p>
+        <p className='text-xs md:text-base'>{ user.firstName + ' ' + user.lastName }</p>
       </div>
       <div className='flex content-center justify-center'>
         { /* Friend - Show Remove Friend Button */
@@ -112,11 +112,11 @@ const FriendCard = (props) => {
         }
         { /* Pending Friend - Placeholder */
           friendStatus === 1 &&
-          <p>Pending Friend</p>
+          <p className='self-center'>Pending Friend</p>
         }
         { /* Stranger - Show Add as Friend Buton */
           friendStatus === 0 &&
-          <button onClick={ sendFriendRequest } className='friend-btn'><i className='fas fa-user-plus'></i></button>
+          <button onClick={ sendFriendRequest } className='friend-btn'><i className='fas fa-user-plus text-xl'></i></button>
         }
       </div>
       { /* Delete - Confirm Modal */
