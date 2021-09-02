@@ -30,7 +30,7 @@ const Header = () => {
         { authContext.loggedIn &&
             <div className='hamburger-menu-container'>
               <button onClick={ toggleNav } className='hamburger-btn' >
-                <img className={ isNavActive ? 'menu-icon animate-200' : 'menu-icon' } src={ HamburgerMenuIcon } alt='hamburger-menu' />
+                <img className={ isNavActive ? 'menu-icon animate-hamburger' : 'menu-icon' } src={ HamburgerMenuIcon } alt='hamburger-menu' />
               </button>
             </div> 
         }

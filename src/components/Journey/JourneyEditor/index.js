@@ -99,21 +99,21 @@ const JourneyEditor = (props) => {
       {/* Conditional rendering depending on button click */}
       { editMode
           ? /* Editor */
-          <div className='content-panel card-item'>
+          <div className='content-panel p-2 mb-4'>
             <form onSubmit={ handleSubmit(submitEdit) }>
               {/* Title */}
               <div className='input-container'>
                 <label htmlFor='journey-title-edit'>Title</label>
-                <input
+                <TextareaAutosize
                   {...register('title', {
                     required: 'Title must not be blank',
                     maxLength: { value: 50, message: 'Title cannot exceed 50 characters.' }
                   })} 
                   type='text' 
-                  maxLength={140} 
+                  maxLength={50} 
                   className='input-field' 
                   id='journey-title-edit'
-                ></input>
+                />
                 <ErrorMessage errors={ errors } name="title">
                   {({ messages }) =>
                     messages &&

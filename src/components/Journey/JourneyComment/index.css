@@ -1,5 +1,5 @@
 .comment-container {
-  @apply flex flex-row my-2;
+  @apply flex flex-col my-2;
 }
 
 .username-date {

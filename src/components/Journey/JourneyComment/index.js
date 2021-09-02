@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { formatDistance } from 'date-fns';
 import axios from 'axios';
 import './index.css';
@@ -8,6 +8,8 @@ import CommentEditor from '../../Comment/CommentEditor';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import ConfirmModal from '../../Modal/ConfirmModal';
+import CommentMenu from '../../Comment/CommentMenu';
+import useDetectOutsideClick from '../../util/useDetectOutsideClick';
 
 const JourneyComment = (props) => {
   const [commentLiked, setCommentLiked] = useState(false);
@@ -16,6 +18,9 @@ const JourneyComment = (props) => {
 
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+
+  const menuRef = useRef(null);
+  const [isMenuActive, setIsMenuActive] = useDetectOutsideClick(menuRef, false);
 
   const { comment } = props;
   const auth = useAuthContext();
@@ -43,6 +48,10 @@ const JourneyComment = (props) => {
     if (deleteMode) {
       setDeleteMode(false);
     }
+  }
+
+  const toggleMenu = () => {
+    setIsMenuActive(!isMenuActive);
   }
 
   const handleLikes = () => {
@@ -151,15 +160,47 @@ const JourneyComment = (props) => {
 
   return (
     <div className='comment-container'>
-      <div className='flex-shrink-0'>
-        <img src={ UserIcon } className='avatar mt-2' alt='commenter' />
-      </div>
-      <div className='flex flex-col ml-2 w-5/6'>
-        <div className='flex flex-col lg:flex-row'>
-          <p className='font-bold text-sm'>{ comment.author.username }</p>
-          <span className='text-gray-500 text-xs lg:self-center lg:ml-1'>{ formatDistance(timestamp, new Date()) }</span>
+      <div className='flex flex-row items-start'>
+        {/* Avatar Picture */}
+        <div className='flex-shrink-0'>
+          <img src={ UserIcon } className='avatar mt-2' alt='commenter' />
         </div>
-        <div className='mt-1'>
+        {/* Author Info */}
+        <div className='flex flex-col m-2'>
+          <p className='font-bold text-sm'>{ comment.author.username }</p>
+          <span className='text-gray-500 text-xs'>{ formatDistance(timestamp, new Date()) }</span>
+        </div>
+        {/* Edit/Delete Ellipsis Menu*/}
+        <div className='ml-auto self-center'>
+          { !editMode 
+            && 
+            <button onClick={ toggleMenu } type='button'><i className='fas fa-ellipsis-v'></i></button>
+          }
+          { isMenuActive 
+            && 
+            <CommentMenu 
+              menuRef={ menuRef } 
+              toggleMenu={ toggleMenu } 
+              openEditor={ openEditor } 
+              openDeleteConfirm={ openDeleteConfirm } 
+            /> 
+          }
+        </div>
+      </div>
+      <div className='flex flex-col'>
+        {/* Editor Button */}
+        { editMode
+          && /* Close Editor Button */
+          <div className='ml-auto'>
+            <button onClick={ closeEditor } >
+              <i className='fas fa-times' ></i>
+            </button>
+            <button onClick={ openDeleteConfirm } className='ml-6'>
+              <i className='fas fa-trash' ></i>
+            </button>
+          </div>
+        }
+        <div className='my-2'>
           { /* Text Content */
             editMode
             ? /* Edit Mode */
@@ -174,20 +215,6 @@ const JourneyComment = (props) => {
         </div>
       </div>
       <div className='ml-auto p-2'>
-        {/* Editor Button */}
-        { editMode
-          ? /* Close Editor Button */
-          <button onClick={ closeEditor } >
-            <i className='fas fa-times' ></i>
-          </button>
-          : /* Open Editor Button */
-          <button onClick={ openEditor } >
-            <i className='far fa-edit' ></i>
-          </button>
-        }
-        <button onClick={ openDeleteConfirm } className='ml-6'>
-          <i className='fas fa-trash' ></i>
-        </button>
       </div>
       {/* Delete Confirm Modal */
         deleteMode &&

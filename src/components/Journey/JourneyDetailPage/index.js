@@ -373,6 +373,7 @@ const JourneyDetailPage = () => {
           </div>
           {/* Side Info Tab */}
           <div className='journey-info-container'>
+            <h3 className='tab-heading dbrown-text card-item'>Journey Details</h3>
             {/* Likes Tab */}
             <div className='content-panel card-item flex flex-row justify-around items-center'>
               <div className='text-xl'>
@@ -431,14 +432,14 @@ const JourneyDetailPage = () => {
               }
             </div>
           </div>
-          <div className='card-item'>
+          <div className='md:card-item'>
             {/* Entry Creator -- Toggleable via button */}
             { entryWrite
               ? <div>
-                  <button onClick={ closeEntryCreator } className='button'>-</button>
+                  <button onClick={ closeEntryCreator } className='button m-4'>- Close Entry</button>
                   <EntryCreator parent={ journey } closeEntryCreator={ closeEntryCreator } />
                 </div> 
-              : <button onClick={ openEntryCreator } className='button'>+ Write an Entry</button>
+              : <button onClick={ openEntryCreator } className='button m-4'>+ Write an Entry</button>
             }
             {/* Entries List */}
             { renderEntries  

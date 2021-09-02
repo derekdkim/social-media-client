@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './index.css';
 
@@ -9,6 +9,8 @@ import CommentCreator from '../../Comment/CommentCreator';
 import JourneyComment from '../JourneyComment';
 import EntryEditor from '../../Entry/EntryEditor';
 import ConfirmModal from '../../Modal/ConfirmModal';
+import useDetectOutsideClick from '../../util/useDetectOutsideClick';
+import CommentMenu from '../../Comment/CommentMenu';
 
 const JourneyEntry = (props) => {
   const [entryLiked, setEntryLiked] = useState(false);
@@ -20,6 +22,9 @@ const JourneyEntry = (props) => {
   const [commentsTab, setCommentsTab] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+
+  const menuRef = useRef(null);
+  const [isMenuActive, setIsMenuActive] = useDetectOutsideClick(menuRef, false);
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -52,16 +57,20 @@ const JourneyEntry = (props) => {
     }
   }
 
-  const openDeletionConfirm = () => {
+  const openDeleteConfirm = () => {
     if (!deleteMode) {
       setDeleteMode(true);
     }
   }
 
-  const closeDeletionConfirm = () => {
+  const closeDeleteConfirm = () => {
     if (deleteMode) {
       setDeleteMode(false);
     }
+  }
+
+  const toggleMenu = () => {
+    setIsMenuActive(!isMenuActive);
   }
 
   const likeEntry = () => {
@@ -199,31 +208,45 @@ const JourneyEntry = (props) => {
   return (
     <div className='content-panel card-item'>
       <div className='author-container'>
-        <div className='flex flex-row'>
-          <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
-          <div className='author-info'>
-            <p className='text-lg font-bold'>{ entry.author.username }</p>
-            <p>{ timestamp.toDateString() }</p>
+        {/* Hide when editing */
+          !editMode &&
+          <div className='flex flex-row'>
+            <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
+            <div className='author-info'>
+              <p className='text-lg font-bold'>{ entry.author.username }</p>
+              <p>{ timestamp.toDateString() }</p>
+            </div>
           </div>
-        </div>
+        }
         <div className='ml-auto p-2'>
           {/* Editor Button */}
-          { editMode
-            ? /* Close Editor Button */
-            <button onClick={ closeEditor } >
-              <i className='fas fa-times' ></i>
-            </button>
-            : /* Open Editor Button */
-            <button onClick={ openEditor } >
-              <i className='far fa-edit' ></i>
-            </button>
+          { !editMode 
+            && 
+            <button onClick={ toggleMenu } type='button'><i className='fas fa-ellipsis-v'></i></button>
           }
-          <button onClick={ openDeletionConfirm } className='ml-6'>
-            <i className='fas fa-trash' ></i>
-          </button>
+          { isMenuActive 
+            && 
+            <CommentMenu 
+              menuRef={ menuRef } 
+              toggleMenu={ toggleMenu } 
+              openEditor={ openEditor } 
+              openDeleteConfirm={ openDeleteConfirm } 
+            /> 
+          }
+          { editMode
+            && /* Close Editor Button */
+            <div>
+              <button onClick={ closeEditor } >
+                <i className='fas fa-times' ></i>
+              </button>
+              <button onClick={ openDeleteConfirm } className='ml-6'>
+                <i className='fas fa-trash' ></i>
+              </button>
+            </div>
+          }
         </div>
       </div>
-      <div className='p-2'>
+      <div className='m-2 p-2'>
         { editMode
           ? /* Edit Mode */
           <EntryEditor entry={ entry } closeEditor={ closeEditor } />
@@ -253,7 +276,7 @@ const JourneyEntry = (props) => {
       { /* Confirmation Modal for Entry Deletion -- Accessible via Trash button */
         deleteMode &&
         <ConfirmModal 
-          cancelEvent={ closeDeletionConfirm }
+          cancelEvent={ closeDeleteConfirm }
           callbackEvent={ deleteEntry }
           dialogText='Are you sure you want to delete this entry?'
         />
