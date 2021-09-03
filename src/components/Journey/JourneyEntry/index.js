@@ -128,6 +128,10 @@ const JourneyEntry = (props) => {
     // Start Loading
     status.setIsLoading(true);
 
+    // Close Comments tab
+    // Prevents a bug where the comments tab of the deleted tab would appear on the next tab until re-rendering.
+    setCommentsTab(false);
+
     // Submit request
     axios.delete(`https://journey-social-media-server.herokuapp.com/entries/${entry.parent._id}/${entry._id}`, 
       {

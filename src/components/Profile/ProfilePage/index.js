@@ -70,6 +70,9 @@ const ProfilePage = () => {
         if (res.data.user.uuid === auth.UUID) {
           setIsThisMe(true);
         } else {
+          // This isn't me
+          setIsThisMe(false);
+          
           // Determine friend status
           if (res.data.user.currentFriends.some(friend => friend.uuid === auth.UUID)) {
             setFriendCode(2);
@@ -97,7 +100,7 @@ const ProfilePage = () => {
         // Loading Complete
         status.setIsLoading(false);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     loadJourneyList();

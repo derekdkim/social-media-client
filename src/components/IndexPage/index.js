@@ -48,7 +48,13 @@ const IndexPage = () => {
           { journeyList.length > 0
             /* Limit to 5 most recent journeys -- slice() cuts to the entire length of array if it is smaller than the end argument */
             ? journeyList.slice(0, 5).map((journey, index) => <JourneyLink journey={journey} key={index} />)
-            : <p>Looks like you're not on any journeys right now.</p>
+            : 
+            <div className='flex flex-col items-center lg:mt-40'>
+              <p className='my-10 text-xl'>Looks like you're not on any journeys right now.</p>
+              <Link to='/journeys/new'>
+                <button className='button'>Create your first one!</button>
+              </Link>
+            </div>
           }
           { /* See more link*/
             journeyList.length > 5 &&

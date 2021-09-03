@@ -2,6 +2,7 @@
   .journey-det-container {
     @apply grid;
     grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
   }
 
   .journey-info-container {
