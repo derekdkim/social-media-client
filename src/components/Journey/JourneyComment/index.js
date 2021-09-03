@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import axios from 'axios';
 import './index.css';
@@ -167,7 +168,9 @@ const JourneyComment = (props) => {
         </div>
         {/* Author Info */}
         <div className='flex flex-col m-2'>
-          <p className='font-bold text-sm'>{ comment.author.username }</p>
+          <Link to={`/profile/${comment.author._id}`}>
+            <p className='font-bold text-sm'>{ comment.author.username }</p>
+          </Link>
           <span className='text-gray-500 text-xs'>{ formatDistance(timestamp, new Date()) }</span>
         </div>
         {/* Edit/Delete Ellipsis Menu*/}

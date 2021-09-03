@@ -8,11 +8,48 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 import JourneyLink from '../JourneyLink';
 
 const MyJourneyPage = () => {
-  const [journeyList, setJourneyList] = useState(null);
-  const [renderJourneys, setRenderJourneys] = useState(false);
+  const [journeyList, setJourneyList] = useState([]);
+  const [partipList, setPartipList] = useState([]);
 
   const auth = useAuthContext();
   const status = useStatusContext();
+
+  const getMyJourneys = async () => {
+    axios.get('https://journey-social-media-server.herokuapp.com/journeys/private', {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+      })
+      .then(res => {
+        // Set journey output to state
+        setJourneyList(res.data.journeys);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const getPartipJourneys = async () => {
+    axios.get('https://journey-social-media-server.herokuapp.com/journeys/participating', {
+      headers: {
+        'Authorization': `Bearer ${auth.JWT}`
+      }
+      })
+      .then(res => {
+        // Set journey output to state
+        setPartipList(res.data.journeys);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const getAllJourneys = async () => {
+    await getMyJourneys();
+    await getPartipJourneys();
+    // Finish Loading
+    status.setIsLoading(false);
+  }
 
   // Fetch journey data from API on initial render
   useEffect(() => {
@@ -22,46 +59,11 @@ const MyJourneyPage = () => {
     if (isMounted) {
       // Start Loading
       status.setIsLoading(true);
-
-      // Fetch journeys
-      axios.get('https://journey-social-media-server.herokuapp.com/journeys/private', {
-          headers: {
-            'Authorization': `Bearer ${auth.JWT}`
-          }
-        })
-        .then(res => {
-          if (res.data.journeys) {
-            // Set imported journeys list to state
-            setJourneyList(res.data.journeys);
-            
-            // Loading Complete
-            status.setIsLoading(false);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-
-          // Loading Complete
-          status.setIsLoading(false);
-        })
+      getAllJourneys();
     }
 
     return () => { isMounted = false };
   }, []);
-
-  useEffect(() => {
-    if (journeyList != null && journeyList.length > 0) {
-      // Prevent redundant state changes
-      if (!renderJourneys) {
-        setRenderJourneys(true);
-      }
-    } else {
-      // Prevent redundant state changes
-      if (renderJourneys) {
-        setRenderJourneys(false);
-      }
-    }
-  }, [journeyList]);
 
   return (
     <div className='page-container'>
@@ -73,12 +75,17 @@ const MyJourneyPage = () => {
       <div className='one-tab-container'>
         <h1 className='tab-heading dbrown-text'>My Journeys</h1>
         <div className='journey-list grid lg:grid-cols-2 my-4'>
-          { renderJourneys 
+          { journeyList.length > 0
               ? journeyList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
-              : <div>You are not currently on any journeys yet.</div>
+              : <div className='m-4'>You are not currently on any journeys yet.</div>
           }
         </div>
         <h1 className='tab-heading dbrown-text'>Participating Journeys</h1>
+        { /* Participating Journeys */
+          partipList.length > 0
+          ? partipList.map((journey, index) => <JourneyLink journey={journey} key={index} />)
+          : <div className='m-4'>You are not currently participating in other users' journeys yet.</div>
+        }
       </div>
     </div>
   );

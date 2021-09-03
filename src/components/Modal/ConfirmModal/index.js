@@ -10,8 +10,8 @@ const ConfirmModal = (props) => {
         <p>{dialogText}</p>
         <hr className='mx-2 my-8'></hr>
         <div className='card-item flex justify-around'>
-          <button className='button' onClick={ cancelEvent }>Cancel</button>
-          <button className='button' onClick={ callbackEvent }>Confirm</button>
+          <button className='button mr-2' onClick={ cancelEvent }>Cancel</button>
+          <button className='button ml-2' onClick={ callbackEvent }>Confirm</button>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import { useStatusContext } from '../../../context/StatusContextProvider';
 
 const MyFriendsPage = () => {
   const [friendList, setFriendList] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -37,7 +38,14 @@ const MyFriendsPage = () => {
 
   useEffect(() => {
     fetchFriends();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (updateList) {
+      fetchFriends();
+      setUpdateList(false);
+    }
+  }, [updateList]);
 
   return (
     <div className='page-container'>
@@ -51,7 +59,7 @@ const MyFriendsPage = () => {
       <div className='one-tab-container'>
         <h3 className='tab-heading dbrown-text'>My Friends</h3>
         <div className='friend-list grid lg:grid-cols-2'>
-          { friendList.map((friend, index) => <FriendCard user={ friend } key={ index } />) }
+          { friendList.map((friend, index) => <FriendCard user={ friend } setUpdateList={ setUpdateList } key={ index } />) }
           { /* No Friends Placeholder */
             friendList.length === 0 &&
             <p className='content-panel card-item'>

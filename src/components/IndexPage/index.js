@@ -4,20 +4,15 @@ import './index.css';
 import axios from 'axios';
 
 import { useAuthContext } from '../../context/AuthContextProvider';
-import { useStatusContext } from '../../context/StatusContextProvider';
 import JourneyLink from '../Journey/JourneyLink';
 
 const IndexPage = () => {
   const [journeyList, setJourneyList] = useState([]);
 
   const auth = useAuthContext();
-  const status = useStatusContext();
 
   useEffect(() => {
     if (auth.loggedIn && auth.JWT) {
-      // Start Loading
-      status.setIsLoading(true);
-
       // Fetch private journeys
       axios.get('https://journey-social-media-server.herokuapp.com/journeys/private', {
           headers: {
@@ -26,15 +21,9 @@ const IndexPage = () => {
         })
         .then(res => {
           setJourneyList(res.data.journeys);
-
-          // Loading Complete
-          status.setIsLoading(false);
         })
         .catch(err => {
           console.log(err);
-
-          // Loading Complete
-          status.setIsLoading(false);
         });
     }
   }, []);

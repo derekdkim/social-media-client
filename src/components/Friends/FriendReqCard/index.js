@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -8,10 +9,8 @@ import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 
 const FriendReqCard = (props) => {
-  const [friendAccepted, setFriendAccepted] = useState(false);
-  const [friendDeclined, setFriendDeclined] = useState(false);
 
-  const { user } = props;
+  const { user, setUpdateList } = props;
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -30,7 +29,7 @@ const FriendReqCard = (props) => {
         })
         .then(res => {
           if (res.data.message === 'success') {
-            setFriendAccepted(true);
+            setUpdateList(true);
           }
 
           // Finished Loading
@@ -53,7 +52,7 @@ const FriendReqCard = (props) => {
           })
           .then(res => {
             if (res.data.message === 'success') {
-              setFriendDeclined(true);
+              setUpdateList(true);
             }
 
             // Finished Loading
@@ -75,8 +74,10 @@ const FriendReqCard = (props) => {
           <img src={ UserIcon } alt='user' className='avatar' />
         </div>
         <div className='self-center'>
-          <p className='card-primary-text'>{ user.username }</p>
-          <p className='card-secondary-text'>{ user.firstName + ' ' + user.lastName }</p>
+          <Link to={`/profile/${user._id}`}>
+            <p className='card-primary-text'>{ user.username }</p>
+            <p className='card-secondary-text'>{ user.firstName + ' ' + user.lastName }</p>
+          </Link>
         </div>
       </div>
       <div className='card-right'>

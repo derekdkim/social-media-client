@@ -8,6 +8,7 @@ import FriendReqCard from '../FriendReqCard';
 
 const FriendRequestPage = () => {
   const [pendingFriends, setPendingFriends] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   const auth = useAuthContext();
   const status = useStatusContext();
@@ -38,16 +39,24 @@ const FriendRequestPage = () => {
 
   useEffect(() => {
     fetchPendingFriends();
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    if (updateList) {
+      fetchPendingFriends();
+      setUpdateList(false);
+    }
+  }, [updateList]);
 
   return (
     <div className='page-container'>
       <div className='one-tab-container only-tab narrow-page'>
         <h3 className='tab-heading'>Pending Requests</h3>
         <div>
-          {pendingFriends.map((user, i) => <FriendReqCard user={ user } key={ i } />)}
-          {/* No Results Placeholder Text */
-            pendingFriends.length === 0 &&
+          { pendingFriends.length > 0
+            ?
+            pendingFriends.map((user, i) => <FriendReqCard user={ user } key={ i } setUpdateList = { setUpdateList } />)
+            : /* No Results Placeholder Text */
             <p className='content-panel card-item'>No potential friends to accept as of this moment.</p>
           }
         </div>

@@ -21,7 +21,7 @@ const SettingsMenu = (props) => {
 
   return (
     <div ref={ settingsRef } className='settings-menu menu-panel'>
-      <Link to='/profile' onClick={ toggleSettings } >
+      <Link to={`/profile/${auth.id}`} onClick={ toggleSettings } >
         <button className='m-2 card-item'>View Profile</button>
       </Link>
       <hr></hr>

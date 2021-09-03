@@ -27,7 +27,7 @@ const Routes = () => {
       <PrivateRoute path='/explore' component={ExplorePage} />
       <PrivateRoute path='/my-friends' component={MyFriendsPage} />
       <PrivateRoute path='/journey-details/:id' component={JourneyDetailPage} />
-      <PrivateRoute path='/profile' component={ProfilePage} />
+      <PrivateRoute path='/profile/:id' component={ProfilePage} />
       <PrivateRoute path='/profile-setting' component={ProfileEditPage} />
       <PrivateRoute path='/friend-requests' component={FriendRequestPage} />
       <PrivateRoute path='/friend-search' component={FriendSearch} />

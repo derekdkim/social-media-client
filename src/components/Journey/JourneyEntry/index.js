@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -213,7 +214,9 @@ const JourneyEntry = (props) => {
           <div className='flex flex-row'>
             <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
             <div className='author-info'>
-              <p className='text-lg font-bold'>{ entry.author.username }</p>
+              <Link to={`/profile/${entry.author._id}`}>
+                <p className='text-lg font-bold'>{ entry.author.username }</p>
+              </Link>
               <p>{ timestamp.toDateString() }</p>
             </div>
           </div>

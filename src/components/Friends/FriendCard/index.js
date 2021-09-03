@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -12,7 +13,7 @@ const FriendCard = (props) => {
   const [friendStatus, setFriendStatus] = useState(0);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  const { user } = props;
+  const { user, setUpdateList } = props;
   const auth = useAuthContext();
   const status = useStatusContext();
 
@@ -42,6 +43,7 @@ const FriendCard = (props) => {
       .then(res => {
         if (res.data.message === 'success') {
           setFriendStatus(1);
+          setUpdateList(true);
         }
 
         // Finish Loading
@@ -70,6 +72,8 @@ const FriendCard = (props) => {
       .then(res => {
         if (res.data.message === 'success') {
           setFriendStatus(0);
+          setUpdateList(true);
+          setDeleteMode(false);
         }
 
         // Finish Loading
@@ -100,11 +104,13 @@ const FriendCard = (props) => {
 
   return (
     <div className='content-panel card-item friend-card-container'>
-      <img src={ UserIcon } className='avatar md:ml-2' alt='profile-pic'/>
-      <div className='my-4 md:my-0 text-center'>
-        <p className='text-base md:text-xl font-bold'>{ user.username }</p>
-        <p className='text-xs md:text-base'>{ user.firstName + ' ' + user.lastName }</p>
-      </div>
+        <img src={ UserIcon } className='avatar md:ml-2' alt='profile-pic'/>
+        <Link to={`/profile/${user._id}`}>
+          <div className='my-4 md:my-0 text-center'>
+            <p className='text-base md:text-xl font-bold'>{ user.username }</p>
+            <p className='text-xs md:text-base'>{ user.firstName + ' ' + user.lastName }</p>
+          </div>
+        </Link>
       <div className='flex content-center justify-center'>
         { /* Friend - Show Remove Friend Button */
           friendStatus === 2 &&
