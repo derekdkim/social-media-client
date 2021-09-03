@@ -153,7 +153,7 @@ const JourneyEntry = (props) => {
         console.log(err);
 
         status.setIsLoading(false);
-      })
+      });
   }
 
   const getComments = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -399,7 +399,7 @@ const JourneyDetailPage = () => {
             {/* Journey Details Tab */}
             <div className='content-panel card-item'>
               <ul>
-                <li>Created by { author.username }</li>
+                <li><Link to={ `/profile/${author._id}` }>Created by { author.username }</Link></li>
                 <li>Started on { timestamp.toDateString() }</li>
                 <li>Privacy: { formatPrivacy(journey.privacy) }</li>
                 { journey.dueDate !== undefined && 
@@ -412,7 +412,7 @@ const JourneyDetailPage = () => {
             {/* Only for non-author, desc is shown as part of JourneyEditor for authors */
               !isAuthor &&
               <div className='content-panel card-item'>
-                <p className='whitespace-nowrap'>{ journey.desc }</p>
+                <p className='whitespace-pre-wrap'>{ journey.desc }</p>
               </div>
             }
             <div className='m-4'>

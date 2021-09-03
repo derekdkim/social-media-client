@@ -14,13 +14,15 @@ const ExploreJourneyCard = (props) => {
 
 
   return (
-    <div className='content-panel m-4 p-4'>
+    <div className='flex flex-col justify-between content-panel m-4 p-4'>
       <Link to={ `/journey-details/${journey._id}` }><h4 className='tab-heading text-center'>{journey.title}</h4></Link>
-      <p className='my-2 text-sm md:text-base'>by {journey.author.username}</p>
+      <Link to={ `/profile/${journey.author._id}` }>
+        <p className='my-2 text-sm md:text-base'>by {journey.author.username}</p>
+      </Link>
       <div>
         <p className='my-2 text-sm md:text-base whitespace-pre-wrap'>{journey.desc}</p>
       </div>
-      <div  className='mt-4 flex flex-row justify-between text-xs'>
+      <div  className='mt-2 flex flex-row justify-between text-xs'>
         <div>
           <p>Goal Date</p>
           <p>{

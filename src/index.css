@@ -21,7 +21,7 @@
 
   /* Input */
   input, textarea {
-    @apply select-none outline-none resize-none;
+    @apply select-none outline-none resize-none whitespace-pre-wrap;
   }
 
   .input-container {
