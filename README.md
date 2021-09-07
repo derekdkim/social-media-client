@@ -20,7 +20,7 @@ This app was developed alone for learning web development. All assets used in th
 
 ## Usage:
 
-Visit the Journey Together website.
+Visit the [Journey Together website](https://journey-together.netlify.app/).
 
 ## Features:
 
