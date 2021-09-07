@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useForm } from 'react-hook-form';
-import './index.css';
 import axios from 'axios';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
@@ -57,7 +56,7 @@ const EntryCreator = (props) => {
   return (
     <div className='content-panel card-item input-container'>
       <form onSubmit={ handleSubmit(createEntry) }>
-        <div className='entry-creator-container'>
+        <div className='flex flex-col p-2'>
           <TextareaAutosize 
             {...register('text', {
               required: 'Entry cannot be blank.',
@@ -68,7 +67,7 @@ const EntryCreator = (props) => {
             })}
             minRows={ 4 }
             maxLength={ 5000 } 
-            className='input-field entry-creator-field' 
+            className='input-field h-8' 
             placeholder="Share what's on your mind!"
           />
           <button className={ isValid ? 'button ml-auto mt-4' : 'button ml-auto mt-4 disabled-btn' }>Post Entry</button>

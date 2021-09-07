@@ -1,7 +1,0 @@
-.entry-creator-container {
-  @apply flex flex-col p-2;
-}
-
-.entry-creator-field {
-  @apply h-8;
-}
