@@ -4,10 +4,6 @@
   @apply flex flex-col text-left m-4 rounded-lg;
 }
 
-.header-nav {
-  @apply flex flex-col justify-around md:justify-center content-center;
-}
-
 .nav-icon {
   @apply w-5 h-5 md:w-10 lg:w-5 md:h-10 lg:h-5 self-center;
 }

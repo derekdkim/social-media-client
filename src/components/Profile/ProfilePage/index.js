@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './index.css';
 
 import JourneyLink from '../../Journey/JourneyLink';
 import { UserIcon } from '../../../images';
@@ -109,12 +108,12 @@ const ProfilePage = () => {
   return (
     <div>
       { userInfo !== null &&
-        <div className='page-container profile-page one-tab-container'>
-          <div className='user-info-tab'>
-            <div className='profile-pic-container'>
-              <img className='profile-pic-main' src={UserIcon} alt='profile'></img>
+        <div className='page-container one-tab-container lg:w-1/2 lg:mx-auto'>
+          <div className='flex flex-col items-center md:flex-row md:justify-start lg:justify-center my-8'>
+            <div className='mx-8'>
+              <img className='bg-gray-400 max-w-full max-h-full w-24 h-24 rounded-full' src={UserIcon} alt='profile'></img>
             </div>
-            <div className='username-container'>
+            <div className='ml-8 my-4 flex flex-col justify-center'>
               <h3 className='text-3xl'>{userInfo.username}</h3>
               <h4 className='tab-heading'>{userInfo.firstName} {userInfo.lastName}</h4>
             </div>
@@ -149,7 +148,7 @@ const ProfilePage = () => {
           </div>
           <div>
             <h3 className='tab-heading'>Friends <span className='text-gray-600 text-base'>{friendList.length}</span></h3>
-            <div className='friend-grid card-item'>
+            <div className='card-item grid grid-cols-3 md:grid-cols-6 lg:grid-cols-4 gap-x-1 gap-y-3'>
               { /* Friend List*/
                 friendList.length > 0 &&
                 friendList.map((user, i) => <FriendBadge user={ user } key={i} />)

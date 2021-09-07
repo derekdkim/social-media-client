@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import './index.css';
 
 import { useStatusContext } from '../../context/StatusContextProvider';
 
@@ -71,8 +70,10 @@ const SignupPage = () => {
         >
           <h1 className='tab-heading text-center'>Create a New Account</h1>
 
+          {/* Login error message dialog */}
           <span className='text-input-error'>{formErrMsg}</span>
 
+          {/* Username Input */}
           <div className='input-container'>
             <label htmlFor='signup-username-input'>Username</label>
             <input
@@ -105,6 +106,7 @@ const SignupPage = () => {
             </ErrorMessage>
           </div>
 
+          {/* Password Input */}
           <div className='input-container'>
             <label htmlFor='signup-password-input'>Password</label>
             <input
@@ -133,6 +135,7 @@ const SignupPage = () => {
             </ErrorMessage>
           </div>
 
+          {/* First Name Input */}
           <div className='input-container'>
             <label htmlFor='signup-firstname-input'>First Name</label>
             <input
@@ -161,6 +164,7 @@ const SignupPage = () => {
             </ErrorMessage>
           </div>
 
+          {/* Last Name Input */}
           <div className='input-container'>
             <label htmlFor='signup-lastname-input'>Last Name</label>
             <input
@@ -189,6 +193,7 @@ const SignupPage = () => {
             </ErrorMessage>
           </div>
           
+          {/* Birth Date Input */}
           <div className='input-container'>
             <label htmlFor='signup-username-input'>Birth Date</label>
             <input
@@ -217,6 +222,7 @@ const SignupPage = () => {
             </ErrorMessage>
           </div>
           <div className='btn-container'>
+            {/* Only interactable if form is completed */}
             <button className={ isValid ? 'button': 'button disabled-btn' }> Sign Up </button>
           </div>
         </form>

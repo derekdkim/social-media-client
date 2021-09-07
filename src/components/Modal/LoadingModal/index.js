@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './index.css';
 
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import { loadingGIF } from '../../../images';
@@ -31,7 +30,7 @@ const LoadingModal = () => {
       { status.isLoading &&
         <div className={ status.isLoading ? 'modal-container loading' : 'modal-container inactive' }>
           <div className='modal'>
-            <img className='modal-container--img' src={ loadingGIF } alt='loading' />
+            <img className='m-auto' src={ loadingGIF } alt='loading' />
             <p>{ longLoad ? 'Waking up API on Heroku...' : 'loading...' }</p>
           </div>
         </div>

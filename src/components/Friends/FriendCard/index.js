@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './index.css';
 
 import { UserIcon } from '../../../images/';
 import { useAuthContext } from '../../../context/AuthContextProvider';
@@ -103,7 +102,7 @@ const FriendCard = (props) => {
   }, [user]);
 
   return (
-    <div className='content-panel card-item friend-card-container'>
+    <div className='content-panel card-item flex flex-col items-center md:grid md:grid-cols-3 p-2'>
         <img src={ UserIcon } className='avatar md:ml-2' alt='profile-pic'/>
         <Link to={`/profile/${user._id}`}>
           <div className='my-4 md:my-0 text-center'>

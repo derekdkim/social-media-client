@@ -9,7 +9,7 @@ const HamburgerMenu = (props) => {
 
   return (
     <div className='left-hbmenu-tab menu-panel' ref={ navRef }>
-      <nav className='header-nav'>
+      <nav className='flex flex-col justify-around md:justify-center content-center'>
         <Link onClick={ toggleNav } className='nav-link card-item' to='/my-journeys'>
           <img className='nav-icon' src={ MapIcon } alt='my-journeys-icon'/>
           <p className='nav-link-text'>My Journeys</p>

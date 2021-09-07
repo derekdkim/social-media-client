@@ -29,7 +29,7 @@ const IndexPage = () => {
   }, []);
 
   return (
-    <div className='page-container index-page'>
+    <div className='page-container lg:grid lg:grid-cols-2'>
       <div className='tab-left'>
         <div className='welcome-panel'>
           <h1 className='dbrown-text'>Welcome back, {auth.firstName}!</h1>

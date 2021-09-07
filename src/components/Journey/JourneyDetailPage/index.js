@@ -5,7 +5,7 @@ import './index.css';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
-import JourneyEntry from '../JourneyEntry';
+import Entry from '../../Entry/Entry';
 import EntryCreator from '../../Entry/EntryCreator';
 import JourneyEditor from '../JourneyEditor';
 import { formatPrivacy } from '../../util/stringFormatter';
@@ -443,7 +443,7 @@ const JourneyDetailPage = () => {
             }
             {/* Entries List */}
             { renderEntries  
-              ? entries.map((entry, index) => <JourneyEntry entry={ entry } key={ index } />)
+              ? entries.map((entry, index) => <Entry entry={ entry } key={ index } />)
               : <div className='content-panel card-item'>There are currently no entries in this journey. Create one!</div>
             }
           </div>

@@ -7,8 +7,8 @@ import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import { UserIcon } from '../../../images';
 import CommentCreator from '../../Comment/CommentCreator';
-import JourneyComment from '../JourneyComment';
-import EntryEditor from '../../Entry/EntryEditor';
+import Comment from '../../Comment/Comment';
+import EntryEditor from '../EntryEditor';
 import ConfirmModal from '../../Modal/ConfirmModal';
 import useDetectOutsideClick from '../../util/useDetectOutsideClick';
 import CommentMenu from '../../Comment/CommentMenu';
@@ -212,12 +212,12 @@ const JourneyEntry = (props) => {
 
   return (
     <div className='content-panel card-item'>
-      <div className='author-container'>
+      <div className='flex flex-row m-2'>
         {/* Hide when editing */
           !editMode &&
           <div className='flex flex-row'>
             <img src={ UserIcon } className='avatar md:ml-2 'alt='profile-pic'/>
-            <div className='author-info'>
+            <div className='ml-4'>
               <Link to={`/profile/${entry.author._id}`}>
                 <p className='text-lg font-bold'>{ entry.author.username }</p>
               </Link>
@@ -273,7 +273,7 @@ const JourneyEntry = (props) => {
             <div className='card-item'>
               <div>
                 { commentsList !== null
-                  ? commentsList.map((e, i) => <JourneyComment comment={ e } key={ i } />)
+                  ? commentsList.map((e, i) => <Comment comment={ e } key={ i } />)
                   : <p>No comments yet. Be the first to write one!</p> }
               </div>
               <CommentCreator parent={entry} />

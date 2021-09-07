@@ -50,7 +50,7 @@ const FriendRequestPage = () => {
 
   return (
     <div className='page-container'>
-      <div className='one-tab-container only-tab narrow-page'>
+      <div className='one-tab-container only-tab lg:w-1/2 lg:mx-auto'>
         <h3 className='tab-heading'>Pending Requests</h3>
         <div>
           { pendingFriends.length > 0

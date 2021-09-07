@@ -74,7 +74,7 @@ const ProfileEditPage = () => {
     <div>
       {/* Only render once API has loaded */
         userInfo !== null &&
-        <div className='page-container profile-page one-tab-container'>
+        <div className='page-container one-tab-container lg:w-1/2 lg:mx-auto'>
           {/* Intro Edit Tab */}
           <EditIntro editUser={ editUser } intro={ userInfo.intro } />
           <hr></hr>

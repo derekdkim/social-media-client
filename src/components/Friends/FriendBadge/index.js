@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
 
 import { UserIcon } from '../../../images';
 
@@ -8,9 +7,9 @@ const FriendBadge = (props) => {
   const { user } = props;
 
   return (
-    <div className='friend-badge'>
+    <div className='inline-flex flex-col text-center'>
       <Link to={`/profile/${user._id}`}>
-        <div className='friend-icon-container'>
+        <div className='flex justify-center'>
           <img src={ UserIcon } className='avatar' alt='friend'/>
         </div>
         <div>

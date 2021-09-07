@@ -11,7 +11,7 @@ const CommentCreator = (props) => {
   const status = useStatusContext();
   const { parent } = props;
 
-  const { register, handleSubmit, formState: { isValid } } = useForm({
+  const { register, handleSubmit, reset, formState: { isValid, isSubmitSuccessful } } = useForm({
     mode: 'onChange'
   });
 
@@ -47,6 +47,13 @@ const CommentCreator = (props) => {
         });
     }
   }
+
+  useEffect(() => {
+    // Clear input field after submission
+    if (isSubmitSuccessful) {
+      reset({ text: '' });
+    }
+  }, [isSubmitSuccessful, reset])
   
   return (
     <div>
@@ -60,7 +67,7 @@ const CommentCreator = (props) => {
             }
           })} 
           maxLength={1000} 
-          className='comment-field' 
+          className='input-field' 
           type='text' 
           placeholder='Share your thoughts!' 
         />

@@ -1,7 +1,0 @@
-.friend-badge {
-  @apply inline-flex flex-col text-center;
-}
-
-.friend-icon-container {
-  @apply flex justify-center;
-} 

@@ -2,24 +2,26 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import axios from 'axios';
-import './index.css';
 
 import { UserIcon } from '../../../images';
-import CommentEditor from '../../Comment/CommentEditor';
+import CommentEditor from '../CommentEditor';
 import { useAuthContext } from '../../../context/AuthContextProvider';
 import { useStatusContext } from '../../../context/StatusContextProvider';
 import ConfirmModal from '../../Modal/ConfirmModal';
-import CommentMenu from '../../Comment/CommentMenu';
+import CommentMenu from '../CommentMenu';
 import useDetectOutsideClick from '../../util/useDetectOutsideClick';
 
 const JourneyComment = (props) => {
+  // Fetched data
   const [commentLiked, setCommentLiked] = useState(false);
   const [likedByCount, setLikedByCount] = useState(0);
   const [timestamp, setTimestamp] = useState(new Date());
 
+  // Render states
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
 
+  // Settings menu popup control
   const menuRef = useRef(null);
   const [isMenuActive, setIsMenuActive] = useDetectOutsideClick(menuRef, false);
 
@@ -160,7 +162,7 @@ const JourneyComment = (props) => {
 
 
   return (
-    <div className='comment-container'>
+    <div className='flex flex-col my-2'>
       <div className='flex flex-row items-start'>
         {/* Avatar Picture */}
         <div className='flex-shrink-0'>
@@ -209,7 +211,9 @@ const JourneyComment = (props) => {
             ? /* Edit Mode */
             <CommentEditor comment={ comment } closeEditor={ closeEditor } />
             : /* View Mode */
-            <p className='comment-content'>{ comment.text }</p>
+            <p className='text-xs md:text-sm whitespace-pre-wrap break-all'>
+              { comment.text }
+            </p>
           }
         </div>
         <div className='p-1'>
