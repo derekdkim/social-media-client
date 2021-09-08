@@ -25,7 +25,7 @@ const ProfilePage = () => {
   const loadJourneyList = async () => {
     // Prevent pointless request if profile doesn't load to begin with
     if (userInfo !== null) {
-      // Activate loading modal
+      // Start Loading
       status.setIsLoading(true);
       let url = `https://journey-social-media-server.herokuapp.com/journeys/user-journeys/${id}`;
 
@@ -53,6 +53,34 @@ const ProfilePage = () => {
         });
     }
   };
+
+  const sendFriendRequest = () => {
+    // Start Loading
+    status.setIsLoading(true);
+
+    const url = `https://journey-social-media-server.herokuapp.com/friends/${id}/request`;
+
+    axios.post(url, {}, {
+        headers: {
+          'Authorization': `Bearer ${auth.JWT}`
+        }
+      })
+      .then(res => {
+        if (res.data.message === 'success') {
+          // Mark as pending friends
+          setFriendCode(1);
+        }
+
+        // Finish Loading
+        status.setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+
+        // Finish Loading
+        status.setIsLoading(false);
+      });
+  }
 
   useEffect(() => {
     // Start Loading
@@ -134,7 +162,7 @@ const ProfilePage = () => {
               ? <button className='button disabled-btn'>Pending Friends</button>
                 /* Stranger */
               : friendCode === 0
-              ? <button className='button'>Send Friend Request</button>
+              ? <button onClick={ sendFriendRequest } className='button'>Send Friend Request</button>
               : <div></div>
             }
           </div>
