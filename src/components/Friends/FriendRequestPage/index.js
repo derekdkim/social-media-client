@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { useAuthContext } from '../../../context/AuthContextProvider';
@@ -50,6 +51,9 @@ const FriendRequestPage = () => {
 
   return (
     <div className='page-container'>
+      <div className='mx-4 mt-6 mb-4'>
+        <Link to='/my-friends'><button className='button'>Back</button></Link>
+      </div>
       <div className='one-tab-container only-tab lg:w-1/2 lg:mx-auto'>
         <h3 className='tab-heading'>Pending Requests</h3>
         <div>
