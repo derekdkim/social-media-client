@@ -15,8 +15,9 @@ This app was developed alone for learning web development. All assets used in th
 - Tailwind.css
 - react-hook-forms (validation & forms library)
 - FontAwesome (free icons)
-- date.fns
+- date.fns (date formatting library)
 - axios (AJAX requests library)
+- Netlify (hosting)
 
 ## Usage:
 
